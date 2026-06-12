@@ -1,0 +1,826 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.27)  12 JUN 2026 13:25
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**c:/Users/chris/Desktop/latex_project/AI4Cyber_documentation/main.tex
+(c:/Users/chris/Desktop/latex_project/AI4Cyber_documentation/main.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+(C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+(C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/base\size12.clo
+File: size12.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count275
+\c@section=\count276
+\c@subsection=\count277
+\c@subsubsection=\count278
+\c@paragraph=\count279
+\c@subparagraph=\count280
+\c@figure=\count281
+\c@table=\count282
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen148
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks17
+\inpenc@posthook=\toks18
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen149
+\Gin@req@width=\dimen150
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen151
+\lightrulewidth=\dimen152
+\cmidrulewidth=\dimen153
+\belowrulesep=\dimen154
+\belowbottomsep=\dimen155
+\aboverulesep=\dimen156
+\abovetopsep=\dimen157
+\cmidrulesep=\dimen158
+\cmidrulekern=\dimen159
+\defaultaddspace=\dimen160
+\@cmidla=\count283
+\@cmidlb=\count284
+\@aboverulesep=\dimen161
+\@belowrulesep=\dimen162
+\@thisruleclass=\count285
+\@lastruleclass=\count286
+\@thisrulewidth=\dimen163
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2025/07/09 v2.17z AMS math features
+\@mathmargin=\skip51
+
+For additional information on amsmath, use the `?' option.
+(C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks20
+\ex@=\dimen164
+)) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen165
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count287
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count288
+\leftroot@=\count289
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count290
+\DOTSCASE@=\count291
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box53
+\strutbox@=\box54
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen166
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count292
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count293
+\dotsspace@=\muskip17
+\c@parentequation=\count294
+\dspbrk@lvl=\count295
+\tag@help=\toks21
+\row@=\count296
+\column@=\count297
+\maxfields@=\count298
+\andhelp@=\toks22
+\eqnshift@=\dimen167
+\alignsep@=\dimen168
+\tagshift@=\dimen169
+\tagwidth@=\dimen170
+\totwidth@=\dimen171
+\lineht@=\dimen172
+\@envbody=\toks23
+\multlinegap=\skip52
+\multlinetaggap=\skip53
+\mathdisplay@stack=\toks24
+LaTeX Info: Redefining \[ on input line 2950.
+LaTeX Info: Redefining \] on input line 2951.
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/algorithms\algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count299
+\float@exts=\toks25
+\float@box=\box55
+\@float@everytoks=\toks26
+\@floatcapt=\box56
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks27
+\c@algorithm=\count300
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algpseudocode.sty
+Package: algpseudocode 
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count301
+\c@ALG@rem=\count302
+\c@ALG@nested=\count303
+\ALG@tlm=\skip54
+\ALG@thistlm=\skip55
+\c@ALG@Lnr=\count304
+\c@ALG@blocknr=\count305
+\c@ALG@storecount=\count306
+\c@ALG@tmpcounter=\count307
+\ALG@tmplength=\skip56
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
+\Urlmuskip=\muskip18
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+Package: hyperref 2026-01-29 v7.01p Hypertext links for LaTeX
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+Package: nameref 2026-01-29 v2.58 Cross-referencing by name of section
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count308
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count309
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+\@linkdim=\dimen173
+\Hy@linkcounter=\count310
+\Hy@pagecounter=\count311
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2026-01-29 v7.01p Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count312
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
+File: puenc.def 2026-01-29 v7.01p Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Hyper figures OFF on input line 4201.
+Package hyperref Info: Link nesting OFF on input line 4206.
+Package hyperref Info: Hyper index ON on input line 4209.
+Package hyperref Info: Plain pages OFF on input line 4216.
+Package hyperref Info: Backreferencing OFF on input line 4221.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4468.
+\c@Hy@tempcnt=\count313
+LaTeX Info: Redefining \url on input line 4807.
+\XeTeXLinkMargin=\dimen174
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count314
+\Field@Width=\dimen175
+\Fld@charsize=\dimen176
+Package hyperref Info: Hyper figures OFF on input line 6084.
+Package hyperref Info: Link nesting OFF on input line 6089.
+Package hyperref Info: Hyper index ON on input line 6092.
+Package hyperref Info: backreferencing OFF on input line 6099.
+Package hyperref Info: Link coloring OFF on input line 6104.
+Package hyperref Info: Link coloring with OCG OFF on input line 6109.
+Package hyperref Info: PDF/A mode OFF on input line 6114.
+\Hy@abspage=\count315
+\c@Item=\count316
+\c@Hfootnote=\count317
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2026-01-29 v7.01p Hyperref driver for pdfTeX
+\Fld@listcount=\count318
+\c@bookmark@seq@number=\count319
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
+Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
+)
+\Hy@SectionHShift=\skip57
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/caption\subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen177
+\captionmargin=\dimen178
+\caption@leftmargin=\dimen179
+\caption@rightmargin=\dimen180
+\caption@width=\dimen181
+\caption@indent=\dimen182
+\caption@parindent=\dimen183
+\caption@hangindent=\dimen184
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count320
+\c@continuedfloat=\count321
+Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
+)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count322
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count323
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+Package: geometry 2026/03/07 v6.0 Page Geometry
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count324
+\Gm@cntv=\count325
+\c@Gm@tempcnt=\count326
+\Gm@bindingoffset=\dimen185
+\Gm@wd@mp=\dimen186
+\Gm@odd@mp=\dimen187
+\Gm@even@mp=\dimen188
+\Gm@layoutwidth=\dimen189
+\Gm@layoutheight=\dimen190
+\Gm@layouthoffset=\dimen191
+\Gm@layoutvoffset=\dimen192
+\Gm@dimlist=\toks28
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg)) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/placeins\placeins.sty
+Package: placeins 2005/04/18  v 2.2
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/csvsimple\csvsimple.sty
+Package: csvsimple 2026/04/27 v2.7.1 LaTeX CSV file processing
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/csvsimple\csvsimple-legacy.sty
+Package: csvsimple-legacy 2026/04/27 version 2.7.1 LaTeX2e CSV file processing
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.sty (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil-common.tex
+\pgfutil@everybye=\toks29
+\pgfutil@tempdima=\dimen193
+\pgfutil@tempdimb=\dimen194
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil-latex.def
+\pgfutil@abb=\box57
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs.code.tex (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/pgf\pgf.revision.tex)
+Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
+)) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfkeys.sty (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks30
+\pgfkeys@temptoks=\toks31
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeyslibraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks32
+))) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/tools\shellesc.sty
+Package: shellesc 2023/07/08 v1.0d unified shell escape interface for LaTeX
+Package shellesc Info: Restricted shell escape enabled on input line 77.
+)
+\csv@file=\read2
+\c@csvinputline=\count327
+\c@csvrow=\count328
+\c@csvcol=\count329
+\csv@out=\write3
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/underscore\underscore.sty
+Package: underscore 2006/09/13
+LaTeX Info: Redefining \_ on input line 42.
+)
+==> First Aid for underscore.sty applied!
+(C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/firstaid\underscore-ltx.sty
+Package: underscore-ltx 2023/09/20 LaTeX firstaid to make underscore protected 
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 39.
+Package hyperref Info: Option `breaklinks' set `true' on input line 39.
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count330
+) (main.aux
+
+LaTeX Warning: Label `fig:iter1' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:iter1' multiply defined.
+
+
+LaTeX Warning: Label `fig:iter5' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:iter5' multiply defined.
+
+
+LaTeX Warning: Label `fig:iter10' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:iter10' multiply defined.
+
+
+LaTeX Warning: Label `fig:iter20' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:iter20' multiply defined.
+
+)
+\openout1 = `main.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count331
+\scratchdimen=\dimen195
+\scratchbox=\box58
+\nofMPsegments=\count332
+\nofMParguments=\count333
+\everyMPshowfont=\toks33
+\MPscratchCnt=\count334
+\MPscratchDim=\dimen196
+\MPnumerator=\count335
+\makeMPintoPDFobject=\count336
+\everyMPtoPDFconversion=\toks34
+) (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (C:\Users\chris\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+Package hyperref Info: Link coloring ON on input line 41.
+ (main.out) (main.out)
+\@outlinefile=\write4
+\openout4 = `main.out'.
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(71.13188pt, 455.24411pt, 71.13188pt)
+* v-part:(T,H,B)=(56.9055pt, 731.23584pt, 56.9055pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=455.24411pt
+* \textheight=731.23584pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-52.36449pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=35.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+<unisa_logo.png, id=59, 92.0238pt x 92.0238pt>
+File: unisa_logo.png Graphic file (type png)
+<use unisa_logo.png>
+Package pdftex.def Info: unisa_logo.png  used on input line 46.
+(pdftex.def)             Requested size: 136.57462pt x 136.58626pt.
+<Diem_logo.png, id=61, 75.1608pt x 29.3898pt>
+File: Diem_logo.png Graphic file (type png)
+<use Diem_logo.png>
+Package pdftex.def Info: Diem_logo.png  used on input line 52.
+(pdftex.def)             Requested size: 136.57462pt x 53.40697pt.
+[1
+
+{C:/Users/chris/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./unisa_logo.png> <./Diem_logo.png>] (main.toc)
+\tf@toc=\write5
+\openout5 = `main.toc'.
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.96 \newpage
+              [1]
+Overfull \hbox (1.49976pt too wide) in paragraph at lines 99--100
+\OT1/cmr/m/n/12 sturt-tura dell'elaborato ^^Re cos^^R^^P com-posta, per ar-rivare in modo co-er-ente all'implementazione
+ []
+
+[2]
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 130.
+ [3
+
+]
+Overfull \hbox (6.67456pt too wide) in paragraph at lines 146--147
+\OT1/cmr/m/n/12 l'algoritmo con-fronta la classe pre-detta con la \OT1/cmr/m/it/12 ground truth \OT1/cmr/m/n/12 per cias-cun cam-pi-one, generando
+ []
+
+[4
+
+] [5
+
+]
+<FGSM/FGSM_SEC.png, id=136, 643.203pt x 423.7431pt>
+File: FGSM/FGSM_SEC.png Graphic file (type png)
+<use FGSM/FGSM_SEC.png>
+Package pdftex.def Info: FGSM/FGSM_SEC.png  used on input line 207.
+(pdftex.def)             Requested size: 409.71692pt x 269.92735pt.
+ [6 <./FGSM/FGSM_SEC.png>] [7]
+<BIM_Error_generic/BIM_iter1_SEC.png, id=153, 643.203pt x 423.7431pt>
+File: BIM_Error_generic/BIM_iter1_SEC.png Graphic file (type png)
+<use BIM_Error_generic/BIM_iter1_SEC.png>
+Package pdftex.def Info: BIM_Error_generic/BIM_iter1_SEC.png  used on input line 273.
+(pdftex.def)             Requested size: 204.85846pt x 134.96043pt.
+<BIM_Error_generic/BIM_iter5_SEC.png, id=154, 643.203pt x 423.7431pt>
+File: BIM_Error_generic/BIM_iter5_SEC.png Graphic file (type png)
+<use BIM_Error_generic/BIM_iter5_SEC.png>
+Package pdftex.def Info: BIM_Error_generic/BIM_iter5_SEC.png  used on input line 281.
+(pdftex.def)             Requested size: 204.85846pt x 134.96043pt.
+<BIM_Error_generic/BIM_iter10_SEC.png, id=155, 643.203pt x 423.7431pt>
+File: BIM_Error_generic/BIM_iter10_SEC.png Graphic file (type png)
+<use BIM_Error_generic/BIM_iter10_SEC.png>
+Package pdftex.def Info: BIM_Error_generic/BIM_iter10_SEC.png  used on input line 291.
+(pdftex.def)             Requested size: 204.85846pt x 134.96043pt.
+<BIM_Error_generic/BIM_iter20_SEC.png, id=156, 643.203pt x 423.7431pt>
+File: BIM_Error_generic/BIM_iter20_SEC.png Graphic file (type png)
+<use BIM_Error_generic/BIM_iter20_SEC.png>
+Package pdftex.def Info: BIM_Error_generic/BIM_iter20_SEC.png  used on input line 299.
+(pdftex.def)             Requested size: 204.85846pt x 134.96043pt.
+ [8
+
+]
+<BIM_Error_generic/BIM_comparative_SEC.png, id=163, 643.203pt x 423.7431pt>
+File: BIM_Error_generic/BIM_comparative_SEC.png Graphic file (type png)
+<use BIM_Error_generic/BIM_comparative_SEC.png>
+Package pdftex.def Info: BIM_Error_generic/BIM_comparative_SEC.png  used on input line 312.
+(pdftex.def)             Requested size: 341.43307pt x 224.93839pt.
+ [9 <./BIM_Error_generic/BIM_iter1_SEC.png> <./BIM_Error_generic/BIM_iter5_SEC.png> <./BIM_Error_generic/BIM_iter10_SEC.png> <./BIM_Error_generic/BIM_iter20_SEC.png> <./BIM_Error_generic/BIM_comparative_SEC.png>] [10]
+Overfull \hbox (10.65392pt too wide) in paragraph at lines 339--340
+[]$\OT1/cmr/m/n/12 ^^E[]$ rap-p-re-senta l'operatore di proiezione, il quale garan-tisce che ad ogni step l'immagine
+ []
+
+[11
+
+] [12
+
+] [13]
+Overfull \hbox (19.86395pt too wide) in paragraph at lines 420--421
+[]\OT1/cmtt/m/n/12 max_-iter \OT1/cmr/m/n/12 ($1\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 5\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 10\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 20\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 50$): il nu-mero mas-simo di proiezioni lin-eari con-cesse all'algoritmo; 
+ []
+
+[14
+
+] [15
+
+]
+Overfull \hbox (4.01869pt too wide) in paragraph at lines 460--461
+\OT1/cmr/m/n/12 rata, pu^^Ro es-sere adat-tato matem-ati-ca-mente per op-er-are in regime \OT1/cmr/m/it/12 error-specific\OT1/cmr/m/n/12 . L'obiettivo
+ []
+
+<FGSM_targeted/FGSM_Targeted_Fixed_SEC.png, id=208, 643.203pt x 423.7431pt>
+File: FGSM_targeted/FGSM_Targeted_Fixed_SEC.png Graphic file (type png)
+<use FGSM_targeted/FGSM_Targeted_Fixed_SEC.png>
+Package pdftex.def Info: FGSM_targeted/FGSM_Targeted_Fixed_SEC.png  used on input line 481.
+(pdftex.def)             Requested size: 455.24411pt x 299.91568pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[16
+
+] [17 <./FGSM_targeted/FGSM_Targeted_Fixed_SEC.png>]
+<FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png, id=226, 651.3936pt x 423.7431pt>
+File: FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png Graphic file (type png)
+<use FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png>
+Package pdftex.def Info: FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png  used on input line 518.
+(pdftex.def)             Requested size: 455.24411pt x 296.14613pt.
+ [18 <./FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png>] [19
+
+]
+<BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png, id=239, 643.203pt x 423.7431pt>
+File: BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png Graphic file (type png)
+<use BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png>
+Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png  used on input line 581.
+(pdftex.def)             Requested size: 364.19667pt x 239.93254pt.
+<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png, id=240, 643.203pt x 423.7431pt>
+File: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png Graphic file (type png)
+<use BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png>
+Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png  used on input line 625.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png, id=241, 643.203pt x 423.7431pt>
+File: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png Graphic file (type png)
+<use BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png>
+Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png  used on input line 625.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png, id=242, 643.203pt x 423.7431pt>
+File: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png Graphic file (type png)
+<use BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png>
+Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png  used on input line 625.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png, id=243, 643.203pt x 423.7431pt>
+File: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png Graphic file (type png)
+<use BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png>
+Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png  used on input line 625.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+ [20
+
+ <./BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png>] [21 <./BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png> <./BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png> <./BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png> <./BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png>]
+<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_comparative_SEC.png, id=263, 643.203pt x 423.7431pt>
+File: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_comparative_SEC.png Graphic file (type png)
+<use BIM_Error_specific/LL/BIM_Targeted_LeastLikely_comparative_SEC.png>
+Package pdftex.def Info: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_comparative_SEC.png  used on input line 644.
+(pdftex.def)             Requested size: 455.24411pt x 299.91568pt.
+<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter1_SEC.png, id=264, 643.203pt x 423.7431pt>
+File: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter1_SEC.png Graphic file (type png)
+<use BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter1_SEC.png>
+Package pdftex.def Info: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter1_SEC.png  used on input line 689.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter5_SEC.png, id=265, 643.203pt x 423.7431pt>
+File: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter5_SEC.png Graphic file (type png)
+<use BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter5_SEC.png>
+Package pdftex.def Info: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter5_SEC.png  used on input line 689.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter10_SEC.png, id=266, 643.203pt x 423.7431pt>
+File: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter10_SEC.png Graphic file (type png)
+<use BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter10_SEC.png>
+Package pdftex.def Info: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter10_SEC.png  used on input line 689.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter20_SEC.png, id=267, 643.203pt x 423.7431pt>
+File: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter20_SEC.png Graphic file (type png)
+<use BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter20_SEC.png>
+Package pdftex.def Info: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter20_SEC.png  used on input line 689.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+ [22
+
+ <./BIM_Error_specific/LL/BIM_Targeted_LeastLikely_comparative_SEC.png>] [23 <./BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter1_SEC.png> <./BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter5_SEC.png> <./BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter10_SEC.png> <./BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter20_SEC.png>]
+Overfull \hbox (44.86986pt too wide) in paragraph at lines 721--722
+[][]\OT1/cmr/m/n/12 E fon-da-men-tale no-tare che la con-fig-u-razione con \OT1/cmtt/m/n/12 num_-random_-init \OT1/cmr/m/n/12 = 0 an-nulla l'inizializzazione
+ []
+
+[24
+
+]
+
+LaTeX Warning: Reference `fig:BIM_PGD_Compare' on page 25 undefined on input line 766.
+
+[25
+
+] [26]
+<PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png, id=303, 643.203pt x 423.7431pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png  used on input line 777.
+(pdftex.def)             Requested size: 227.62206pt x 149.9546pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter1_SEC.png, id=304, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter1_SEC.png  used on input line 788.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter5_SEC.png, id=305, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter5_SEC.png  used on input line 796.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter10_SEC.png, id=306, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter10_SEC.png  used on input line 806.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter20_SEC.png, id=307, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter20_SEC.png  used on input line 814.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter40_SEC.png, id=308, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter40_SEC.png  used on input line 823.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png, id=309, 643.203pt x 423.7431pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png  used on input line 835.
+(pdftex.def)             Requested size: 227.62206pt x 149.9546pt.
+ [27
+
+ <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter1_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter5_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter10_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter20_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter40_SEC.png>]
+<PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter1_SEC.png, id=322, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter1_SEC.png  used on input line 846.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter5_SEC.png, id=323, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter5_SEC.png  used on input line 854.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter10_SEC.png, id=324, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter10_SEC.png  used on input line 863.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter20_SEC.png, id=325, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter20_SEC.png  used on input line 871.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter40_SEC.png, id=326, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter40_SEC.png  used on input line 879.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png, id=327, 643.203pt x 423.7431pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png  used on input line 890.
+(pdftex.def)             Requested size: 227.62206pt x 149.9546pt.
+ [28 <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter1_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter5_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter10_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter20_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter40_SEC.png>]
+<PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter1_SEC.png, id=340, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter1_SEC.png  used on input line 901.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter5_SEC.png, id=341, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter5_SEC.png  used on input line 909.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter10_SEC.png, id=342, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter10_SEC.png  used on input line 918.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter20_SEC.png, id=343, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter20_SEC.png  used on input line 926.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter40_SEC.png, id=344, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter40_SEC.png  used on input line 934.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png, id=345, 643.203pt x 423.7431pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png  used on input line 945.
+(pdftex.def)             Requested size: 227.62206pt x 149.9546pt.
+ [29 <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter1_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter5_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter10_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter20_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter40_SEC.png>]
+<PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter1_SEC.png, id=358, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter1_SEC.png  used on input line 956.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter5_SEC.png, id=359, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter5_SEC.png  used on input line 964.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter10_SEC.png, id=360, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter10_SEC.png  used on input line 973.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter20_SEC.png, id=361, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter20_SEC.png  used on input line 981.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter40_SEC.png, id=362, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter40_SEC.png  used on input line 989.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png  used on input line 1038.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png  used on input line 1038.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png  used on input line 1038.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png  used on input line 1038.
+(pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
+ [30 <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter1_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter5_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter10_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter20_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter40_SEC.png>] [31] [32
+
+] (main.aux)
+ ***********
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+ ***********
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 6E9C68D1AC4F6A95851BFC106F334B3E;2836.
+ ) 
+Here is how much of TeX's memory you used:
+ 14144 strings out of 467867
+ 252298 string characters out of 5418334
+ 659188 words of memory out of 5000000
+ 42732 multiletter control sequences out of 15000+600000
+ 636791 words of font info for 71 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 75i,15n,79p,1009b,691s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\chris\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on main.pdf (33 pages, 8559402 bytes).
+PDF statistics:
+ 474 PDF objects out of 1000 (max. 8388607)
+ 99 named destinations out of 1000 (max. 500000)
+ 333 words of extra memory for PDF output out of 10000 (max. 10000000)
+

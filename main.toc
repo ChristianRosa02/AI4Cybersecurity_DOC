@@ -1,0 +1,14 @@
+\contentsline {section}{\numberline {1}Introduzione}{2}{section.1}%
+\contentsline {section}{\numberline {2}Dataset Preparation}{3}{section.2}%
+\contentsline {section}{\numberline {3}NN1 \& NN2 Baseline Evaluation}{4}{section.3}%
+\contentsline {section}{\numberline {4}Generating Adversarial Examples}{5}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Error-Generic Attacks}{5}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Fast Gradient Sign Method (FGSM)}{5}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2}Basic Iterative Method (BIM)}{8}{subsubsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.3}Projected Gradient Descent (PGD)}{11}{subsubsection.4.1.3}%
+\contentsline {subsubsection}{\numberline {4.1.4}Carlini \& Wagner (CW)}{12}{subsubsection.4.1.4}%
+\contentsline {subsubsection}{\numberline {4.1.5}DeepFool (DF)}{14}{subsubsection.4.1.5}%
+\contentsline {subsection}{\numberline {4.2}Error-Specific Attacks}{15}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Targeted Fast Gradient Sign Method (FGSM)}{16}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Basic Iterative Method (BIM)}{19}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Targeted Projected Gradient Descent (PGD)}{24}{subsubsection.4.2.3}%
