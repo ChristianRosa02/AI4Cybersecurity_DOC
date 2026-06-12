@@ -12,3 +12,4 @@
 \contentsline {subsubsection}{\numberline {4.2.1}Targeted Fast Gradient Sign Method (FGSM)}{16}{subsubsection.4.2.1}%
 \contentsline {subsubsection}{\numberline {4.2.2}Basic Iterative Method (BIM)}{19}{subsubsection.4.2.2}%
 \contentsline {subsubsection}{\numberline {4.2.3}Targeted Projected Gradient Descent (PGD)}{24}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Carlini \& Wagner Attack}{39}{subsubsection.4.2.4}%

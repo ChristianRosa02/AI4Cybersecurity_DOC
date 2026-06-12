@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.27)  12 JUN 2026 13:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.27)  12 JUN 2026 17:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -465,12 +465,12 @@ Package caption Info: End \AtBeginDocument code.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<unisa_logo.png, id=59, 92.0238pt x 92.0238pt>
+<unisa_logo.png, id=63, 92.0238pt x 92.0238pt>
 File: unisa_logo.png Graphic file (type png)
 <use unisa_logo.png>
 Package pdftex.def Info: unisa_logo.png  used on input line 46.
 (pdftex.def)             Requested size: 136.57462pt x 136.58626pt.
-<Diem_logo.png, id=61, 75.1608pt x 29.3898pt>
+<Diem_logo.png, id=65, 75.1608pt x 29.3898pt>
 File: Diem_logo.png Graphic file (type png)
 <use Diem_logo.png>
 Package pdftex.def Info: Diem_logo.png  used on input line 52.
@@ -506,28 +506,28 @@ Overfull \hbox (6.67456pt too wide) in paragraph at lines 146--147
 ] [5
 
 ]
-<FGSM/FGSM_SEC.png, id=136, 643.203pt x 423.7431pt>
+<FGSM/FGSM_SEC.png, id=141, 643.203pt x 423.7431pt>
 File: FGSM/FGSM_SEC.png Graphic file (type png)
 <use FGSM/FGSM_SEC.png>
 Package pdftex.def Info: FGSM/FGSM_SEC.png  used on input line 207.
 (pdftex.def)             Requested size: 409.71692pt x 269.92735pt.
  [6 <./FGSM/FGSM_SEC.png>] [7]
-<BIM_Error_generic/BIM_iter1_SEC.png, id=153, 643.203pt x 423.7431pt>
+<BIM_Error_generic/BIM_iter1_SEC.png, id=158, 643.203pt x 423.7431pt>
 File: BIM_Error_generic/BIM_iter1_SEC.png Graphic file (type png)
 <use BIM_Error_generic/BIM_iter1_SEC.png>
 Package pdftex.def Info: BIM_Error_generic/BIM_iter1_SEC.png  used on input line 273.
 (pdftex.def)             Requested size: 204.85846pt x 134.96043pt.
-<BIM_Error_generic/BIM_iter5_SEC.png, id=154, 643.203pt x 423.7431pt>
+<BIM_Error_generic/BIM_iter5_SEC.png, id=159, 643.203pt x 423.7431pt>
 File: BIM_Error_generic/BIM_iter5_SEC.png Graphic file (type png)
 <use BIM_Error_generic/BIM_iter5_SEC.png>
 Package pdftex.def Info: BIM_Error_generic/BIM_iter5_SEC.png  used on input line 281.
 (pdftex.def)             Requested size: 204.85846pt x 134.96043pt.
-<BIM_Error_generic/BIM_iter10_SEC.png, id=155, 643.203pt x 423.7431pt>
+<BIM_Error_generic/BIM_iter10_SEC.png, id=160, 643.203pt x 423.7431pt>
 File: BIM_Error_generic/BIM_iter10_SEC.png Graphic file (type png)
 <use BIM_Error_generic/BIM_iter10_SEC.png>
 Package pdftex.def Info: BIM_Error_generic/BIM_iter10_SEC.png  used on input line 291.
 (pdftex.def)             Requested size: 204.85846pt x 134.96043pt.
-<BIM_Error_generic/BIM_iter20_SEC.png, id=156, 643.203pt x 423.7431pt>
+<BIM_Error_generic/BIM_iter20_SEC.png, id=161, 643.203pt x 423.7431pt>
 File: BIM_Error_generic/BIM_iter20_SEC.png Graphic file (type png)
 <use BIM_Error_generic/BIM_iter20_SEC.png>
 Package pdftex.def Info: BIM_Error_generic/BIM_iter20_SEC.png  used on input line 299.
@@ -535,7 +535,7 @@ Package pdftex.def Info: BIM_Error_generic/BIM_iter20_SEC.png  used on input lin
  [8
 
 ]
-<BIM_Error_generic/BIM_comparative_SEC.png, id=163, 643.203pt x 423.7431pt>
+<BIM_Error_generic/BIM_comparative_SEC.png, id=168, 643.203pt x 423.7431pt>
 File: BIM_Error_generic/BIM_comparative_SEC.png Graphic file (type png)
 <use BIM_Error_generic/BIM_comparative_SEC.png>
 Package pdftex.def Info: BIM_Error_generic/BIM_comparative_SEC.png  used on input line 312.
@@ -563,7 +563,7 @@ Overfull \hbox (4.01869pt too wide) in paragraph at lines 460--461
 \OT1/cmr/m/n/12 rata, pu^^Ro es-sere adat-tato matem-ati-ca-mente per op-er-are in regime \OT1/cmr/m/it/12 error-specific\OT1/cmr/m/n/12 . L'obiettivo
  []
 
-<FGSM_targeted/FGSM_Targeted_Fixed_SEC.png, id=208, 643.203pt x 423.7431pt>
+<FGSM_targeted/FGSM_Targeted_Fixed_SEC.png, id=213, 643.203pt x 423.7431pt>
 File: FGSM_targeted/FGSM_Targeted_Fixed_SEC.png Graphic file (type png)
 <use FGSM_targeted/FGSM_Targeted_Fixed_SEC.png>
 Package pdftex.def Info: FGSM_targeted/FGSM_Targeted_Fixed_SEC.png  used on input line 481.
@@ -574,7 +574,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [16
 
 ] [17 <./FGSM_targeted/FGSM_Targeted_Fixed_SEC.png>]
-<FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png, id=226, 651.3936pt x 423.7431pt>
+<FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png, id=231, 651.3936pt x 423.7431pt>
 File: FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png Graphic file (type png)
 <use FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png>
 Package pdftex.def Info: FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png  used on input line 518.
@@ -582,27 +582,27 @@ Package pdftex.def Info: FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png  used o
  [18 <./FGSM_targeted/FGSM_Targeted_LeastLikely_SEC.png>] [19
 
 ]
-<BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png, id=239, 643.203pt x 423.7431pt>
+<BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png, id=244, 643.203pt x 423.7431pt>
 File: BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png Graphic file (type png)
 <use BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png>
 Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png  used on input line 581.
 (pdftex.def)             Requested size: 364.19667pt x 239.93254pt.
-<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png, id=240, 643.203pt x 423.7431pt>
+<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png, id=245, 643.203pt x 423.7431pt>
 File: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png Graphic file (type png)
 <use BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png>
 Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png  used on input line 625.
 (pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
-<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png, id=241, 643.203pt x 423.7431pt>
+<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png, id=246, 643.203pt x 423.7431pt>
 File: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png Graphic file (type png)
 <use BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png>
 Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png  used on input line 625.
 (pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
-<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png, id=242, 643.203pt x 423.7431pt>
+<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png, id=247, 643.203pt x 423.7431pt>
 File: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png Graphic file (type png)
 <use BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png>
 Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png  used on input line 625.
 (pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
-<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png, id=243, 643.203pt x 423.7431pt>
+<BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png, id=248, 643.203pt x 423.7431pt>
 File: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png Graphic file (type png)
 <use BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png>
 Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png  used on input line 625.
@@ -610,27 +610,27 @@ Package pdftex.def Info: BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.
  [20
 
  <./BIM_Error_specific/fixed/BIM_Targeted_Fixed_comparative_SEC.png>] [21 <./BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter1_SEC.png> <./BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter5_SEC.png> <./BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter10_SEC.png> <./BIM_Error_specific/fixed/BIM_Targeted_Fixed_iter20_SEC.png>]
-<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_comparative_SEC.png, id=263, 643.203pt x 423.7431pt>
+<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_comparative_SEC.png, id=268, 643.203pt x 423.7431pt>
 File: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_comparative_SEC.png Graphic file (type png)
 <use BIM_Error_specific/LL/BIM_Targeted_LeastLikely_comparative_SEC.png>
 Package pdftex.def Info: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_comparative_SEC.png  used on input line 644.
 (pdftex.def)             Requested size: 455.24411pt x 299.91568pt.
-<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter1_SEC.png, id=264, 643.203pt x 423.7431pt>
+<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter1_SEC.png, id=269, 643.203pt x 423.7431pt>
 File: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter1_SEC.png Graphic file (type png)
 <use BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter1_SEC.png>
 Package pdftex.def Info: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter1_SEC.png  used on input line 689.
 (pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
-<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter5_SEC.png, id=265, 643.203pt x 423.7431pt>
+<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter5_SEC.png, id=270, 643.203pt x 423.7431pt>
 File: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter5_SEC.png Graphic file (type png)
 <use BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter5_SEC.png>
 Package pdftex.def Info: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter5_SEC.png  used on input line 689.
 (pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
-<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter10_SEC.png, id=266, 643.203pt x 423.7431pt>
+<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter10_SEC.png, id=271, 643.203pt x 423.7431pt>
 File: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter10_SEC.png Graphic file (type png)
 <use BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter10_SEC.png>
 Package pdftex.def Info: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter10_SEC.png  used on input line 689.
 (pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
-<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter20_SEC.png, id=267, 643.203pt x 423.7431pt>
+<BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter20_SEC.png, id=272, 643.203pt x 423.7431pt>
 File: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter20_SEC.png Graphic file (type png)
 <use BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter20_SEC.png>
 Package pdftex.def Info: BIM_Error_specific/LL/BIM_Targeted_LeastLikely_iter20_SEC.png  used on input line 689.
@@ -651,150 +651,302 @@ LaTeX Warning: Reference `fig:BIM_PGD_Compare' on page 25 undefined on input lin
 [25
 
 ] [26]
-<PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png, id=303, 643.203pt x 423.7431pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png  used on input line 777.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png, id=308, 643.203pt x 423.7431pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png  used on input line 777.
 (pdftex.def)             Requested size: 227.62206pt x 149.9546pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter1_SEC.png, id=304, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter1_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter1_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter1_SEC.png  used on input line 788.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter1_SEC.png, id=309, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter1_SEC.png  used on input line 788.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter5_SEC.png, id=305, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter5_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter5_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter5_SEC.png  used on input line 796.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter5_SEC.png, id=310, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter5_SEC.png  used on input line 796.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter10_SEC.png, id=306, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter10_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter10_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter10_SEC.png  used on input line 806.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter10_SEC.png, id=311, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter10_SEC.png  used on input line 806.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter20_SEC.png, id=307, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter20_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter20_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter20_SEC.png  used on input line 814.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter20_SEC.png, id=312, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter20_SEC.png  used on input line 814.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter40_SEC.png, id=308, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter40_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter40_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter40_SEC.png  used on input line 823.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter40_SEC.png, id=313, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter40_SEC.png  used on input line 823.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png, id=309, 643.203pt x 423.7431pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png  used on input line 835.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png, id=314, 643.203pt x 423.7431pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png  used on input line 835.
 (pdftex.def)             Requested size: 227.62206pt x 149.9546pt.
  [27
 
- <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter1_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter5_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter10_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter20_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri0_iter40_SEC.png>]
-<PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter1_SEC.png, id=322, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter1_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter1_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter1_SEC.png  used on input line 846.
+ <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter1_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter5_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter10_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter20_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_iter40_SEC.png>]
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter1_SEC.png, id=327, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter1_SEC.png  used on input line 846.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter5_SEC.png, id=323, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter5_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter5_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter5_SEC.png  used on input line 854.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter5_SEC.png, id=328, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter5_SEC.png  used on input line 854.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter10_SEC.png, id=324, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter10_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter10_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter10_SEC.png  used on input line 863.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter10_SEC.png, id=329, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter10_SEC.png  used on input line 863.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter20_SEC.png, id=325, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter20_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter20_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter20_SEC.png  used on input line 871.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter20_SEC.png, id=330, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter20_SEC.png  used on input line 871.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter40_SEC.png, id=326, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter40_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter40_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter40_SEC.png  used on input line 879.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter40_SEC.png, id=331, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter40_SEC.png  used on input line 879.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png, id=327, 643.203pt x 423.7431pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png  used on input line 890.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png, id=332, 643.203pt x 423.7431pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png  used on input line 890.
 (pdftex.def)             Requested size: 227.62206pt x 149.9546pt.
- [28 <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter1_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter5_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter10_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter20_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri1_iter40_SEC.png>]
-<PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter1_SEC.png, id=340, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter1_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter1_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter1_SEC.png  used on input line 901.
+ [28 <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter1_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter5_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter10_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter20_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_iter40_SEC.png>]
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter1_SEC.png, id=345, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter1_SEC.png  used on input line 901.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter5_SEC.png, id=341, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter5_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter5_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter5_SEC.png  used on input line 909.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter5_SEC.png, id=346, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter5_SEC.png  used on input line 909.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter10_SEC.png, id=342, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter10_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter10_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter10_SEC.png  used on input line 918.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter10_SEC.png, id=347, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter10_SEC.png  used on input line 918.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter20_SEC.png, id=343, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter20_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter20_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter20_SEC.png  used on input line 926.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter20_SEC.png, id=348, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter20_SEC.png  used on input line 926.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter40_SEC.png, id=344, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter40_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter40_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter40_SEC.png  used on input line 934.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter40_SEC.png, id=349, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter40_SEC.png  used on input line 934.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png, id=345, 643.203pt x 423.7431pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png  used on input line 945.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png, id=350, 643.203pt x 423.7431pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png  used on input line 945.
 (pdftex.def)             Requested size: 227.62206pt x 149.9546pt.
- [29 <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter1_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter5_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter10_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter20_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri3_iter40_SEC.png>]
-<PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter1_SEC.png, id=358, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter1_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter1_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter1_SEC.png  used on input line 956.
+ [29 <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter1_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter5_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter10_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter20_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_iter40_SEC.png>]
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter1_SEC.png, id=363, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter1_SEC.png  used on input line 956.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter5_SEC.png, id=359, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter5_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter5_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter5_SEC.png  used on input line 964.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter5_SEC.png, id=364, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter5_SEC.png  used on input line 964.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter10_SEC.png, id=360, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter10_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter10_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter10_SEC.png  used on input line 973.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter10_SEC.png, id=365, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter10_SEC.png  used on input line 973.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter20_SEC.png, id=361, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter20_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter20_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter20_SEC.png  used on input line 981.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter20_SEC.png, id=366, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter20_SEC.png  used on input line 981.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-<PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter40_SEC.png, id=362, 643.203pt x 425.1885pt>
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter40_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter40_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter40_SEC.png  used on input line 989.
+<PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter40_SEC.png, id=367, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter40_SEC.png  used on input line 989.
 (pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png  used on input line 1038.
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri0_comparative_maxiter_SEC.png  used on input line 1038.
 (pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png  used on input line 1038.
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri1_comparative_maxiter_SEC.png  used on input line 1038.
 (pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png  used on input line 1038.
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri3_comparative_maxiter_SEC.png  used on input line 1038.
 (pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
-File: PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png Graphic file (type png)
-<use PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png>
-Package pdftex.def Info: PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png  used on input line 1038.
+File: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png  used on input line 1038.
 (pdftex.def)             Requested size: 250.38564pt x 164.95525pt.
- [30 <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter1_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter5_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter10_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter20_SEC.png> <./PGD_Error_specific/PGD_Targeted_Fixed_nri5_iter40_SEC.png>] [31] [32
+ [30 <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_comparative_maxiter_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter1_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter5_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter10_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter20_SEC.png> <./PGD_Error_specific/Fixed/PGD_Targeted_Fixed_nri5_iter40_SEC.png>] [31] [32
 
-] (main.aux)
+] [33]
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_comparative_maxiter_SEC.png, id=398, 657.4161pt x 423.7431pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_comparative_maxiter_SEC.png  used on input line 1093.
+(pdftex.def)             Requested size: 227.62206pt x 146.71524pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter1_SEC.png, id=399, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter1_SEC.png  used on input line 1104.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter5_SEC.png, id=400, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter5_SEC.png  used on input line 1112.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter10_SEC.png, id=401, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter10_SEC.png  used on input line 1121.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter20_SEC.png, id=402, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter20_SEC.png  used on input line 1129.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter40_SEC.png, id=403, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter40_SEC.png  used on input line 1137.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_comparative_maxiter_SEC.png, id=404, 657.4161pt x 423.7431pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_comparative_maxiter_SEC.png  used on input line 1148.
+(pdftex.def)             Requested size: 227.62206pt x 146.71524pt.
+ [34
+
+ <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_comparative_maxiter_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter1_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter5_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter10_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter20_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_iter40_SEC.png>]
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter1_SEC.png, id=417, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter1_SEC.png  used on input line 1159.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter5_SEC.png, id=418, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter5_SEC.png  used on input line 1167.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter10_SEC.png, id=419, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter10_SEC.png  used on input line 1176.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter20_SEC.png, id=420, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter20_SEC.png  used on input line 1184.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter40_SEC.png, id=421, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter40_SEC.png  used on input line 1192.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_comparative_maxiter_SEC.png, id=422, 657.4161pt x 423.7431pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_comparative_maxiter_SEC.png  used on input line 1203.
+(pdftex.def)             Requested size: 227.62206pt x 146.71524pt.
+ [35 <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_comparative_maxiter_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter1_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter5_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter10_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter20_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_iter40_SEC.png>]
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter1_SEC.png, id=435, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter1_SEC.png  used on input line 1214.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter5_SEC.png, id=436, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter5_SEC.png  used on input line 1222.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter10_SEC.png, id=437, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter10_SEC.png  used on input line 1231.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter20_SEC.png, id=438, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter20_SEC.png  used on input line 1239.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter40_SEC.png, id=439, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter40_SEC.png  used on input line 1247.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_comparative_maxiter_SEC.png, id=440, 657.4161pt x 423.7431pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_comparative_maxiter_SEC.png  used on input line 1258.
+(pdftex.def)             Requested size: 227.62206pt x 146.71524pt.
+ [36 <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_comparative_maxiter_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter1_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter5_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter10_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter20_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_iter40_SEC.png>]
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter1_SEC.png, id=454, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter1_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter1_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter1_SEC.png  used on input line 1269.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter5_SEC.png, id=455, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter5_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter5_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter5_SEC.png  used on input line 1277.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter10_SEC.png, id=456, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter10_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter10_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter10_SEC.png  used on input line 1286.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter20_SEC.png, id=457, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter20_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter20_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter20_SEC.png  used on input line 1294.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+<PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter40_SEC.png, id=458, 643.203pt x 425.1885pt>
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter40_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter40_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter40_SEC.png  used on input line 1302.
+(pdftex.def)             Requested size: 204.85846pt x 135.42079pt.
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri0_comparative_maxiter_SEC.png  used on input line 1351.
+(pdftex.def)             Requested size: 250.38564pt x 161.38612pt.
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri1_comparative_maxiter_SEC.png  used on input line 1351.
+(pdftex.def)             Requested size: 250.38564pt x 161.38612pt.
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri3_comparative_maxiter_SEC.png  used on input line 1351.
+(pdftex.def)             Requested size: 250.38564pt x 161.38612pt.
+File: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_comparative_maxiter_SEC.png Graphic file (type png)
+<use PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_comparative_maxiter_SEC.png>
+Package pdftex.def Info: PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_comparative_maxiter_SEC.png  used on input line 1351.
+(pdftex.def)             Requested size: 250.38564pt x 161.38612pt.
+ [37 <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_comparative_maxiter_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter1_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter5_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter10_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter20_SEC.png> <./PGD_Error_specific/LL/PGD_Targeted_LeastLikely_nri5_iter40_SEC.png>]
+Overfull \hbox (6.74832pt too wide) in paragraph at lines 1359--1361
+[]\OT1/cmr/m/n/12 Un ul-te-ri-ore el-e-mento di ril-e-vanza che emerge dai dati, vis-i-bile nella ma-trice in Figura [][]27[][],
+ []
+
+[38]
+Overfull \hbox (2.90114pt too wide) in paragraph at lines 1371--1372
+[]\OT1/cmr/m/n/12 La griglia di es-plo-razione iper-parametrica ha in-cro-ci-ato la pro-fon-dit^^Ra dell'ottimizzatore
+ []
+
+[39] (main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -807,20 +959,20 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 6E9C68D1AC4F6A95851BFC106F334B3E;2836.
+(rerunfilecheck)             Checksum: 27DC6FF905A93BD8DFEA41B1C72F6145;3031.
  ) 
 Here is how much of TeX's memory you used:
- 14144 strings out of 467867
- 252298 string characters out of 5418334
- 659188 words of memory out of 5000000
- 42732 multiletter control sequences out of 15000+600000
+ 14389 strings out of 467867
+ 267618 string characters out of 5418334
+ 662459 words of memory out of 5000000
+ 42959 multiletter control sequences out of 15000+600000
  636791 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,15n,79p,1009b,691s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\chris\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/chris/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on main.pdf (33 pages, 8559402 bytes).
+Output written on main.pdf (40 pages, 13507364 bytes).
 PDF statistics:
- 474 PDF objects out of 1000 (max. 8388607)
- 99 named destinations out of 1000 (max. 500000)
- 333 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 575 PDF objects out of 1000 (max. 8388607)
+ 117 named destinations out of 1000 (max. 500000)
+ 461 words of extra memory for PDF output out of 10000 (max. 10000000)
 
