@@ -356,7 +356,13 @@ NUM_RANDOM_INITS   = [0, 1, 3, 5]
 
 L'esecuzione di questa vasta mole di permutazioni ha generato un set stratificato di \textit{Security Evaluation Curve} (SEC). Nelle sezioni successive verranno analizzati i risultati quantitativi, esplorando l'impatto isolato delle iterazioni (\textit{ceteris paribus} rispetto ai riavvii casuali) e l'efficacia dei \textit{random restart} (\textit{ceteris paribus} rispetto alle iterazioni).
 
-\textbf{AGGIUNGERE I GRAFICI E L'ANALISI PER PGD (MANCANO I GRAFICI PER MAX ITER 40)}
+\textbf{AGGIUNGERE I GRAFICI E L'ANALISI PER PGD}
+
+L'analisi quantitativa, i cui risultati compatti sono visibili nelle \textit{Security Evaluation Curve} (SEC) prodotte e nei dati estratti dal file CSV, evidenzia in primo luogo l'estrema vulnerabilità della rete agli attacchi iterativi non mirati. Già con \texttt{max\_iter} = 5 e un budget minimo di $\epsilon = 0.03$, l'algoritmo (sia esso stocastico o deterministico) raggiunge un ASR pressoché totale (oltre il 99.8\%), saturando le difese del modello.
+
+Il dato scientificamente più rilevante emerge tuttavia dall'analisi incrociata del parametro \texttt{num\_random\_init}. A livello teorico, l'inizializzazione stocastica di PGD è concepita per eludere i minimi locali della funzione di costo, suggerendo prestazioni pari o superiori alla variante deterministica (BIM, equivalente a \texttt{nri} = 0). Sorprendentemente, il test su questo dominio smentisce tale assunzione portando a dei risultati lievemente migliori per BIM.
+
+Focalizzando l'attenzione sui valori di \textit{budget} inferiori, dove la saturazione dell'errore non maschera le differenze algoritmiche (es. $\epsilon = 0.01$), si osserva un degrado sistematico delle performance all'aumentare dei riavvii casuali. Ad esempio, eseguendo 10 iterazioni con $\epsilon = 0.01$, l'approccio BIM (\texttt{nri} = 0) riesce a distruggere la predizione nel 98.0\% dei casi (lasciando un'accuratezza residua del 2.0\%). Al contrario, armando PGD con 5 \textit{random restart} a parità di iterazioni, l'ASR scende al 95.9\% (accuratezza residua del 4.1\%). Questa dinamica di lieve decremento offensivo si conferma per tutte le configurazioni iterative (\texttt{max\_iter} da 1 a 40).
 
 \clearpage
 \subsubsection{Carlini \& Wagner (CW)}
@@ -558,8 +564,8 @@ MAX_ITER_LIST = [1, 5, 10, 20]
 
 Le sezioni seguenti presentano l'analisi quantitativa dei risultati, esplorando l'impatto del partizionamento dell'errore (iterazioni) sulla reale capacità di forzare un inganno mirato. Al fine di non appesantire ulteriormente la lettura dell'elaborato, è possibile consultare i valori precisi dei risultati empirici ottenuti durante la fase di test, alle seguenti cartelle:
 \begin{itemize}
-    \item risultati fixed: \textbf{AGGIUNGERE LINK ALLA REPO}
-    \item risultati Least Likely: \textbf{AGGIUNGERE LINK ALLA REPO}
+    \item \href{https://github.com/ChristianRosa02/AI4Cybersecurity/blob/master/results/BIM_Targeted_Fixed/BIM_Targeted_Fixed_results.csv}{risultati fixed}
+    \item \href{https://github.com/ChristianRosa02/AI4Cybersecurity/blob/master/results/BIM_Targeted_LeastLikely/BIM_Targeted_LeastLikely_results.csv}{risultati Least Likely}
 \end{itemize}
 
 \clearpage
@@ -722,8 +728,8 @@ NUM_RANDOM_INITS = [0, 1, 3, 5]
 
 Le sezioni a seguire conterranno un'analisi quantitativa granulare basata sulle \textit{Targeted SEC}, al fine di isolare l'efficacia dei singoli iperparametri (iterazioni \textit{vs.} riavvii casuali) sull'\textit{Attack Success Rate} complessivo. Al fine di non appesantire ulteriormente la lettura dell'elaborato, è possibile consultare i valori precisi dei risultati empirici ottenuti durante la fase di test, alle   seguenti cartelle:
 \begin{itemize}
-    \item risultati fixed: \textbf{AGGIUNGERE LINK ALLA REPO}
-    \item risultati Least Likely: \textbf{AGGIUNGERE LINK ALLA REPO}
+    \item \href{https://github.com/ChristianRosa02/AI4Cybersecurity/blob/master/results/PGD_Targeted_Fixed/PGD_Targeted_Fixed_results.csv}{risultati fixed}
+    \item \href{https://github.com/ChristianRosa02/AI4Cybersecurity/blob/master/results/PGD_Targeted_LeastLikely/PGD_Targeted_LeastLikely_results.csv}{risultati Least Likely}
 \end{itemize}
 
 \clearpage
@@ -766,6 +772,7 @@ Inoltre, per aiutare una comparazione visiva più immediata, è stata realizzata
 Poiché la formulazione teorica di PGD suggeriva un potenziale vantaggio offensivo, l'indagine è stata estesa a una valutazione qualitativa degli esempi avversari generati, al fine di misurarne la furtività agli occhi di un osservatore umano. A tal proposito, la figura~\ref{fig:BIM_PGD_Compare} offre un riscontro visivo diretto: essa affianca l'immagine originale pulita (relativa al soggetto \textit{n0001} del dataset) alle rispettive versioni alterate da BIM e PGD, a parità di \texttt{max\_iter} ed $\epsilon$. Questo parallelismo empirico consente di apprezzare le differenze nella distribuzione spaziale del rumore e di valutare se la componente stocastica introdotta da PGD renda la perturbazione meno sospetta e riconoscibile rispetto a BIM.
 
 % INSERIRE FOTO COMPARATIVE
+\textbf{INSERIRE FOTO COMPARATIVE BIM VS PGD}
 
 
 
@@ -1360,13 +1367,13 @@ Un ulteriore elemento di rilevanza che emerge dai dati, visibile nella matrice i
 Il dato scientificamente più interessante è che l'introduzione della stocasticità (\texttt{num\_random\_init} > 0) non mitiga in alcun modo questo risultato. Se l'algoritmo applica un salto casuale iniziale, ma dispone poi di un unico passo di calcolo del gradiente (\texttt{max\_iter} = 1) per rimettersi in rotta, la dinamica offensiva non cambia. Partire da un punto leggermente sfalsato all'interno del minuscolo \textit{budget} $\epsilon$ e tracciare una singola retta di massima pendenza produce inevitabilmente un risultato che non è in grado di raggiungere il target. L'immagine alterata finisce per cadere all'interno della regione di pertinenza di una delle innumerevoli classi limitrofe (causando un attacco di tipo \textit{error-generic} riuscito), ma manca totalmente la minuscola e lontana area di accettazione della classe \textit{Least Likely}.
 
 \subsubsection{Carlini \& Wagner Attack}
-L'algoritmo \textit{Carlini \& Wagner} (CW) chiude la disamina degli attacchi mirati proponendo un approccio diverso rispetto ai metodi basati sul gradiente proiettato. Come ampiamente discusso nelle sezioni relative a BIM e PGD, il limite strutturale degli attacchi \textit{budget-constrained} emerge prepotentemente quando la distanza semantica tra l'immagine originale e la classe bersaglio è estrema.
+L'algoritmo \textit{Carlini \& Wagner} (CW) chiude la disamina degli attacchi mirati proponendo un approccio diverso rispetto ai metodi basati sul gradiente proiettato. Come ampiamente discusso nelle sezioni relative a BIM e PGD, il limite strutturale degli attacchi \textit{budget-constrained} emerge quando la distanza semantica tra l'immagine originale e la classe bersaglio è estrema.
 
 Essendo un CW un attacco ottimizzante, la sua formulazione matematica non prevede un vincolo esplicito sulla magnitudo della perturbazione.
 
-L'algoritmo esplorerà lo spazio alla ricerca del percorso ottimale verso il target e, solo a posteriori, verrà misurato il rumore effettivamente speso. Per mantenere la coerenza scientifica con i test precedenti, è stato implementata una logica di filtraggio: se per raggiungere la classe bersaglio CW genera una perturbazione la cui norma $L_\infty$ supera la soglia limite prestabilita (\texttt{EPSILON\_LIMIT} = 0.1), l'immagine viene rigettata (considerata fuori budget) e non concorre ad accrescere l'\textit{Attack Success Rate} (ASR).
+L'algoritmo esplorerà lo spazio alla ricerca del percorso ottimale verso il target e, solo a posteriori, verrà misurato il rumore effettivamente speso. Per mantenere la coerenza scientifica con i test precedenti, è stata implementata una logica di filtraggio: se per raggiungere la classe bersaglio CW genera una perturbazione la cui norma $L_\infty$ supera la soglia limite prestabilita (\texttt{EPSILON\_LIMIT} = 0.1), l'immagine viene rigettata (considerata fuori budget) e non concorre ad accrescere l'\textit{Attack Success Rate} (ASR).
 
-Considerato l'ingente costo computazionale dell'ottimizzatore, i test sono stati eseguiti sul \texttt{dataset\_1\_per\_person} (100 immagini). La modalità di attacco è stata limitata al solo scenario \textit{Fixed}, sempre per una questione di costo computazionale dell'algoritmo.
+Considerato l'ingente costo computazionale dell'ottimizzatore, i test sono stati eseguiti sul \texttt{dataset\_1\_per\_person} (100 immagini). La modalità di attacco è stata limitata al solo scenario \textit{Fixed}, sempre per una questione di costo computazionale dell'algoritmo e anche per gli scarsi risultati ottenuti nella modalità più semplice.
 
 La griglia di esplorazione iper-parametrica ha incrociato la profondità dell'ottimizzatore (\texttt{max\_iter} $\in \{1, 20, 50\}$) e il passo di discesa (\texttt{learning\_rate} $\in \{0.01, 0.1\}$), valutando per ogni combinazione la percentuale di attacchi mirati andati a buon fine.
 
@@ -1376,6 +1383,91 @@ La griglia di esplorazione iper-parametrica ha incrociato la profondità dell'ot
     CONFIDENCE_LIST    = [0.0]
 \end{verbatim}
 
+
+\subsubsection*{Fixed Attack}
+L'analisi empirica dell'attacco Carlini \& Wagner (CW) in modalità \textit{Fixed} restituisce un risultato inaspettato: l'algoritmo fallisce totalmente l'obiettivo. Come si evince dai dati raccolti in tabella~\ref{tab:cw_targeted_fixed_results} e dalla \textit{SEC} piatta (figura~\ref{fig:sec_fixed_cw}), per l'intero spettro di iperparametri testati (\texttt{max\_iter} fino a 50 e \texttt{learning\_rate} fino a 0.1), l'\textit{Attack Success Rate} (ASR) si attesta rigorosamente allo 0.0\%. Su 100 immagini testate, nessuna è stata classificata nella classe bersaglio (ID 2026).
+
+Per comprendere la natura di questo fallimento, è fondamentale analizzare la metrica del rumore medio (\texttt{mean\_linf\_raw}). I dati rivelano che le perturbazioni generate non hanno mai infranto il \textit{budget} tollerato: con un \texttt{learning\_rate} di 0.1, l'attacco si è arrestato a un'ampiezza massima di perturbazione pari a $0.0485$, ben al di sotto del limite rigido $\epsilon \le 0.1$. Ciò dimostra che CW non ha fallito perché "murato" dal vincolo spaziale (come avveniva per PGD nei target remoti), bensì perché l'ottimizzatore non ha avuto a disposizione un numero sufficiente di iterazioni per colmare la distanza necessaria.
+
+L'algoritmo CW si affida all'ottimizzatore \textit{Adam} per minimizzare la complessa funzione obiettivo. A differenza di BIM, che sfrutta l'operatore \textit{sign()} per compiere sbalzi aggressivi e massimali a ogni step, CW modula la discesa in modo più conservativo. Di conseguenza, il team ipotizza che 50 iterazioni sono troppo poche per consentire ad \textit{Adam} di far convergere l'immagine verso il target. 
+
+A sostegno di questa ipotesi, il limite empirico legato al costo computazionale trova pieno riscontro nel paper ufficiale rilasciato da Carlini e Wagner \cite{carlini2017towards}. Come dimostrato nello studio, l'algoritmo CW è matematicamente concepito per forzare l'inganno in modalità mirata con tassi di successo del 100\%, generando perturbazioni quasi impercettibili. Tuttavia, tale efficacia è ottenibile solo con un numero elevato di iterazioni. Nel dettaglio, il fallimento dell'algoritmo nel presente setup è matematicamente coerente con il comportamento atteso descritto dagli autori per tre ragioni strutturali:
+
+\begin{enumerate}
+    \item \textbf{Carico iterativo di base:} Nella Sezione V.C (pag. 8), gli autori specificano di eseguire ben 10.000 iterazioni di discesa del gradiente con \textit{Adam} per ogni singolo step di ricerca \cite{carlini2017towards}. Inoltre, viene evidenziato che l'ottimizzatore necessita empiricamente di almeno 1.000 iterazioni per raggiungere il 95\% dell'ottimo di convergenza (pag. 8, nota a piè di pagina 9) \cite{carlini2017towards}.
+    
+    \item \textbf{Ricerca del parametro \textit{c}:} L'algoritmo originale non esegue una singola passata, ma un processo di ricerca binaria (\textit{binary search}) per calibrare il parametro $c$, essenziale per bilanciare la distanza della perturbazione e il successo dell'attacco. Carlini e Wagner dichiarano di eseguire 20 iterazioni di ricerca binaria (Sez. V.C, pag. 8), ripetendo le 10.000 iterazioni di \textit{gradient descent} per ognuna di esse \cite{carlini2017towards}.
+    
+    \item \textbf{Criticità e oscillazioni della metrica $\boldsymbol{L_{\infty}}$:} La scelta della distanza $L_{\infty}$ inasprisce ulteriormente il limite computazionale. Come analizzato nella Sezione VI.C (pag. 10), la metrica $L_{\infty}$ non è completamente differenziabile e la discesa del gradiente standard tende a bloccarsi "oscillando tra due soluzioni sub-ottimali" \cite{carlini2017towards}. Per mitigare il problema, l'algoritmo impiega una penalità iterativa decrescente basata su una soglia $\tau$, che viene ridotta di un fattore $0.9$ a ogni ciclo di successo \cite{carlini2017towards}. Questo raffinamento iterativo necessita di tempi fisiologici lunghissimi per stabilizzarsi, rendendo impossibile superare l'oscillazione iniziale in appena 50 iterazioni complessive.
+\end{enumerate}
+
+In conclusione, l'ASR dello 0.0\% registrato per CW $L_{\infty}$ non costituisce un'anomalia di implementazione, ma bensì una dimostrazione empirica di come sia impossibile ottenere risultati soddisfacenti con un numero limitato di iterazioni.
+
+Questo limite teorico si scontra drammaticamente con il vincolo applicativo del tempo di esecuzione. Dai log emerge che l'elaborazione di 100 immagini per 50 iterazioni ha richiesto oltre 18.400 secondi (circa 5.1 ore). Concedere a CW le centinaia o migliaia di iterazioni per eludere un bersaglio specifico comporterebbe tempi di esecuzione proibitivi per il contesto del nostro progetto.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{cccccc}
+        \toprule
+        \textbf{Max Iter} & \textbf{Learning Rate} & \textbf{ASR (\%)} & \textbf{Successi / Totali} & \textbf{Mean $L_\infty$} & \textbf{Tempo (s)} \\
+        \midrule
+        1  & 0.01 & 0.0 & 0 / 100 & 0.0050 & 918.25 \\
+        1  & 0.10 & 0.0 & 0 / 100 & 0.0485 & 874.56 \\
+        20 & 0.01 & 0.0 & 0 / 100 & 0.0050 & 9459.87 \\
+        20 & 0.10 & 0.0 & 0 / 100 & 0.0485 & 5849.32 \\
+        50 & 0.01 & 0.0 & 0 / 100 & 0.0050 & 17158.36 \\
+        50 & 0.10 & 0.0 & 0 / 100 & 0.0485 & 18405.26 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Risultati dell'attacco CW Targeted (Fixed) al variare del numero massimo di iterazioni e del learning rate. La \textit{Confidence} è impostata a 0.0 per tutti i test.}
+    \label{tab:cw_targeted_fixed_results}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    
+    % Blocchiamo la struttura al centro della pagina sfruttando tutto lo spazio
+    \makebox[\textwidth][c]{
+        \begin{tabular}{cc}
+            
+            % Sotto-figura 1 (In alto a sinistra)
+            \begin{subfigure}[b]{0.55\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{CW_Targeted/CW_Targeted_Fixed_SEC.png}
+                \caption{SEC Generale}
+                \label{fig:sec_fixed_cw}
+            \end{subfigure}
+            &
+            % Sotto-figura 2 (In alto a destra)
+            \begin{subfigure}[b]{0.55\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{CW_Targeted/CW_Targeted_Fixed_asr_vs_conf_lr0_01.png}
+                \caption{Learning rate 0.01}
+                \label{fig:sec_fixed_cw_lr_0_01}
+            \end{subfigure} \\ [1em] % Spazio verticale tra le righe
+            
+            % Sotto-figura 3 (In basso a sinistra)
+            \begin{subfigure}[b]{0.55\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{CW_Targeted/CW_Targeted_Fixed_asr_vs_conf_lr0_1.png}
+                \caption{Learning rate 0.1}
+                \label{fig:sec_fixed_cw_lr_0_1}
+            \end{subfigure}
+            &
+            % Sotto-figura 4 (In basso a destra)
+            \begin{subfigure}[b]{0.55\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{CW_Targeted/CW_Targeted_Fixed_asr_vs_lr_conf0_0.png}
+                \caption{Confidence 0.0 e 0.1}
+                \label{fig:sec_fixed_cw_conf_0_0}
+            \end{subfigure}
+            
+        \end{tabular}
+    }
+    
+    \caption{Risultati SEC per l'attacco CW Targeted (Fixed) in diverse configurazioni di Learning Rate e Confidence.}
+    \label{fig:matrice_cw_targeted_fixed}
+\end{figure}
 
 
 
@@ -1438,5 +1530,7 @@ A parità di $\epsilon$, ciascun insieme è riferito a un diverso valore di \tex
 Dall'analisi in Figura \ref{fig:bim_transferability_untargeted}, emergono i seguenti punti chiave:
 
 
-
+\clearpage
+\bibliographystyle{plain} 
+\bibliography{bibliografia}
 \end{document}

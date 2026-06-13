@@ -1,0 +1,9 @@
+\begin{thebibliography}{1}
+
+\bibitem{carlini2017towards}
+Nicholas Carlini and David Wagner.
+\newblock Towards evaluating the robustness of neural networks.
+\newblock In {\em 2017 IEEE Symposium on Security and Privacy (SP)}, pages
+  39--57. IEEE, 2017.
+
+\end{thebibliography}
