@@ -1389,9 +1389,53 @@ La griglia di esplorazione iper-parametrica ha incrociato la profondità dell'ot
 
 \clearpage
 \section{Transferability Analysis}
-Un aspetto cruciale nella valutazione della robustezza dei sistemi di face recognition è la trasferibilità degli attacchi avversariali. Questa proprietà definisce la capacità di una perturbazione, originariamente calcolata per ingannare uno specifico modello, di mantenere la propria efficacia malevola anche contro un modello differente.
-In questo capitolo viene simulato uno scenario di attacco realistico di tipo black-box. In tale contesto, si assume che l'attaccante non abbia alcun accesso all'architettura interna, ai parametri o ai gradienti del modello bersaglio finale, denominato NN2, conoscendone esclusivamente il dominio applicativo.
-\end{document}
+Un aspetto cruciale nella valutazione della robustezza dei sistemi di face recognition è la trasferibilità degli attacchi avversariali. Questa proprietà definisce la capacità di una perturbazione, originariamente calcolata per ingannare uno specifico modello (NN1), di mantenere la propria efficacia malevola anche contro un modello differente (NN2), permettendo all'attaccante di sfruttare vulnerabilità condivise tra architetture simili.
+
+In questo capitolo viene simulato uno scenario di attacco di tipo black-box. In tale contesto, si assume che l'attaccante non abbia alcun accesso all'architettura interna, ai parametri o ai gradienti del modello NN2, conoscendone esclusivamente il dominio applicativo.
+Per aggirare questa limitazione, l'attaccante impiega il modello fornito NN1 come modello surrogato, generando quindi le immagini avversariali basandosi su questo modello.
+Le immagini avversariali così prodotte vengono successivamente testate su NN2 per verificare se le perturbazioni applicate mantengono la propria efficacia, riuscendo a ingannare un modello differente da quello per cui sono state originariamente progettate.
+
+\subsection{Error-Generic Attack}
+
+
+
+\subsubsection{Fast Gradient Sign Method (FGSM)}
+
+In questa sezione viene valutata l'accuratezza del modello NN2 sugli esempi avversariali generati tramite l'attacco FGSM contro NN1, analizzandone il comportamento al variare di $\epsilon$. 
+
+Per visualizzare chiaramente l'impatto dell'attacco, i risultati sono presentati attraverso una Security Evaluation Curve comparativa in Figura \ref{fig:fgsm_transferability_untargeted}. Questo grafico rappresenta l'accuracy di NN1 e di NN2, testati con diversi insiemi di immagini avversariali. Ciasun insieme è riferito a un diverso valore di $\epsilon$. Vengono testate prima le immagini con $\epsilon = 0.01$, poi con $\epsilon = 0.1$, e cosi via, fino a raggiungere il budget massimo di $\epsilon = 0.1$.
+\begin{figure}[htbp]
+    \centering
+    % Regola il parametro width (es. 0.8\textwidth) per ingrandire o rimpicciolire l'immagine
+    \includegraphics[width=0.8\textwidth]{./Transferability/untargeted/FGSM/image.png}
+    \caption{SEC comparativa per l'attacco FGSM.}
+    \label{fig:fgsm_transferability_untargeted}
+\end{figure}
+
+Dal grafico emerge innanzitutto una differenza nelle prestazioni di base dei due modelli su immagini non perturbate ($\epsilon$=0.00). Il modello bersaglio NN2 dimostra una capacità di generalizzazione superiore, registrando un'accuratezza del 95.50\%, rispetto all'85.00\% del modello surrogato NN1.
+Dall'analisi del grafico è possibile evidenziare i seguenti aspetti chiave:
+\begin{itemize}
+    \item L'accuratezza del secondo modello decresce progressivamente all'aumentare di $\epsilon$, confermando che anche l'architettura \textit{black-box} (NN2) subisce l'effetto dell'attacco originato sul modello surrogato.
+    \item Per valori di perturbazione contenuti, NN2 mostra una robustezza superiore rispetto a NN1.
+    \item In corrispondenza del valore $\epsilon = 0.05$, le due curve tendono a convergere verso gli stessi valori di accuracy. Si può quindi concludere che l'attacco FGSM mostra una forte trasferibilità per intensità di rumore $\epsilon \geq 0.05$, riuscendo a compromettere con successo entrambi i modelli.
+\end{itemize}
+
+\subsubsection{Basic Iterative Method (BIM)}
+
+In questa sezione viene valutata l'accuratezza del modello NN2 sugli esempi avversariali generati tramite l'attacco BIM contro NN1, analizzandone il comportamento al variare di $\epsilon$. 
+
+Per visualizzare chiaramente l'impatto dell'attacco, i risultati sono presentati attraverso una Security Evaluation Curve comparativa in Figura \ref{fig:bim_transferability_untargeted}. Questo grafico rappresenta l'accuracy di NN1 e di NN2, testati con diversi insieme di immagini avversariali.
+A parità di $\epsilon$, ciascun insieme è riferito a un diverso valore di \texttt{max\_iter}. 
+
+\begin{figure}[htbp]
+    \centering
+    % Regola il parametro width (es. 0.8\textwidth) per ingrandire o rimpicciolire l'immagine
+    \includegraphics[width=0.8\textwidth]{./Transferability/untargeted/BIM/image.png}
+    \caption{SEC comparativa per l'attacco BIM.}
+    \label{fig:bim_transferability_untargeted}
+\end{figure}
+
+Dall'analisi in Figura \ref{fig:bim_transferability_untargeted}, emergono i seguenti punti chiave:
 
 
 
