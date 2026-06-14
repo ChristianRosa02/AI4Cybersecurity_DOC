@@ -356,15 +356,252 @@ NUM_RANDOM_INITS   = [0, 1, 3, 5]
 
 È fondamentale sottolineare che la configurazione con \texttt{num\_random\_init} = 0 disabilita la componente stocastica, riducendo di fatto PGD a un attacco BIM standard. Questo espediente metodologico fornisce una \textit{baseline} algoritmica perfetta per isolare e quantificare il reale valore aggiunto dei \textit{random restart}.
 
-L'esecuzione di questa vasta mole di permutazioni ha generato un set stratificato di \textit{Security Evaluation Curve} (SEC). Nelle sezioni successive verranno analizzati i risultati quantitativi, esplorando l'impatto isolato delle iterazioni (\textit{ceteris paribus} rispetto ai riavvii casuali) e l'efficacia dei \textit{random restart} (\textit{ceteris paribus} rispetto alle iterazioni).
+L'esecuzione di questa vasta mole di permutazioni ha generato un set stratificato di \textit{Security Evaluation Curve} (SEC). Nelle sezioni successive verranno analizzati i risultati quantitativi. Nello specifico il testo è stato organizzato in modo tale da esporre il primo grafico comparativo e subito di seguito una matrice di grafici per aiutare una migliore visualizzazione delle curve di interesse.   
 
-\textbf{AGGIUNGERE I GRAFICI E L'ANALISI PER PGD}
+\clearpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\linewidth]{PGD_Error_Generic/PGD_nri0_comparative_maxiter_SEC.png}
+    \caption{PGD SEC su NN1 con \texttt{num\_random\_init} = 0}
+    \label{fig:PGD_SEC_nri0}
+\end{figure}
 
-L'analisi quantitativa, i cui risultati compatti sono visibili nelle \textit{Security Evaluation Curve} (SEC) prodotte e nei dati estratti dal file CSV, evidenzia in primo luogo l'estrema vulnerabilità della rete agli attacchi iterativi non mirati. Già con \texttt{max\_iter} = 5 e un budget minimo di $\epsilon = 0.03$, l'algoritmo (sia esso stocastico o deterministico) raggiunge un ASR pressoché totale (oltre il 99.8\%), saturando le difese del modello.
+% -- SOTTO GRAFICI PER NRI = 0
+\begin{figure}[H]
+    \centering
+    % Sotto-figura 1
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri0_iter1_SEC.png}
+        \caption{\texttt{max_iter} = 1}
+        \label{fig:PGD_nri0_generic_iter1}
+    \end{subfigure}
+    \hfill
+    % Sotto-figura 2
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri0_iter5_SEC.png}
+        \caption{\texttt{max_iter} = 5}
+        \label{fig:PGD_nri0_generic_iter5}
+    \end{subfigure}
 
-Il dato scientificamente più rilevante emerge tuttavia dall'analisi incrociata del parametro \texttt{num\_random\_init}. A livello teorico, l'inizializzazione stocastica di PGD è concepita per eludere i minimi locali della funzione di costo, suggerendo prestazioni pari o superiori alla variante deterministica (BIM, equivalente a \texttt{nri} = 0). Sorprendentemente, il test su questo dominio smentisce tale assunzione portando a dei risultati lievemente migliori per BIM.
+    \vspace{1em} % Spazio verticale tra le righe di immagini
 
-Focalizzando l'attenzione sui valori di \textit{budget} inferiori, dove la saturazione dell'errore non maschera le differenze algoritmiche (es. $\epsilon = 0.01$), si osserva un degrado sistematico delle performance all'aumentare dei riavvii casuali. Ad esempio, eseguendo 10 iterazioni con $\epsilon = 0.01$, l'approccio BIM (\texttt{nri} = 0) riesce a distruggere la predizione nel 98.0\% dei casi (lasciando un'accuratezza residua del 2.0\%). Al contrario, armando PGD con 5 \textit{random restart} a parità di iterazioni, l'ASR scende al 95.9\% (accuratezza residua del 4.1\%). Questa dinamica di lieve decremento offensivo si conferma per tutte le configurazioni iterative (\texttt{max\_iter} da 1 a 40).
+    % Sotto-figura 3
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri0_iter10_SEC.png}
+        \caption{\texttt{max_iter} = 10}
+        \label{fig:PGD_nri0_generic_iter10}
+    \end{subfigure}
+    \hfill
+    % Sotto-figura 4
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri0_iter20_SEC.png}
+        \caption{\texttt{max_iter} = 20}
+        \label{fig:PGD_nri0_generic_iter2'}
+    \end{subfigure}
+    \vspace{1em} % Spazio verticale tra le righe di immagini
+
+    % Sotto-figura 5
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri0_iter40_SEC.png}
+        \caption{\texttt{max_iter} = 40}
+        \label{fig:PGD_nri0_generic_iter40}
+    \end{subfigure}
+
+    \caption{PGD Generic - Iterazioni a confronto per \texttt{nri} = 0}
+    \label{fig:PGD_nri0_iterations}
+\end{figure}
+
+\clearpage
+% -- GRAFICO PER nri = 1
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\linewidth]{PGD_Error_Generic/PGD_nri1_comparative_maxiter_SEC.png}
+    \caption{PGD SEC su NN1 con \texttt{num\_random\_init} = 1}
+    \label{fig:PGD_SEC_nri1}
+\end{figure}
+
+% -- SOTTO GRAFICI PER NRI = 1
+\begin{figure}[H]
+    \centering
+    % Sotto-figura 1
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri1_iter1_SEC.png}
+        \caption{\texttt{max_iter} = 1}
+        \label{fig:PGD_nri1_generic_iter1}
+    \end{subfigure}
+    \hfill
+    % Sotto-figura 2
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri1_iter5_SEC.png}
+        \caption{\texttt{max_iter} = 5}
+        \label{fig:PGD_nri1_generic_iter5}
+    \end{subfigure}
+
+    \vspace{1em} % Spazio verticale tra le righe di immagini
+
+    % Sotto-figura 3
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri1_iter10_SEC.png}
+        \caption{\texttt{max_iter} = 10}
+        \label{fig:PGD_nri1_generic_iter10}
+    \end{subfigure}
+    \hfill
+    % Sotto-figura 4
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri1_iter20_SEC.png}
+        \caption{\texttt{max_iter} = 20}
+        \label{fig:PGD_nri1_generic_iter2'}
+    \end{subfigure}
+    \vspace{1em} % Spazio verticale tra le righe di immagini
+
+    % Sotto-figura 5
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri1_iter40_SEC.png}
+        \caption{\texttt{max_iter} = 40}
+        \label{fig:PGD_nri1_generic_iter40}
+    \end{subfigure}
+
+    \caption{PGD Generic - Iterazioni a confronto per \texttt{nri} = 1}
+    \label{fig:PGD_iterations_nri1}
+\end{figure}
+
+
+\clearpage
+% -- GRAFICO PER nri = 3
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\linewidth]{PGD_Error_Generic/PGD_nri3_comparative_maxiter_SEC.png}
+    \caption{PGD SEC su NN1 con \texttt{num\_random\_init} = 3}
+    \label{fig:PGD_generic_SEC_nri3}
+\end{figure}
+
+% -- SOTTO GRAFICI PER NRI = 3
+\begin{figure}[h]
+    \centering
+    % Sotto-figura 1
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter1_SEC.png}
+        \caption{\texttt{max_iter} = 1}
+        \label{fig:PGD_nri3_generic_iter1}
+    \end{subfigure}
+    \hfill
+    % Sotto-figura 2
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter5_SEC.png}
+        \caption{\texttt{max_iter} = 5}
+        \label{fig:PGD_nri3_generic_iter5}
+    \end{subfigure}
+
+    \vspace{1em} % Spazio verticale tra le righe di immagini
+
+    % Sotto-figura 3
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter10_SEC.png}
+        \caption{\texttt{max_iter} = 10}
+        \label{fig:PGD_nri3_generic_iter10}
+    \end{subfigure}
+    \hfill
+    % Sotto-figura 4
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter20_SEC.png}
+        \caption{\texttt{max_iter} = 20}
+        \label{fig:PGD_nri3_generic_iter20'}
+    \end{subfigure}
+    \vspace{1em} % Spazio verticale tra le righe di immagini
+
+    % Sotto-figura 5
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter40_SEC.png}
+        \caption{\texttt{max_iter} = 40}
+        \label{fig:PGD_nri3_generic_iter40}
+    \end{subfigure}
+
+    \caption{PGD Generic - Iterazioni a confronto per \texttt{nri} = 3}
+    \label{fig:PGD_nri3_iterations}
+\end{figure}
+
+
+% -- GRAFICO PER nri = 5
+\clearpage
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{PGD_Error_Generic/PGD_nri5_comparative_maxiter_SEC.png}
+    \caption{PGD SEC su NN1 con \texttt{num\_random\_init} = 5}
+    \label{fig:PGD_Generic_SEC_nri5}
+\end{figure}
+
+% -- SOTTO GRAFICI PER NRI = 5
+\begin{figure}[h]
+    \centering
+    % Sotto-figura 1
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter1_SEC.png}
+        \caption{\texttt{max_iter} = 1}
+        \label{fig:PGD_nri5_generic_iter1}
+    \end{subfigure}
+    \hfill
+    % Sotto-figura 2
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri5_iter5_SEC.png}
+        \caption{\texttt{max_iter} = 5}
+        \label{fig:PGD_nri5_generic_iter5}
+    \end{subfigure}
+
+    \vspace{1em} % Spazio verticale tra le righe di immagini
+
+    % Sotto-figura 3
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri5_iter10_SEC.png}
+        \caption{\texttt{max_iter} = 10}
+        \label{fig:PGD_nri5_generic_iter10}
+    \end{subfigure}
+    \hfill
+    % Sotto-figura 4
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri5_iter20_SEC.png}
+        \caption{\texttt{max_iter} = 20}
+        \label{fig:PGD_nri5_generic_iter20'}
+    \end{subfigure}
+    \vspace{1em} % Spazio verticale tra le righe di immagini
+
+    % Sotto-figura 5
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri5_iter40_SEC.png}
+        \caption{\texttt{max_iter} = 40}
+        \label{fig:PGD_nri5_generic_iter40}
+    \end{subfigure}
+
+    \caption{PGD Generic - Iterazioni a confronto per \texttt{nri} = 5}
+    \label{fig:PGD_nri5_iterations}
+\end{figure}
+
+
+
+L'analisi quantitativa, i cui risultati compatti sono visibili nelle \textit{Security Evaluation Curve} (SEC) prodotte e nei dati estratti dal file CSV, evidenzia in primo luogo l'estrema vulnerabilità della rete agli attacchi iterativi non mirati. Già con \texttt{max\_iter} = 5 e un budget minimo di $\epsilon = 0.03$, il modello raggiunge un'accuracy dello 0.2\%. 
+
+Il dato scientificamente più interessante emerge tuttavia dall'analisi incrociata del parametro \texttt{num\_random\_init}. A livello teorico il team si aspettava un miglioramento dell'ASR rispetto alla variante deterministica BIM, invece il test su questo dominio smentisce tale assunzione portando a dei risultati lievemente peggiori.
+
+Focalizzando l'attenzione sui valori di \textit{budget} inferiori, si osserva un degrado delle performance all'aumentare dei riavvii casuali. Ad esempio, eseguendo 10 iterazioni con $\epsilon = 0.01$, l'approccio BIM (\texttt{nri} = 0) fa calare le prestazioni della rete NN1 al 2\%. Al contrario, PGD con 5 \textit{random restart} a parità di iterazioni, il modello sale al 4.1\%. Questa dinamica di lieve decremento offensivo si conferma per tutte le configurazioni iterative (\texttt{max\_iter} da 1 a 40).
 
 \clearpage
 \subsubsection{Carlini \& Wagner (CW)}
@@ -393,20 +630,87 @@ Un aspetto metodologico cruciale che distingue CW dalle tecniche viste in preced
 
 Data l'elevata complessità computazionale l'attacco è stato eseguito sul dataset ridotto \texttt{dataset\_1\_per\_person} (100 immagini in totale, una per soggetto). L'analisi è stata condotta esplorando una griglia tridimensionale di iperparametri:
 \begin{itemize}
-    \item \texttt{max\_iter} (1, 5, 10): il numero di step concessi all'ottimizzatore;
-    \item \texttt{learning\_rate} (0.001, 0.01, 0.05, 0.1): il passo di aggiornamento della perturbazione;
-    \item \texttt{confidence} (0.0, 0.5, 1.0): il margine di sicurezza richiesto all'attacco per considerare concluso con successo lo spostamento verso la classe errata.
+    \item \texttt{max\_iter} (1, 5, 10, 20): il numero di step concessi all'ottimizzatore;
+    \item \texttt{learning\_rate} (0.01, 0.1): il passo di aggiornamento della perturbazione;
+    \item \texttt{confidence} (0.0): il margine di sicurezza richiesto all'attacco per considerare concluso con successo lo spostamento verso la classe errata.
 \end{itemize}
 
 \begin{verbatim}
-MAX_ITER_LIST      = [1, 5, 10]
-LEARNING_RATE_LIST = [0.001, 0.01, 0.05, 0.1]
-CONFIDENCE_LIST    = [0.0, 0.5, 1.0]
+MAX_ITER_LIST      = [1, 5, 10, 20]
+LEARNING_RATE_LIST = [0.01, 0.1]
+CONFIDENCE_LIST    = [0.0]
 
 \end{verbatim}
 
 
 L'incrocio di questi iperparametri ha permesso di tracciare le \textit{Security Evaluation Curve} (valutate in funzione della perturbazione media realmente applicata) e di isolare l'efficacia delle singole configurazioni sulle performance del modello NN1.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{CW_Generic/CW_Untargeted_SEC.png}
+    \caption{CW SEC su NN1}
+    \label{fig:CW_Generic_SEC}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{CW_Generic/CW_Untargeted_lr_effect_conf0_0.png}
+    \caption{Effetto del learning rate su NN1}
+    \label{fig:CW_Generic_lr}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    % Sotto-figura 1
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{CW_Generic/CW_Untargeted_conf_effect_lr0_01.png}
+        \caption{\texttt{lr} = 0.01}
+        \label{fig:CW_lr_0_01}
+    \end{subfigure}
+    \hfill
+    % Sotto-figura 2
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{CW_Generic/CW_Untargeted_conf_effect_lr0_1.png}
+        \caption{\texttt{lr} = 0.1}
+        \label{fig:CW_lr_0_1}
+    \end{subfigure}
+\end{figure}
+
+I risultati quantitativi estratti dal test e riassunti nelle \textit{Security Evaluation Curve} evidenziano la notevole efficacia dell'algoritmo in questo scenario operativo.
+
+I dati mostrano che, impostando un \texttt{learning\_rate} aggressivo pari a 0.1, l'attacco riesce a portarr laccuratezza residua del modello al 2.0\% già alla prima singola iterazione (\texttt{max\_iter} = 1). Incrementare il numero di iterazioni a 5, 10 o 20 non produce una diminuzione rilevante. 
+
+Anche riducendo il passo di ottimizzazione (\texttt{learning\_rate} = 0.01), l'algoritmo converege rapidamente. Infatti, impostando il suddetto learning rate e dando all'algoritmo una singola iterazione, si registra per NN1 un'accuratezza del 28.0\%, l'attacco si ferma facendo registrare un'accuratezza 4.0\% già a \texttt{max\_iter} = 5, mantenendosi piatto per le iterazioni successive. Questo risultato indica che, per causare una \textit{misclassification} generica, la formulazione di CW trova il modo per ingannare la rete, senza necessitare di cicli di ottimizzazione prolungati.
+
+L'aspetto più rivelatore di questa analisi risiede tuttavia nel bilancio tra la qualità del rumore avversario e l'ingente \textit{overhead} computazionale. Dall'analisi della metrica \texttt{mean\_linf\_applied}, si osserva che la configurazione con \texttt{lr} = 0.1, pur portando la rete ad livello di accuracy al 2.0\%, genera una perturbazione media costante pari a 0.05. Al contrario, la configurazione con \texttt{lr} = 0.01 riesce a minimizzare drasticamente l'entità del rumore, ottenendo comunque un buon 4.0\% iniettando una perturbazione media impercettibile di appena 0.0064 (quasi un ordine di grandezza inferiore rispetto al \texttt{lr} più alto).
+
+Tuttavia, tali risultati si scontrano con un prezzo computazionale estremamente elevato. L'esecuzione di appena 20 iterazioni con \texttt{lr} = 0.01 su un campione ristretto di sole 100 immagini ha richiesto oltre 12.150 secondi (circa 3,3 ore). Se si confronta questo dato con l'algoritmo BIM \textit{error-generic}, capace di distruggere l'accuratezza di 1000 immagini nel medesimo spazio latente in poche decine di secondi mantenendo il rumore vincolato sotto controllo, il trade-off va a favore di BIM. 
+
+In conclusione, l'analisi empirica conferma che CW domina nella capacità di eludere il modello producendo perturbazioni di magnitudo minima. Ma il costo computazionale richiesto non lo rende una soluzione applicabile in ogni contesto. 
+
+\begin{table}[h]
+    \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}lccccc@{}}
+        \toprule
+        \textbf{Max Iter} & \textbf{Learning Rate} & \textbf{Correct Predictions} & \textbf{Total Images} & \textbf{Accuracy (\%)} & \textbf{Time (s)} \\
+        \midrule
+        1  & 0.01 & 28 & 100 & 28.0 & 677.40 \\
+        1  & 0.10 & 2  & 100 & 2.0  & 770.82 \\
+        5  & 0.01 & 4  & 100 & 4.0  & 1841.94 \\
+        5  & 0.10 & 2  & 100 & 2.0  & 1939.44 \\
+        10 & 0.01 & 4  & 100 & 4.0  & 3394.79 \\
+        10 & 0.10 & 2  & 100 & 2.0  & 3489.74 \\
+        20 & 0.01 & 4  & 100 & 4.0  & 12156.82 \\
+        20 & 0.10 & 2  & 100 & 2.0  & 6477.53 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Valutazione dei risultati dell'attacco CW Untargeted al variare delle iterazioni e del learning rate.}
+    \label{tab:CW_Untargeted_robustness}
+\end{table}
 
 \clearpage
 \subsubsection{DeepFool (DF)}
@@ -436,7 +740,30 @@ EPSILON_LIST  = [0.1, 1.0, 10.0, 50.0, 100.0]
 
 L'analisi di questa griglia permette di generare grafici a doppio asse (accuratezza e perturbazione media in funzione di $\epsilon$ per ogni singolo \texttt{max\_iter}) e un grafico aggregato finale, utile a isolare empiricamente il puro trade-off tra l'entità del rumore realmente applicato e il crollo delle performance della rete NN1.
 
-\textbf{GRAFICI PER DEEPFOOL} 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\linewidth]{DeepFool_Generic/DeepFool_aggregated_linf_vs_acc.png}
+    \caption{SEC di DeepFool su NN1}
+    \label{fig:DeepFool_SEC}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\linewidth]{DeepFool_Generic/DeepFool_acc_per_iter_eps1e-06.png}
+    \caption{NN1 Accuracy ai vari \texttt{max_iter}}
+    \label{fig:DeepFool_iters}
+\end{figure}
+
+L'esame della configurazione parametrica di test (fissata su un fattore di sovracompensazione $\epsilon = 10^{-6}$ ed esplorata al variare delle iterazioni \texttt{max\_iter} da 1 a 175) evidenzia come l'algoritmo si dimostri letale sin dal primissimo step. Con una singola iterazione, DeepFool riesce ad abbattere l'accuratezza del modello dal 87.00\% originario al 14.14\%.
+
+Il vero potenziale del calcolo iterativo si manifesta estendendo la profondità dell'algoritmo a \texttt{max\_iter} = 5. In questo regime operativo, l'accuratezza residua ha un valore pari al 2.06\%. L'ottimizzazione satura definitivamente a \texttt{max\_iter} = 10, raggiungendo il picco minimo di accuratezza del modello pari a 1.04\%, soglia oltre la quale incrementi computazionali fino a 175 iterazioni non producono alcun degrado ulteriore.
+
+Ciò che eleva aumenta l'efficacia di questo attacco è l'analisi dell'accuratezza residua con la metrica \texttt{mean\_linf\_applied}, la quale misura il rumore iniettato. I dati estratti ci indicano che l'algoritmo supera i confini della regione di decisione corretta richiedendo una perturbazione media in norma $L_\infty$ pari a soli 0.0471. Questo valore si colloca ampiamente al di sotto della soglia di percettibilità empirica prefissata ($\epsilon \le 0.1$). 
+
+Dal punto di vista dell'economia elaborativa, i tempi di esecuzione riportati offrono un ulteriore spunto di riflessione. L'esecuzione dell'attacco sulle 100 immagini del \texttt{dataset\_1\_per\_person} ha richiesto circa 119 secondi (circa 1,2 secondi a immagine) nella configurazione ottimale a 10 iterazioni. Risulta interessante notare che i tempi di calcolo non subiscono scalate lineari punitive all'aumentare estremo del parametro \texttt{max\_iter} (116 secondi per 175 iterazioni). Questa dinamica temporale costante indica che l'implementazione interna di DeepFool incorpora un meccanismo di arresto anticipato (\textit{early stopping}): non appena la proiezione matematica dell'immagine valica il confine decisionale e rientra in un'area di \textit{misclassification} stabile, i calcoli tensoriali sui gradienti vengono interrotti, risparmiando preziose risorse macchina.
+
+In conclusione, l'analisi empirica dimostra come DeepFool sia un algoritmo molto interessante per gli attacchi non mirati. Il suo duplice vantaggio risiede nel trovare una perturbazione minima efficace in un tempo relativamente basso. 
 
 \clearpage
 \subsection{Error-Specific Attacks}
