@@ -11,6 +11,7 @@
 \usepackage{subcaption}
 \setcounter{secnumdepth}{4}
 \usepackage{float} 
+\usepackage{multirow}
 \usepackage[
     left=2.5cm,   
     right=2.5cm,  
@@ -1474,11 +1475,6 @@ Questo limite teorico si scontra drammaticamente con il vincolo applicativo del 
 
 
 
-
-
-
-
-
 \clearpage
 \section{Transferability Analysis}
 Un aspetto cruciale nella valutazione della robustezza dei sistemi di face recognition è la trasferibilità degli attacchi avversariali. Questa proprietà definisce la capacità di una perturbazione, originariamente calcolata per ingannare uno specifico modello (NN1), di mantenere la propria efficacia malevola anche contro un modello differente (NN2), permettendo all'attaccante di sfruttare vulnerabilità condivise tra architetture simili.
@@ -1500,7 +1496,7 @@ Per visualizzare chiaramente l'impatto dell'attacco, i risultati sono presentati
     \centering
     % Regola il parametro width (es. 0.8\textwidth) per ingrandire o rimpicciolire l'immagine
     \includegraphics[width=0.8\textwidth]{./Transferability/untargeted/FGSM/image.png}
-    \caption{SEC comparativa per l'attacco FGSM.}
+    \caption{SEC comparativa per l'attacco FGSM Untargeted.}
     \label{fig:fgsm_transferability_untargeted}
 \end{figure}
 
@@ -1509,17 +1505,45 @@ Dall'analisi del grafico è possibile evidenziare i seguenti aspetti chiave:
 \begin{itemize}
     \item L'accuratezza del secondo modello decresce progressivamente all'aumentare di $\epsilon$, confermando che anche l'architettura \textit{black-box} (NN2) subisce l'effetto dell'attacco originato sul modello surrogato.
     \item Per valori di perturbazione contenuti, NN2 mostra una robustezza superiore rispetto a NN1.
-    \item In corrispondenza del valore $\epsilon = 0.05$, le due curve tendono a convergere verso gli stessi valori di accuracy. Si può quindi concludere che l'attacco FGSM mostra una forte trasferibilità per intensità di rumore $\epsilon \geq 0.05$, riuscendo a compromettere con successo entrambi i modelli.
+    \item In corrispondenza del valore $\epsilon = 0.05$, le due curve tendono a convergere verso gli stessi valori di accuracy. Questo indica che i modelli si comportano in maniera simile con $\epsilon \geq 0.05$.
 \end{itemize}
+I dati numerici completi sono riportati nella Tabella \ref{tab:fgsm_tab_unt_transferability}, che mostra inoltre il \textit{Transfer Gap}, ovvero la differenza di accuracy tra NN2 e NN1 per ogni valore di $\epsilon$.
+\begin{table}[htbp]
+    \centering
+    \vspace{0.2cm}
+    \begin{tabular}{cccc}
+        \toprule
+        \textbf{($\epsilon$)} & \textbf{Accuracy NN2} & \textbf{Accuracy NN1} & \textbf{Gap} \\
+        \midrule
+        0.001 & 86.70\% & 77.10\% & +9.60\% \\
+        0.003 & 86.70\% & 45.80\% & +40.90\% \\
+        0.005 & 78.80\% & 22.80\% & +56.00\% \\
+        0.010 & 66.50\% &  6.70\% & \textbf{+59.80\%} \\
+        0.030 & 20.10\% &  1.60\% & +18.50\% \\
+        0.050 &  5.90\% &  0.70\% & +5.20\% \\
+        0.100 &  0.70\% &  0.10\% & +0.60\% \\
+        \bottomrule
+    \end{tabular}
+    \caption{Risultati di transferabilità per l'attacco FGSM Untargeted.}
+    \label{tab:fgsm_tab_unt_transferability}
+\end{table}
+
+Il Transfer Gap, calcolato come $\text{Acc}_{NN2} - \text{Acc}_{NN1}$, quantifica la differenza di accuracy tra i due modelli per ogni valore di $\epsilon$: un valore basso indica una bassa transferibilità.
+Per valori di perturbazione ridotti ($\epsilon \leq 0.010$), il gap raggiunge 
+il suo massimo ($+59.80\%$ per $\epsilon = 0.010$), indicando 
+che l'attacco, pur essendo efficace su NN1, si trasferisce solo parzialmente su NN2.
+Al crescere di $\epsilon$, il gap si riduce progressivamente fino a quasi annullarsi 
+($+0.60\%$ per $\epsilon = 0.100$). Questo indica che NN2 è robusta fino a circa $\epsilon = 0.01$. Tuttavia, aumentando le perturbazioni, aumenta anche la trasferibilità, riuscendo a compromettere con successo NN2.
+
 
 \subsubsection{Basic Iterative Method (BIM)}
 
-In questa sezione viene valutata l'accuratezza del modello NN2 sugli esempi avversariali generati tramite l'attacco BIM contro NN1, analizzandone il comportamento al variare di $\epsilon$. 
+In questa sezione viene valutata l'accuracy del modello NN2 sugli esempi avversariali generati tramite l'attacco BIM contro NN1, analizzandone il comportamento al variare di $\epsilon$ e di \texttt{max\_iter}. 
 
-Per visualizzare chiaramente l'impatto dell'attacco, i risultati sono presentati attraverso una Security Evaluation Curve comparativa in Figura \ref{fig:bim_transferability_untargeted}. Questo grafico rappresenta l'accuracy di NN1 e di NN2, testati con diversi insieme di immagini avversariali.
-A parità di $\epsilon$, ciascun insieme è riferito a un diverso valore di \texttt{max\_iter}. 
+Per visualizzare chiaramente l'impatto dell'attacco, i risultati sono presentati attraverso una Security Evaluation Curve comparativa in Figura \ref{fig:bim_transferability_untargeted}. Questo grafico rappresenta l'accuracy di NN1 e di NN2, ottenute testando con diversi insiemi di immagini avversariali.
+A parità di $\epsilon$, ciascun insieme è riferito a un diverso valore di \texttt{max\_iter}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     % Regola il parametro width (es. 0.8\textwidth) per ingrandire o rimpicciolire l'immagine
     \includegraphics[width=0.8\textwidth]{./Transferability/untargeted/BIM/image.png}
@@ -1527,7 +1551,397 @@ A parità di $\epsilon$, ciascun insieme è riferito a un diverso valore di \tex
     \label{fig:bim_transferability_untargeted}
 \end{figure}
 
-Dall'analisi in Figura \ref{fig:bim_transferability_untargeted}, emergono i seguenti punti chiave:
+Dall'analisi in Figura \ref{fig:bim_transferability_untargeted}, emergono le seguenti considerazioni:
+
+\begin{itemize}
+    \item All'aumentare di \texttt{max\_iter}, l'accuracy di NN1 crolla più rapidamente al crescere 
+    di $\epsilon$. Per \texttt{iter=10} e \texttt{iter=20}, NN1 si azzera già 
+    intorno a $\epsilon = 0.01$, confermando che BIM diventa più efficace sul modello surrogato NN1 con l'aumentare delle iterazioni.
+
+    \item Le curve tratteggiate di NN2 si mantengono al di sopra delle corrispondenti curve di NN1, dimostrando che NN2 è piu' robusto rispettto a NN1.
+
+    \item Il comportamento con una sola iterazione è assimilabile a quello dell'attacco FGSM, quindi valgono le considerazioni trattate in precedenza.
+
+
+\end{itemize}
+
+\begin{table}[htbp]
+    \centering
+    \setlength{\tabcolsep}{12pt} % <-- AUMENTA QUESTO VALORE (es. 10pt, 12pt, 15pt)
+    \vspace{0.2cm}
+    \makebox[\textwidth][c]{
+    \begin{tabular}{c | cc | cc | ccc}
+        \hline
+        & \multicolumn{2}{c|}{\textbf{max\_iter = 5}}
+        & \multicolumn{2}{c|}{\textbf{max\_iter = 10}}
+        & \multicolumn{3}{c}{\textbf{max\_iter = 20}} \\
+        \hline
+        \textbf{$\epsilon$}
+        & \textbf{NN2} & \textbf{NN1}
+        & \textbf{NN2} & \textbf{NN1}
+        & \textbf{NN2} & \textbf{NN1} & \textbf{Gap} \\
+        \hline
+        0.010 & 65.70\% & 2.60\% & 65.70\% & 2.00\% & 66.00\% & 1.80\% & +64.20\% \\
+        0.030 & 19.40\% & 0.10\% & 20.40\% & 0.10\% & 21.50\% & 0.10\% & +21.40\% \\
+        0.050 &  6.40\% & 0.10\% &  7.20\% & 0.10\% & 10.40\% & 0.10\% & +10.30\% \\
+        0.100 &  0.90\% & 0.00\% &  2.40\% & 0.00\% &  3.50\% & 0.10\% & +3.40\% \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Risultati di transferabilità per l'attacco BIM Untargeted.}
+    \label{tab:bim_unt_table}
+\end{table}
+
+
+
+Dai risultati in Tabella \ref{tab:bim_unt_table} emerge che l'utilizzo di esempi avversariali generati con 
+un valore di \texttt{max\_iter} più elevato non garantisce un miglioramento 
+significativo dell'efficacia dell'attacco nei confronti di NN2. Infatti, 
+confrontando le accuratezze di NN2 al variare di \texttt{max\_iter} a parità 
+di $\epsilon$, l'aumento medio di accuracy tra \texttt{max\_iter=5} e 
+\texttt{max\_iter=20} è di circa il $2\%$. Questo risultato conferma che incrementare il numero di iterazioni dell'attacco BIM, 
+non porta a una migliore transferibilità degli attacchi su NN2.
+
+Il Transfer Gap riportato per \texttt{max\_iter=20} conferma ulteriormente questo 
+comportamento: nonostante NN1 sia quasi completamente compromesso in tutte le 
+configurazioni, il Gap rimane elevato per valori di perturbazione contenuti, 
+raggiungendo il $+64.20\%$ per $\epsilon = 0.010$. Al crescere di $\epsilon$, 
+il Gap si riduce progressivamente fino al $+3.40\%$ per $\epsilon = 0.100$, indicando una \textbf{crescente transferibilità} 
+dell'attacco: perturbazioni piu' marcate riescono a compromettere NN2 favorendo la trasferibilità dei rispettivi campioni avversariali.
+
+
+
+\subsubsection{Projected Gradient Descent (PGD)}
+In questa sezione viene valutata l'accuracy del modello NN2 sugli esempi 
+avversariali generati tramite l'attacco PGD contro NN1, analizzandone il 
+comportamento al variare di $\epsilon$, del numero di iterazioni 
+\texttt{max\_iter} e del numero di inizializzazioni casuali \texttt{nri} 
+(\textit{number of random init}).
+
+Poiché la combinazione di tutti i valori di \texttt{max\_iter} e \texttt{nri} 
+genera un numero elevato di configurazioni, i risultati sono sintetizzati in 
+due Security Evaluation Curve comparative. La prima, riportata in 
+Figura~\ref{fig:pgd_transferability_untargeted}, isola l'effetto del parametro 
+\texttt{nri} fissando \texttt{max\_iter} al valore massimo $40$; essa 
+rappresenta l'accuracy di NN1 e di NN2 ottenute testando i diversi insiemi di 
+immagini avversariali generati con \texttt{nri} pari a $0$, $1$, $3$ e $5$.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{./Transferability/untargeted/PGD/image1.png}
+    \caption{SEC comparativa per l'attacco PGD al variare di \texttt{nri} 
+    (\texttt{max\_iter} = 40).}
+    \label{fig:pgd_transferability_untargeted}
+\end{figure}
+
+Dall'analisi della Figura~\ref{fig:pgd_transferability_untargeted}, emergono le 
+seguenti considerazioni.
+\begin{itemize}
+    \item Indipendentemente dal valore di 
+    \texttt{nri}, l'accuratezza del modello surrogato NN1 crolla rapidamente, 
+    azzerandosi quasi completamente già per $\epsilon \geq 0.01$. 
+
+    \item L'introduzione della random initialization riduce la transferibilità dell'attacco. La curva 
+    di NN2 per \texttt{nri=0} (equivalente a BIM) si colloca sistematicamente al 
+    di sotto delle curve con \texttt{nri} $\geq 1$, indicando che senza 
+    inizializzazione casuale l'attacco si trasferisce con maggiore efficacia su NN2.
+
+    \item L'incremento di \texttt{nri} oltre 
+    il valore $1$ non produce miglioramenti apprezzabili. Le curve di NN2 per 
+    \texttt{nri} pari a $1$, $3$ e $5$ risultano pressoché sovrapposte, 
+    suggerendo che è sufficiente una singola inizializzazione casuale per 
+    ottenere il massimo beneficio in termini di riduzione della transferibilità.
+\end{itemize}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{./Transferability/untargeted/PGD/image2.png}
+    \caption{SEC comparativa per l'attacco PGD al variare di \texttt{max\_iter} 
+    (\texttt{nri} = 1).}
+    \label{fig:pgd_transferability_maxiter}
+\end{figure}
+
+La seconda Security Evaluation Curve, riportata in 
+Figura~\ref{fig:pgd_transferability_maxiter}, isola invece l'effetto del numero 
+di iterazioni \texttt{max\_iter}, fissando $\texttt{nri}=1$, 
+sufficiente (come osservato in precedenza) a sfruttare il beneficio della 
+random initialization. Vengono confrontate le accuratezze di NN1 e NN2 per 
+\texttt{max\_iter} pari a $1$, $10$ e $40$.
+
+Dall'analisi della Figura~\ref{fig:pgd_transferability_maxiter}, emergono le 
+seguenti considerazioni.
+\begin{itemize}
+    \item L'accuracy di NN2 cresce all'aumentare di \texttt{max\_iter}: 
+    le curve relative a \texttt{max\_iter=40} si collocano sopra quelle con 
+    \texttt{max\_iter=1}. Questo indica che un numero più elevato di iterazioni 
+    riduce la transferibilità dell'attacco, in modo analogo a quanto osservato 
+    per l'attacco BIM.
+
+    \item L'effetto delle iterazioni è tuttavia graduale e contenuto: 
+    l'incremento di accuratezza di NN2 tra \texttt{max\_iter=1} e 
+    \texttt{max\_iter=40} si mantiene su pochi punti percentuali, a conferma che la transferibilità dell'attacco PGD è solo marginalmente influenzata dal numero di iterazioni.
+\end{itemize}
+
+
+\begin{table}[htbp]
+    \centering
+    \vspace{0.2cm}
+    \setlength{\tabcolsep}{12pt}      % aumenta lo spazio orizzontale tra le colonne
+    \makebox[\textwidth][c]{
+    \begin{tabular}{c | ccc | ccc | ccc}
+        \hline
+        & \multicolumn{3}{c|}{\textbf{max\_iter = 1}}
+        & \multicolumn{3}{c|}{\textbf{max\_iter = 10}}
+        & \multicolumn{3}{c}{\textbf{max\_iter = 40}} \\
+        \hline
+        \textbf{$\epsilon$}
+        & \textbf{NN1} & \textbf{NN2} & \textbf{Gap}
+        & \textbf{NN1} & \textbf{NN2} & \textbf{Gap}
+        & \textbf{NN1} & \textbf{NN2} & \textbf{Gap} \\
+        \hline
+        0.010 & 12.2\% & 73.6\% & +61.4\% & 4.4\% & 73.2\% & +68.8\% & 4.1\% & 73.3\% & +69.2\% \\
+        0.030 &  1.9\% & 31.5\% & +29.6\% & 0.2\% & 31.7\% & +31.5\% & 0.3\% & 32.8\% & +32.5\% \\
+        0.050 &  1.1\% & 11.0\% &  +9.9\% & 0.1\% & 13.8\% & +13.7\% & 0.2\% & 17.5\% & +17.3\% \\
+        0.100 &  0.3\% &  1.3\% &  +1.0\% & 0.0\% &  3.3\% &  +3.3\% & 0.2\% &  5.9\% &  +5.7\% \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Risultati di transferabilità per l'attacco PGD al variare di \texttt{max\_iter} (\texttt{nri} = 1).}
+    \label{tab:pgd_maxiter_transferability}
+\end{table}
+
+
+Si osserva in Tabella \ref{tab:pgd_maxiter_transferability} che, a parità di $\epsilon$, il Gap tende ad aumentare con il numero 
+di iterazioni. Infatti, con il crescere del numero di iterazioni, l'attacco diventa più aggressivo su NN1 ma meno trasferibile su NN2.
+Con più iterazioni, infatti, la perturbazione viene ottimizzata in modo sempre 
+più specifico su NN1, diventando però troppo legata a quest'ultimo per riuscire 
+a ingannare anche NN2. Lo stesso comportamento era già emerso nell'analisi 
+dell'attacco BIM.
+
+Analizzando invece l'andamento lungo $\epsilon$, il Gap si riduce 
+progressivamente per perturbazioni elevate, fino a valori contenuti in 
+corrispondenza di $\epsilon = 0.100$ (ad esempio $+5.7\%$ per \texttt{max\_iter=40}). 
+Questo comportamento indica una \textbf{crescente transferibilità} dell'attacco: 
+perturbazioni più ampie riescono a compromettere NN2 favorendo la transferibilità dell'attacco.
+
+
+
+\subsubsection{DeepFool}
+In questa sezione viene valutata l'accuracy del modello NN2 sugli esempi 
+avversariali generati tramite l'attacco DeepFool contro NN1, analizzandone il 
+comportamento al variare del numero di iterazioni \texttt{max\_iter}. In particolare,
+utilizziamo le immagini avversariali generate a partire dal test set dataset\_1\_per\_person.
+
+I risultati sono presentati in Figura~\ref{fig:deepfool_transferability_untargeted} 
+attraverso un grafico a barre che confronta, per ciascun valore di 
+\texttt{max\_iter}, l'accuracy del modello surrogato NN1 e quella del modello 
+bersaglio NN2 sugli stessi esempi avversariali.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{./Transferability/untargeted/DeepFool/image.png}
+    \caption{Confronto dell'accuracy di NN1 e NN2 per l'attacco DeepFool al 
+    variare di \texttt{max\_iter}.}
+    \label{fig:deepfool_transferability_untargeted}
+\end{figure}
+
+Dall'analisi della Figura~\ref{fig:deepfool_transferability_untargeted}, emergono 
+le seguenti considerazioni.
+\begin{itemize}
+    \item L'accuracy del modello surrogato NN1 crolla rapidamente già con 
+    poche iterazioni, passando dal $14.14\%$ con \texttt{max\_iter=1} all'$1.04\%$ 
+    a partire da \texttt{max\_iter=10}, valore oltre il quale rimane costante. 
+    Questo conferma l'elevata efficacia di DeepFool su NN1.
+
+    \item L'accuracy del modello NN2 si mantiene costante al 
+    $72.00\%$ per qualunque valore di \texttt{max\_iter}, evidenziando una
+    \textbf{transferibilità molto bassa}: gli esempi avversariali, pur 
+    compromettendo NN1, risultano quasi del tutto inefficaci su NN2.
+
+    \item Il comportamento dell'attacco si stabilizza a partire da 
+    \texttt{max\_iter=10}: incrementare ulteriormente il numero di iterazioni non 
+    produce alcun effetto né su NN1 né su NN2, poiché DeepFool ha già raggiunto 
+    la perturbazione minima necessaria a oltrepassare il confine decisionale.
+\end{itemize}
+
+La ridotta transferibilità di DeepFool trova spiegazione nell'entità delle 
+perturbazioni introdotte, riportate nella 
+Tabella~\ref{tab:deepfool_mean_linf}. Il Transfer Gap, calcolato come $\text{Acc}_{NN2} - \text{Acc}_{NN1}$, si mantiene 
+elevato e prossimo al $+71\%$ per tutte le configurazioni, a conferma quantitativa 
+della scarsa capacità dell'attacco di trasferirsi sul modello bersaglio. Per sua natura, DeepFool genera 
+perturbazioni di ampiezza minima, appena sufficienti a far attraversare 
+all'immagine il confine decisionale di NN1. Tali perturbazioni risultano quindi 
+estremamente specifiche per il modello surrogato e, essendo di entità così 
+contenuta, non sono in grado di alterare in maniera significativa la classificazione di un modello 
+diverso come NN2.
+
+\begin{table}[htbp]
+    \centering
+    \vspace{0.2cm}
+    \small
+    \setlength{\tabcolsep}{6pt}
+    \renewcommand{\arraystretch}{1.1}
+    \begin{tabular}{ccccc}
+        \toprule
+        \textbf{max\_iter} & \textbf{Accuracy NN1} & \textbf{Accuracy NN2} & \textbf{Gap} & \textbf{Mean $L_\infty$} \\
+        \midrule
+        1   & 14.14\% & 72.00\% & +57.86\% & 0.0442 \\
+        5   &  2.06\% & 72.00\% & +69.94\% & 0.0473 \\
+        10  &  1.04\% & 72.00\% & +70.96\% & 0.0471 \\
+        20  &  1.04\% & 72.00\% & +70.96\% & 0.0471 \\
+        50  &  1.04\% & 72.00\% & +70.96\% & 0.0471 \\
+        100 &  1.04\% & 72.00\% & +70.96\% & 0.0470 \\
+        175 &  1.04\% & 72.00\% & +70.96\% & 0.0471 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Risultati di transferabilità per l'attacco DeepFool al variare di \texttt{max\_iter}.}
+    \label{tab:deepfool_mean_linf}
+\end{table}
+
+
+\subsubsection{Carlini \& Wagner}
+In questa sezione viene valutata l'accuracy del modello NN2 sugli esempi 
+avversariali generati tramite l'attacco Carlini \& Wagner contro NN1, 
+nella sua variante \textit{untargeted}. Il comportamento dell'attacco viene 
+analizzato al variare del numero di iterazioni \texttt{max\_iter} e del 
+\texttt{learning\_rate}.
+
+
+\begin{table}[htbp]
+    \centering
+    \vspace{0.2cm}
+    \small
+    \setlength{\tabcolsep}{8pt}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{cc ccc c}
+        \toprule
+        \textbf{learning\_rate} & \textbf{max\_iter} 
+        & \textbf{Acc. NN1} & \textbf{Acc. NN2} & \textbf{Gap} 
+        & \textbf{Mean $L_\infty$} \\
+        \midrule
+        \multirow{4}{*}{0.01}
+            & 1   & 28.0\% & 84.0\% & +56.0\% & 0.0038 \\
+            & 5   &  4.0\% & 84.0\% & +80.0\% & 0.0064 \\
+            & 10  &  4.0\% & 84.0\% & +80.0\% & 0.0064 \\
+            & 20  &  4.0\% & 84.0\% & +80.0\% & 0.0064 \\
+        \midrule
+        \multirow{4}{*}{0.1}
+            & 1   &  2.0\% & 12.0\% & +10.0\% & 0.0500 \\
+            & 5   &  2.0\% & 12.0\% & +10.0\% & 0.0500 \\
+            & 10  &  2.0\% & 13.0\% & +11.0\% & 0.0500 \\
+            & 20  &  2.0\% & 12.0\% & +10.0\% & 0.0500 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Risultati di transferabilità per l'attacco C\&W Untargeted al variare 
+    di \texttt{learning\_rate} e \texttt{max\_iter}.}
+    \label{tab:cw_transferability}
+\end{table}
+
+Dall'analisi della Tabella~\ref{tab:cw_transferability} emerge che il parametro 
+determinante per la transferibilità dell'attacco C\&W è il \texttt{learning\_rate}, 
+che controlla l'ampiezza della perturbazione applicata.
+
+Con un \texttt{learning\_rate} ridotto ($0.01$), l'attacco genera perturbazioni 
+molto contenute (Mean $L_\infty \approx 0.006$): NN1 viene compromesso quasi 
+completamente (accuratezza al $4\%$), ma NN2 mantiene un'accuratezza elevata, 
+pari all'$84\%$. Il Transfer Gap raggiunge in questo caso il $+80\%$, indicando 
+una \textbf{bassa transferibilità}. Le perturbazioni, essendo di entità minima e 
+specifiche per il modello surrogato, non riescono a trasferirsi su NN2, 
+analogamente a quanto osservato per DeepFool.
+
+Con un \texttt{learning\_rate} più elevato ($0.1$), la perturbazione media cresce 
+di quasi un ordine di grandezza (Mean $L_\infty = 0.05$). In questo regime non 
+solo NN1, ma anche NN2 viene compromesso in modo significativo, con un'accuratezza 
+che scende al $12\%$ e un Transfer Gap che si riduce al $+10\%$. La maggiore 
+ampiezza della perturbazione si traduce quindi in una \textbf{transferibilità 
+nettamente superiore}.
+
+Il numero di iterazioni \texttt{max\_iter} ha invece un impatto marginale: a 
+parità di \texttt{learning\_rate}, i risultati si stabilizzano già a partire da 
+\texttt{max\_iter=5} e rimangono sostanzialmente invariati per valori superiori. 
+L'unica variazione apprezzabile si registra con \texttt{learning\_rate=0.01} nel 
+passaggio da \texttt{max\_iter=1} a \texttt{max\_iter=5}, oltre il quale l'attacco 
+raggiunge la sua configurazione stabile.
+
+
+
+
+
+
+
+\subsection{Error-Specific Attack}
+In questa sezione viene analizzata la transferibilità degli attacchi in modalità 
+\textit{error-specific}. Si tratta quindi di un obiettivo più ambizioso e, di norma, più difficile da 
+raggiungere.
+
+Coerentemente con questo diverso obiettivo, la metrica di valutazione utilizzata 
+non è più l'accuracy, bensì l'\textbf{Attack Success Rate (ASR)}, ovvero la 
+percentuale di immagini che il modello classifica effettivamente nella classe 
+bersaglio desiderata. Un ASR elevato indica un attacco efficace; nel contesto 
+della transferibilità, un ASR elevato su NN2 indica che l'attacco, generato 
+contro NN1, riesce a forzare la classe bersaglio anche sul modello bersaglio.
+
+In accordo agli attacchi trattati nei capitoli iniziali, vengono considerate due modalità di selezione della classe bersaglio: \textbf{Least-Likely} e \textbf{Fixed}.
+
+\subsubsection{Fast Gradient Sign Method (FGSM)}
+In questa sezione viene valutata la transferibilità dell'attacco FGSM 
+\textit{error-specific}, analizzando l'ASR del modello surrogato NN1 e del modello 
+bersaglio NN2 al variare di $\epsilon$, nelle due modalità Least-Likely e Fixed.
+
+\paragraph*{Modalità Fixed}\mbox{}\\
+La Figura~\ref{fig:fgsm_es_fixed} riporta la Security Evaluation Curve per la 
+modalità Fixed, confrontando l'ASR di NN1 e NN2 al variare di $\epsilon$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./Transferability/targeted/FGSM/image_fixed.png}
+    \caption{SEC comparativa per l'attacco FGSM error-specific in modalità Fixed.}
+    \label{fig:fgsm_es_fixed}
+\end{figure}
+
+Dall'analisi emerge che l'ASR si mantiene molto contenuto per entrambi i modelli. 
+Su NN1 l'attacco raggiunge un valore massimo dell'$8.0\%$ in corrispondenza di 
+$\epsilon = 0.03$–$0.05$, per poi ridursi a $\epsilon = 0.1$. Su NN2 l'ASR resta 
+quasi sempre nullo, raggiungendo al più l'$1.9\%$ per $\epsilon = 0.1$. 
+L'attacco error-specific, nella sua formulazione a singolo passo, risulta quindi 
+poco efficace già su NN1 e sostanzialmente \textbf{non trasferibile} su NN2.
+
+\paragraph*{Modalità Least-Likely}\mbox{}\\
+La Figura~\ref{fig:fgsm_es_ll} riporta la Security Evaluation Curve per la 
+modalità Least-Likely.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./Transferability/targeted/FGSM/image_leastlikely.png}
+    \caption{SEC comparativa per l'attacco FGSM error-specific in modalità 
+    Least-Likely.}
+    \label{fig:fgsm_es_ll}
+\end{figure}
+
+In questa modalità l'attacco risulta ancora meno efficace: l'ASR di NN1 non supera 
+mai lo $0.1\%$ e quello di NN2 rimane costantemente nullo per ogni valore di 
+$\epsilon$. Questo risultato è atteso: forzare la classificazione verso la classe 
+\textit{meno probabile} è l'obiettivo più arduo, e un attacco a singolo passo come 
+FGSM non dispone della capacità di ottimizzazione necessaria a raggiungerlo, né su 
+NN1 né, tantomeno, su NN2.
+
+
+
+\subsubsection{Basic Iterative Method (BIM)}
+
+\subsubsection{Projected Gradient Descent (PGD)}
+
+
+\subsubsection{DeepFool}
+
+
+\subsubsection{Carlini \& Wagner}
+
+
+
+
+
 
 
 \clearpage
