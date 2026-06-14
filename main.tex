@@ -766,6 +766,35 @@ Dal punto di vista dell'economia elaborativa, i tempi di esecuzione riportati of
 In conclusione, l'analisi empirica dimostra come DeepFool sia un algoritmo molto interessante per gli attacchi non mirati. Il suo duplice vantaggio risiede nel trovare una perturbazione minima efficace in un tempo relativamente basso. 
 
 \clearpage
+\subsubsection{All Algorithms Recap}
+
+A conclusione della disamina individuale degli algoritmi per la generazione di esempi avversari non mirati (\textit{error-generic}), è fondamentale tracciare un bilancio comparativo per delineare l'effettivo panorama della vulnerabilità della rete InceptionResnetV1 (NN1). L'obiettivo di questa sezione è confrontare il \textit{trade-off} operativo offerto da ciascun metodo, bilanciando la letalità dell'attacco, la magnitudo della perturbazione (invisibilità) e il costo computazionale.
+
+Il riscontro visivo primario di questa comparazione è offerto dalla Figura~\ref{fig:SEC_Untargeted_All}, che aggrega le \textit{Security Evaluation Curve} (SEC) delle configurazioni più rappresentative o ottimali estratte dai test precedenti.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\linewidth]{Comparative_results/untargeted/Security_Evaluation_Curve_Untargeted.png}
+    \caption{Security Evaluation Curve aggregata per gli attacchi Untargeted su NN1.}
+    \label{fig:SEC_Untargeted_All}
+\end{figure}
+
+L'osservazione della Figura~\ref{fig:SEC_Untargeted_All} e l'analisi incrociata dei dati tabellari consentono di trarre le seguenti conclusioni metodologiche:
+
+\begin{enumerate}
+    \item \textbf{Il dominio degli attacchi iterativi:} Il \textit{Fast Gradient Sign Method} (FGSM), pur godendo di una supremazia assoluta in termini di velocità di esecuzione (inferiore ai 20 secondi per 1000 immagini), mostra i limiti geometrici del suo approccio lineare \textit{single-step}. Per abbattere l'accuratezza del modello prossimo allo zero, FGSM necessita della saturazione completa del budget spaziale ($\epsilon = 0.1$). Al contrario, la sua diretta evoluzione iterativa, il \textit{Basic Iterative Method} (BIM), ottimizza la direzione del gradiente frazionando il passo, riuscendo a devastare le predizioni della rete (accuratezza al 2.6\%) con un quinto del rumore impiegato da FGSM ($\epsilon = 0.01$).
+    
+    \item \textbf{L'inefficacia della stocasticità negli scenari non mirati:} Una delle osservazioni più interessanti riguarda il \textit{Projected Gradient Descent} (PGD). L'aggiunta di riavvii casuali (\textit{random restart}), concepita teoricamente per agevolare la fuga dai minimi locali, si è rivelata svantaggiosa nell'elusione \textit{error-generic}. I dati evidenziano come BIM (puramente deterministico) superi PGD a bassi valori di $\epsilon$, dimostrando che l'aggiunta di stocasticità non giustifica l'aggravio computazionale in questo dominio.
+    
+    \item \textbf{L'estremizzazione dell'ottimizzazione (CW e DeepFool):} Gli algoritmi che abbandonano il paradigma del budget fisso in favore dell'ottimizzazione pura restituiscono risultati eccezionali in termini di \textit{stealthiness}, ma pongono severi vincoli di computzione. 
+    \begin{itemize}
+        \item \textbf{Carlini \& Wagner (CW)} risulata essere l'algoritmo migliore in termini di perturbazione. Infatti, configurato con \texttt{lr} = 0.01, abbassa l'accuratezza al 4.0\% applicando un rumore medio infinitesimale (0.0064). Tuttavia, il suo costo computazionale (oltre 3 ore per sole 100 immagini) rende la scelta molto complessa.
+        \item \textbf{DeepFool} emerge come il \textbf{miglior compromesso algoritmico assoluto} per l'inganno non mirato. Calcolando iterativamente la proiezione ortogonale verso l'iperpiano decisionale più vicino, riesce a far collassare l'accuratezza al minimo assoluto (1.04\%) impiegando un rumore medio modesto (0.0471), ben inferiore alla soglia prefissa. Soprattutto, grazie alla sua efficienza conclude l'attacco su 100 immagini in poco più di un minuto, unendo rapidità operativa ed efficacia.
+    \end{itemize}
+\end{enumerate}
+
+
+\clearpage
 \subsection{Error-Specific Attacks}
 A differenza degli attacchi \textit{error-generic} analizzati nella sezione precedente, gli attacchi \textit{error-specific} non si limitano a indurre un errore di classificazione arbitrario. Il loro scopo è nettamente più complesso e pericoloso: forzare la rete neurale a classificare l'immagine d'ingresso in una specifica classe predeterminata, scelta a priori dall'attaccante.
 
@@ -1798,8 +1827,29 @@ Questo limite teorico si scontra drammaticamente con il vincolo applicativo del 
     \label{fig:matrice_cw_targeted_fixed}
 \end{figure}
 
+\clearpage
+\subsubsection{All Algorithms Recap}
 
+Conclusa l'analisi dettagliata delle singole varianti algoritmiche, la presente sezione si prefigge di tracciare un bilancio comparativo definitivo sull'efficacia degli attacchi avversari mirati (\textit{error-specific}) contro l'architettura InceptionResnetV1 (NN1). 
 
+Il riscontro visivo primario di questa comparazione è offerto dalla Figura~\ref{fig:SEC_Targeted_All}, che aggrega le \textit{Security Evaluation Curve} (SEC) delle configurazioni più rappresentative estratte dai test in modalità \textit{Targeted}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\linewidth]{Comparative_results/targeted/Security_Evaluation_Curve_Targeted.png}
+    \caption{Security Evaluation Curve aggregata per gli attacchi Targeted su NN1.}
+    \label{fig:SEC_Targeted_All}
+\end{figure}
+
+\begin{enumerate}
+    \item \textbf{L'inadeguatezza degli approcci \textit{Single-Step} (FGSM):} I test hanno confermato che il \textit{Fast Gradient Sign Method} è geometricamente inadatto a condurre attacchi mirati in spazi decisionali complessi. Il calcolo di un singolo, massiccio vettore di perturbazione porta l'immagine a finire nei confini delle classi intermedie. Ciò si traduce in un \textit{Attack Success Rate} (ASR) del tutto marginale nell'attacco a target fisso (inferiore all'8\%) e in un fallimento totale (0.0\%) nel tentativo di raggiungere il target \textit{Least Likely}.
+    
+    \item \textbf{La supremazia dell'approccio deterministico multi-step (BIM):} Il \textit{Basic Iterative Method} è emerso come l'\textbf{algoritmo vincitore indiscusso} per gli scenari mirati \textit{budget-constrained}. I risultati dimostrano che, se supportato da un sufficiente numero di iterazioni (\texttt{max\_iter} = 20) e da un budget elevato ($\epsilon = 0.1$), BIM riesce a forzare con successo il furto d'identità persino verso la regione decisionale più remota e improbabile in assoluto, raggiungendo un ASR prossimo al 100\% in tempi computazionali contenuti (circa 60-70 secondi per 1000 immagini).
+    
+    \item \textbf{Il risulato inaspettato di (PGD):} L'esito più inaspettato ottenuto dal team riguarda il \textit{Projected Gradient Descent}. Nonostante sia universalmente considerato un algoritmo più potente di BIM grazie ai riavvii casuali (\textit{random restart}), nei test mirati l'introduzione della stocasticità ha generato un \textbf{degrado prestazionale} sommato a un costo computazionale fino a cinque volte superiore.
+    
+    \item \textbf{L'impossibilità computazionale di Carlini \& Wagner (CW):} Infine, l'attacco Carlini \& Wagner, seppur teoricamente capace di garantire il 100\% di ASR con il minimo rumore possibile, si è scontrato con i limiti computazionali. Formulando l'attacco come un problema di minimizzazione continua gestito dall'ottimizzatore \textit{Adam}, l'algoritmo richiede tempi di convergenza enormi (fino a 10.000 step secondo gli autori originali). Interrompendo l'ottimizzazione a un massimo di 50 iterazioni (che hanno comunque richiesto oltre 5 ore per sole 100 immagini), l'ASR registrato è stato dello 0.0\%.
+\end{enumerate}
 
 
 
