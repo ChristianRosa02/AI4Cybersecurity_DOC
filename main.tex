@@ -24,7 +24,8 @@
 \usepackage{csvsimple}
 \usepackage{underscore}
 \usepackage{float}
-
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric}
 
 
 
@@ -1940,6 +1941,936 @@ NN1 né, tantomeno, su NN2.
 
 
 
+
+\section{Defenses}
+Difendersi dagli esempi avversari è, in generale, un problema complesso e difficile da gestire. Allo stato attuale, 
+non esiste una soluzione definitiva e ogni difesa tende a essere aggirata da attacchi sempre più sofisticati. 
+Dopo aver modellato le minacce e simulato gli attacchi, il principio della sicurezza ``by design'' impone di proteggere
+attivamente i sistemi di machine learning. In questa fase si passa quindi dalla comprensione delle vulnerabilità 
+alla progettazione di contromisure.  Per mitigare le vulnerabilità del sistema di face recognition (NN1) analizzato
+nei capitoli precedenti, sono stati implementati e confrontati due distinti approcci di difesa:
+\begin{itemize}
+    \item \textbf{Image Pre-Processing Before Classification (JPEG Compression):} 
+    Con questo approccio, 
+    l'input viene ripulito prima di essere passato al modello così da rimuovere il rumore avversario. Tecniche come la 
+    compressione JPEG si sono dimostrate effettive nel ridurre l'effetto avversario degli adversarial samples, ma comportano 
+    un compromesso tra robustezza e accuratezza, poiché spesso degradano anche le prestazioni su dati puliti. 
+    \item \textbf{Detection of Adversarial Samples (Adversarial Detector):} L'obiettivo di questa difesa è rilevare durante 
+    l'inferenza la presenza di perturbazioni avversarie in modo da identificare quando un input è stato manipolato. Invece 
+    di creare proattivamente un modello durante la fase di addestramento, questo approccio fornisce un modulo aggiuntivo
+    per i modelli pre-addestrati, al fine di difenderli dagli attacchi avversari. Nel contesto di questo progetto, 
+    la difesa è stata implementata addestrando un classificatore binario ausiliario incaricato di agire come gate
+    prima della  rete bersaglio. 
+    \end{itemize}  
+Nelle sezioni successive verranno dettagliate le metodologie operative applicate per entrambe le difese, la preparazione
+dei dataset necessari e una valutazione delle performance volta a misurare l'efficacia e l'impatto sul modello 
+originario.
+
+\vspace{15pt}
+\subsection{Defense Dataset Creation and Partitioning}
+Per l'addestramento e la valutazione dei meccanismi di difesa, 
+in particolare per il rilevatore di esempi avversari, è stato costruito un dataset bilanciato. 
+Il dataset è composto da due macro-categorie di immagini:
+\begin{itemize}
+    \item \textbf{Immagini Avversariali (Adversarial):} Costituiscono un sottoinsieme degli esempi generati nella precedente 
+    fase di Generating Adversarial Samples. Per garantire eterogeneità, i campioni sono stati estratti da tutte 
+    le 40 configurazioni di attacco esplorate (FGSM, BIM, PGD, CW, DeepFool), campionando in modo uniforme dalle varie 
+    directory per un totale di 6000 immagini. 
+
+    Al fine di garantire la massima aderenza a un modello di minaccia reale, la selezione dei 
+    campioni non si è limitata esclusivamente ai sample a massima efficacia 
+    (caratterizzati da un'accuratezza residua del modello pari allo 0\% o da un 
+    Attack Success Rate del 100\%). Per riprodurre fedelmente uno scenario operativo 
+    in cui l'attore malevolo potrebbe disporre di risorse informative o computazionali 
+    limitate, il dataset include anche immagini avversariali associate a performance medie 
+    o sub-ottimali (contraddistinte da un'accuratezza del classificatore più elevata e da un 
+    valore di ASR inferiore). Questo inserimento è stato eseguito secondo un criterio 
+    proporzionale che, pur riflettendo la variabilità delle capacità dell'attaccante, 
+    assegna una priorità quantitativa ai campioni derivanti dagli attacchi che hanno 
+    registrato il maggior tasso di successo.
+
+    Le immagini avversariali scelte appartengono sia alla classe degli attacchi 
+    error-generic che alla classe degli attacchi error specific. In particolare per gli attacchi error specific si è scelto
+    di includere unicamente i campioni proveniente dagli attacchi targeted fixed dato che gli attacchi in modalità least likely
+    hanno mostrato una scarsa efficacia e quindi le perturbazioni generate possono non essere considerate rappresentative 
+    di un attacco reale. 
+
+    Si consideri che per l'attacco DeepFool, essendo un attacco non-targeted, sono stati inclusi unicamente sample appartenenti
+    a questa categoria. Anche per l'attacco Carlini \& Wagner sono stati scelti solo samples error generic, ma in questo caso 
+    perchè i sample error specific generati durante la fase di attacco hanno avuto dei risultati molto scarsi e quindi non sono
+    stati considerati rappresentativi di un attacco reale.
+    \item \textbf{Immagini Genuine (Genuine):} Per bilanciare il dataset in un rapporto 1:1 con la controparte avversariale, 
+    alle 1000 immagini originali (appartenenti alle 100 identità bersaglio) sono state aggiunte ulteriori 
+    immagini pulite. Queste ultime sono state prelevate dal pool esteso del dataset VGG-Face2,
+    relative ai medesimi 100 soggetti validi.
+    
+\end{itemize}
+
+\vspace{10pt}
+\subsubsection{Splitting Methodology: Identity-Disjoint}
+Una scelta metodologica fondamentale nella preparazione dei dati riguarda la strategia di suddivisione
+in set di \textit{Training}, \textit{Validation} e \textit{Test}. Lo split non è stato effettuato a livello di singola 
+immagine, bensì a livello di \textbf{soggetto (Class ID)}. Le 100 identità del dataset sono state ripartite nel seguente 
+modo:
+\begin{itemize}
+    \item \textbf{Training Set:} 70 soggetti (70\% del totale dei campioni).
+    \item \textbf{Validation Set:} 20 soggetti (20\% del totale dei campioni).
+    \item \textbf{Test Set:} 10 soggetti (10\% del totale dei campioni).
+\end{itemize}
+Questa tecnica, nota come split \textit{identity-disjoint}, 
+garantisce che nessun soggetto presente nel training set appaia nei set di validazione o di test. In un task 
+biometrico come la face recognition, ciò è cruciale: assicura che il classificatore ausiliario impari a 
+riconoscere il rumore avversariale, eliminando a priori il rischio che questo apprenda i tratti 
+somatici, lo sfondo o l'illuminazione specifici delle identità usate in addestramento.
+
+\vspace{10pt}  
+
+\subsubsection{DataLoader e Weighted Sampling}Nella fase di costruzione dei DataLoader in PyTorch, è emersa la 
+necessità di gestire la disomogeneità nella difficoltà di rilevamento dei vari attacchi. Tecniche come Carlini \& Wagner 
+(CW) e DeepFool tendono a generare perturbazioni molto più subdole e vicine ai gradienti naturali , risultando 
+significativamente più ardue da individuare rispetto agli attacchi come FGSM, BIM o PGD.
+Per mitigare questo sbilanciamento e favorire una convergenza ottimale, il training DataLoader è stato implementato 
+ricorrendo a un \texttt{WeightedRandomSampler}. Questo campionatore assegna dinamicamente un peso maggiore alle classi 
+minoritarie o più complesse: nello specifico, le immagini avversariali appartenenti alle famiglie CW e DeepFool sono 
+state sovracampionate con un fattore di \textit{boost} pari a 3.0. Tale accorgimento forza la rete neurale a focalizzarsi 
+maggiormente sui pattern avversariali più elusivi. Prima di introdurre la tecnica di \textit{weighted sampling}, il 
+modello ausiliario tendeva a convergere rapidamente verso un'accuratezza elevata sulle classi più semplici, ma mostrava 
+una performance scadente sulle perturbazioni più sofisticate. L'adozione del campionamento ponderato ha permesso di
+ottenere un bilanciamento più equo tra le varie tipologie di attacchi, migliorando la capacità del rilevatore di
+generalizzare e riconoscere efficacemente anche le perturbazioni più sottili.
+
+Infine, in fase di caricamento, tutte le immagini sono state standardizzate alla risoluzione di $160 \times 160$ pixel e 
+convertite in tensori spaziali con valori nel range $[0, 1]$.
+
+
+\vspace{15pt} 
+
+
+
+\subsection{Image Pre-Processing: Compressione JPEG}
+
+Il primo meccanismo di difesa esplorato si basa sul paradigma 
+dell'\textit{Image Pre-Processing Before Classification}. In questo caso, l'input viene 
+elaborato e ``ripulito'' prima di essere passato al modello, con lo scopo di rimuovere il 
+rumore avversario. 
+
+A livello matematico, la compressione JPEG è un algoritmo lossy che sfrutta la 
+Trasformata Discreta del Coseno (DCT) per convertire l'immagine dal dominio spaziale a 
+quello delle frequenze. Poiché l'occhio umano è meno sensibile alle repentine variazioni di 
+colore o luminosità su scale minuscole, la successiva fase di quantizzazione sopprime 
+selettivamente queste componenti ad alta frequenza per ridurre la dimensione del file. 
+
+Nel contesto della sicurezza dei modelli di Deep Learning, le perturbazioni introdotte dagli 
+attacchi avversari (in particolar modo quelli vincolati da una norma $L_\infty$ stretta) 
+si manifestano tipicamente proprio come rumore ad alta frequenza e bassa ampiezza. Applicare 
+la compressione JPEG funge di fatto da filtro passa-basso: la quantizzazione frantuma la 
+delicata e precisa struttura dei gradienti avversariali, neutralizzando o mitigando la 
+minaccia prima della classificazione. Tecniche come la compressione JPEG si sono dimostrate 
+effettive nel ridurre l'effetto avversario degli \textit{adversarial samples}. 
+
+Tuttavia, queste tecniche introducono un inevitabile compromesso tra robustezza e accuratezza
+[cite: 45]. La rimozione delle alte frequenze altera l'immagine e degrada spesso anche le 
+prestazioni nominali del modello sui dati puliti, poiché elimina dettagli che potrebbero 
+risultare discriminanti per il sistema di riconoscimento biometrico.
+
+\subsubsection{Metodologia Implementativa e Pipeline}
+L'integrazione di questa difesa all'interno del sistema è stata realizzata, inserendo un modulo 
+di pre-elaborazione dinamica a monte della rete principale 
+NN1. Utilizzando i costrutti per le difese spaziali forniti dalla libreria \textit{Adversarial Robustness Toolbox} (ART), 
+specificatamente il modulo \texttt{JpegCompression}, ogni tensore in ingresso viene 
+sottoposto a un ciclo di compressione e successiva decompressione a runtime prima di 
+raggiungere il classificatore.
+
+Per esplorare il delicato trade-off tra la sanitizzazione della perturbazione e 
+la conservazione dei tratti somatici legittimi, l'approccio implementato nel codice valuta il
+sistema testando tre differenti livelli di qualità di compressione ($q$):
+\begin{itemize}
+    \item \textbf{Qualità $q = 80$ (Conservativa):} Applica una quantizzazione leggera. 
+    L'obiettivo è preservare la massima accuratezza sui campioni genuini, verificando 
+    se una perturbazione minima sia sufficiente a far collassare i gradienti avversari 
+    meno robusti.
+    \item \textbf{Qualità $q = 50$ (Bilanciata):} Un livello intermedio che introduce una 
+    compressione spaziale più severa, volto a testare la resilienza del sistema contro
+    attacchi iterativi strutturati, cercando di non distruggere completamente le 
+    feature dell'identità del soggetto.
+    \item \textbf{Qualità $q = 10$ (Aggressiva):} Applica una quantizzazione estrema, 
+    che introduce pesanti artefatti di blocco. Sebbene questo livello massimizzi la 
+    distruzione della topologia avversariale, vi è anche un degrado dei pixel che influisce
+    sulla corretta predizione della ground truth da parte di NN1.
+\end{itemize}
+
+\vspace{10pt}
+
+\subsubsection{Metodologia di Valutazione della Compressione JPEG}
+Per quantificare in modo rigoroso l'efficacia della compressione JPEG come strumento di 
+pre-processing avversariale, la procedura è stata strutturata secondo una duplice strategia di testing,
+(le medesime condizioni vengono poi utilizzate per valutare il rilevatore binario). 
+La metodologia si articola in due fasi distinte e sequenziali:
+
+\vspace{5pt}
+
+\textbf{1. Valutazione Estesa sull'Intero Dataset:}
+La prima fase prevede l'esecuzione del test sull'intero dataset di difesa indipendentemente dallo split 
+(training, validation e test), 
+al fine di valutare la resilienza del modello rispetto a quante piu configurazioni di attacchi possibili.
+
+Al fine di valutare correttamente  l'impatto della contromisura, il codice traccia metriche diversificate 
+in base all'obiettivo dell'attacco:
+\begin{itemize}
+    % eliminare questa definizione se è già stata data in precedenza
+    \item \textbf{Accuracy (per attacchi Untargeted):} Misura la frazione di immagini avversariali che, a seguito 
+    del processo di compressione e quantizzazione DCT, vengono riclassificate correttamente secondo l'etichetta 
+    originaria del soggetto.
+    \item \textbf{Attack Success Rate (ASR, per attacchi Targeted Fixed):} Misura la frazione di campioni manipolati che, 
+    nonostante l'applicazione della difesa, riescono ancora a costringere la rete NN1 a predire la classe bersaglio 
+    predeterminata dall'attaccante (classe 2026).
+    \end{itemize}
+
+\textbf{2. Delta Quantification}
+Prima di procedere con la valutazione dei classificatori 
+difesi (jpeg_classifiers), il sistema esegue una sessione di controllo sul modello privo di 
+protezioni. Questo passaggio stabilisce lo zero per il calcolo dei \textit{delta} 
+(percentuali di variazione), consentendo di misurare con precisione sia il guadagno di sicurezza (riduzione dell'ASR o 
+incremento dell'accuratezza avversariale) sia il rispettivo costo computazionale e biometrico sui campioni puliti 
+(\textit{genuine accuracy degradation}).
+
+
+\textbf{Evaluation Strategy}
+A differenza dell'Adversarial Detector 
+la compressione JPEG è un algoritmo matematico deterministico di elaborazione del segnale e non costituisce 
+un modello di Machine Learning e non richiede alcuna suddivisione strutturale dei dati in set di 
+training, validation e test.
+Tale caratteristica procedurale ha motivato e reso possibile la duplice strategia di testing:
+\begin{enumerate}
+    \item \textbf{Valutazione sull'Intero Dataset:} In fase di validazione, si è scelto di trarre vantaggio 
+    dall'intera disponibilità dei dati, valutando l'impatto della difesa sulla totalità del dataset. 
+    Questo approccio garantisce una significatività statistica nettamente superiore, offrendo una panoramica 
+    piu estesa e robusta del comportamento della quantizzazione al variare delle tecniche di attacco.
+    \item \textbf{Necessità di un \textit{Common Ground} (Test Set):} Nonostante la completezza statistica fornita 
+    dall'analisi massiva, un confronto tra due paradigmi di difesa fondamentalmente diversi richiede un 
+    terreno analitico bilanciato. Per questo motivo, si è ritenuto indispensabile eseguire anche la 
+    valutazione limitata al Test Set che viene poi usato anche per il classficatore binario.
+\end{enumerate}
+
+\subsubsection{Full Dataset Results}
+La prima fase di valutazione della compressione JPEG ha coinvolto l'intero set di dati di difesa, 
+permettendo di quantificare l'impatto del \textit{pre-processing} sulle singole famiglie di attacco. 
+I risultati, riassunti nella Tabella \ref{tab:jpeg_full_dataset} e visualizzati nella Figura \ref{fig:jpeg_full_dataset}, 
+mettono in luce il complesso \textit{trade-off} operativo intrinseco alle difese spaziali \textit{lossy}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Risultati della Compressione JPEG sull'intero dataset. I valori mostrano le metriche assolute e i relativi delta rispetto alla \textit{baseline} senza difesa al variare del fattore di qualità ($q$).}
+    \label{tab:jpeg_full_dataset}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{@{}llccccccc@{}}
+        \toprule
+        \textbf{Famiglia} & \textbf{Metrica} & \textbf{No Defense} & \textbf{$q=10$} & \textbf{$q=50$} & \textbf{$q=80$} & \textbf{$\Delta \ q=10$} & \textbf{$\Delta \ q=50$} & \textbf{$\Delta \ q=80$} \\
+        \midrule
+        \textbf{Genuine} & Accuracy & 83.92\% & 70.62\% & 83.55\% & 83.95\% & \textcolor{black}{-13.30\%} & -0.37\% & +0.03\% \\
+        \midrule
+        BIM (Targeted) & ASR & 70.83\% & 10.17\% & 58.00\% & 63.50\% & \textcolor{black}{-60.67\%} & -12.83\% & -7.33\% \\
+        BIM (Untargeted) & Accuracy & 4.00\% & 27.33\% & 11.00\% & 8.00\% & \textcolor{black}{+23.33\%} & +7.00\% & +4.00\% \\
+        CW (Untargeted) & Accuracy & 18.00\% & 30.92\% & 24.08\% & 19.42\% & \textcolor{black}{+12.92\%} & +6.08\% & +1.42\% \\
+        DeepFool (Untargeted) & Accuracy & 12.83\% & 43.67\% & 21.08\% & 15.58\% & \textcolor{black}{+30.83\%} & +8.25\% & +2.75\% \\
+        FGSM (Targeted) & ASR & 3.83\% & 1.00\% & 3.17\% & 3.67\% & \textcolor{black}{-2.83\%} & -0.67\% & -0.17\% \\
+        FGSM (Untargeted) & Accuracy & 7.00\% & 24.17\% & 13.00\% & 9.83\% & \textcolor{black}{+17.17\%} & +6.00\% & +2.83\% \\
+        PGD (Targeted) & ASR & 62.17\% & 0.83\% & 46.33\% & 54.17\% & \textcolor{black}{-61.33\%} & -15.83\% & -8.00\% \\
+        PGD (Untargeted) & Accuracy & 7.50\% & 31.83\% & 19.50\% & 14.00\% & \textcolor{black}{+24.33\%} & +12.00\% & +6.50\% \\
+        \bottomrule
+    \end{tabular}
+    }
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./Defense/JPEG_Defense/jpeg_defense_full_dataset.png}
+    \caption{Visualizzazione grafica delle performance della difesa JPEG sull'intero dataset. Si osserva la marcata sensibilità delle metriche al livello di compressione applicato.}
+    \label{fig:jpeg_full_dataset}
+\end{figure}
+
+
+\textbf{Il Trade-off tra Usabilità e Robustezza}
+L'analisi del comportamento sui campioni \textbf{genuini} illustra chiaramente il costo operativo della difesa. 
+Utilizzando un fattore di qualità lieve ($q=80$), l'impatto sull'accuratezza nominale del sistema è statisticamente 
+nullo (+0.03\%), indicando che le feature biometriche fondamentali vengono preservate. Tuttavia, inasprendo il filtro 
+($q=10$), si assiste a un crollo drammatico dell'accuratezza legittima (-13.30\%). A questo livello, 
+i pesanti artefatti introdotti dalla quantizzazione DCT alterano la topologia del volto in modo irreparabile, 
+rendendo il sistema inusabile per scopi di identificazione.
+
+
+\textbf{Mitigazione degli Attacchi Mirati (Targeted Fixed)} 
+Nello scenario \textit{baseline}, gli attacchi iterativi strutturati manifestano un ASR estremamente elevato 
+(70.83\% per BIM e 62.17\% per PGD). 
+Applicando compressioni conservative ($q=80$ e $q=50$), si ottiene una mitigazione solo marginale: l'ASR di PGD, 
+ad esempio, scende rispettivamente solo di 8 e 15 punti percentuali. Soltanto ricorrendo a una distruzione spinta del 
+segnale ($q=10$) la direzionalità dell'attacco viene infranta in modo significativo 
+(l'ASR di PGD collassa allo 0.83\% e quello di BIM al 10.17\%).
+
+
+\textbf{Recupero dell'Accuratezza (Untargeted)}
+Parallelamente, le metriche relative agli attacchi a errore generico rivelano un'inefficacia intrinseca nel 
+ripristinare il corretto ground truth. Contro minacce subdole e ottimizzate in norma $L_2$ come Carlini 
+\& Wagner e DeepFool, il filtro $q=80$ riesce a recuperare appena un 1.42\% e un 2.75\% di accuratezza. 
+Anche spingendo la compressione ai massimi livelli ($q=10$), l'accuratezza ripristinata su DeepFool non 
+supera il 43.67\% (partendo da un 12.83\% di baseline).
+
+
+
+\subsubsection{Common Test Set Results}
+
+Per implementare questa valutazione, la struttura del sistema viene concettualmente riorganizzata. 
+A differenza del rilevatore avversariale, che funge da vero e proprio "cancello" (o \textit{gate}) in grado di respingere 
+le connessioni sospette, la compressione JPEG agisce come uno strato di filtraggio passivo e trasparente. 
+
+In questa architettura, non esiste alcuna operazione di scarto: ogni singola immagine in ingresso, che sia essa 
+legittima o manipolata da un attaccante, è obbligata ad attraversare il modulo di compressione prima di poter 
+raggiungere NN1. Durante l'attraversamento di questo filtro, il sistema 
+applica la quantizzazione matematica controllata dal fattore di qualità $q$.
+Si delineano due scenari di output:
+\begin{itemize}
+    \item \textit{PassOK (Successo della Difesa):} L'immagine compressa ha perso a sufficienza il proprio rumore malevolo.
+    La perturbazione è stata frantumata dal filtro e la rete NN1 riesce a identificare correttamente l'utente sottostante,
+    resistendo all'attacco.
+    \item \textit{PassFail (Fallimento della Difesa):} La compressione non è stata abbastanza aggressiva 
+    (oppure l'attacco era troppo robusto). La perturbazione sopravvive al filtro di pre-processing 
+    e riesce a ingannare con successo il classificatore finale, forzando un'identità errata o un errore generico.
+\end{itemize}
+
+\vspace{10pt}
+
+\subsubsection{Risultati sul Test Set Condiviso (\textit{Common Ground})}
+I dati complessivi registrati al variare del fattore di qualità sono riportati nella 
+Tabella \ref{tab:jpeg_testset_summary}, la cui distribuzione delle performance è sintetizzata 
+graficamente nella Figura \ref{fig:jpeg_testset_trends}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Metriche complessive di accuratezza sul Test Set Condiviso per i diversi livelli di qualità JPEG e relativi delta rispetto alla configurazione indifesa.}
+    \label{tab:jpeg_testset_summary}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        \textbf{Configurazione} & \textbf{Genuine Accuracy} & \textbf{Adversarial Accuracy} & \textbf{$\Delta$ Genuine} & \textbf{$\Delta$ Adversarial} \\
+        \midrule
+        No Defense & 85.17\% & 14.29\% & --- & --- \\
+        JPEG $q=10$ & 72.50\% & 37.86\% & \textcolor{black}{-12.67\%} & \textcolor{black}{+23.57\%} \\
+        \textbf{JPEG $q=50$} & \textbf{85.33\%} & \textbf{24.64\%} & \textbf{+0.17\%} & \textbf{+10.36\%} \\
+        JPEG $q=80$ & 85.17\% & 18.57\% & +0.00\% & +4.29\% \\
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.80\textwidth]{./Defense/JPEG_Defense/jpeg_defense_testset.png}
+    \caption{Grafico riepilogativo dei trend di accuratezza su campioni genuini e avversariali in funzione della qualità di compressione JPEG.}
+    \label{fig:jpeg_testset_trends}
+\end{figure}
+
+Mentre la configurazione aggressiva ($q=10$) penalizza l'usabilità del sistema riducendo l'accuratezza sui dati puliti del 12.67\%, e l'approccio conservativo ($q=80$) si dimostra inefficace nel disarmare la perturbazione (+4.29\%), il livello $q=50$ neutralizza una quota rilevante di vettori avversariali (+10.36\%) azzerando il costo biometrico sugli utenti legittimi (+0.17\%). 
+Di conseguenza, l'analisi granulare del comportamento della pipeline è stata focalizzata su quest'ultima configurazione.
+
+\begin{figure}[H]
+    \centering
+    % Top row: the system evaluation image occupies the full text width (larger size)
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{./Defense/JPEG_Defense/jpeg_defense_testset_system_eval_q50.png}
+        \caption{Valutazione globale di sistema per la configurazione JPEG $q=50$.}
+        \label{fig:jpeg_system_eval_q50}
+    \end{subfigure}
+    
+    \vspace{1.5em} % Vertical spacing between rows
+    
+    % Bottom row: targeted ASR and per-attack breakdown side by side
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/JPEG_Defense/jpeg_defense_testset_asr_q50.png}
+        \caption{Impatto sull'Attack Success Rate (ASR).}
+        \label{fig:jpeg_asr_q50}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/JPEG_Defense/jpeg_defense_testset_breakdown_q50.png}
+        \caption{Scomposizione esiti (PassOK/PassFail) per famiglia.}
+        \label{fig:jpeg_breakdown_q50}
+    \end{subfigure}
+    
+    \caption{Quadro sinottico dei risultati sperimentali sul Test Set ottenuti tramite la configurazione ottimale JPEG $q=50$.}
+    \label{fig:jpeg_q50_evaluation_grid}
+\end{figure}
+
+\vspace{10pt}
+
+\subsubsection{Conclusioni sull'Efficacia del Pre-Processing}
+I dati empirici confermano i limiti teorici del \textit{pre-processing} contro minacce con magnitudo elevata 
+(come nel nostro caso con perturbazioni $L_\infty$ pari al 10\% del range dinamico). Sebbene la compressione JPEG 
+funzioni effettivamente come un filtro passa-basso disorientando i gradienti avversariali, la quantità di rumore 
+iniettata dagli algoritmi è troppo massiccia. Rimuovere una quantità di segnale sufficiente a neutralizzare l'attacco 
+($q=10$) comporta inevitabilmente la distruzione di una porzione critica di dettagli semantici legittimi, paralizzando 
+la capacità di riconoscimento del modello NN1. Il migliore compresso risulta essere il livello $q=50$. Nonostante ciò questo
+meccanismo di difesa non è adatto a garantire un meccanssmo di protezione sufficiente per un sistema di riconoscimento facciale.
+
+
+\vspace{15pt}
+
+
+\subsection{Adversarial Detector}
+\vspace{5pt}
+
+\textbf{Training}
+La fase di addestramento dell'Adversarial Detector è stata concepita per massimizzare la capacità del modello di 
+generalizzare su perturbazioni non viste, mantenendo al contempo un'elevata efficienza computazionale. A tal fine, 
+sono stati condotti due esperimenti paralleli per confrontare architetture di rete e strategie di ottimizzazione 
+differenti.
+
+\vspace{10pt} 
+
+\subsubsection{Architectures (Experiment A and B)}
+
+È stata preliminarmente scartata l'ipotesi di utilizzare i moduli di rilevamento 
+predefiniti forniti direttamente dalla libreria ART, come ad esempio l'\texttt{ActivationDefence} dato che questi
+non sono progettati per il fine-tuning in classificazione binaria. Essi sono piuttosto strumenti di analisi statistica sulle 
+attivazioni (che applicano, ad esempio, algoritmi di clustering k-means sui feature layer intermedi), la cui efficacia 
+si esplica principalmente in scenari di \textit{data poisoning}. 
+Quindi per lo sviluppo di un detector generico e robusto da porre come meccanismo di gating a monte del 
+classificatore principale, questa non è la strada metodologica corretta.
+
+Si è scelto pertanto di modellare il rilevamento come un problema nativo di classificazione binaria supervisionata, 
+(campione genuino vs. campione avversariale). Per risolvere questo task si è optato per architetture convoluzionali
+note per ottenere un necessario compromesso tra accuratezza e leggerezza computazionale, un requisito essenziale affinché 
+il modulo di  difesa non introduca latenze operative inaccettabili in un sistema di face recognition reale e possa essere
+allo stesso tempo addestrato in tempi ragionavoli e con le limitate risorse a disposizione. Le architetture selezionate 
+per i due esperimenti sono le seguenti:
+
+\begin{itemize}
+    \item \textbf{Esperimento A (MobileNetV3-Large):} Architettura progettata per l'efficienza su dispositivi mobili, 
+    caratterizzata dall'uso di \textit{depthwise separable convolutions} e moduli \textit{Squeeze-and-Excitation}. 
+    La scelta è guidata dalla necessità di minimizzare l'overhead computazionale: le \textit{depthwise separable convolutions} riducono drasticamente le operazioni necessarie per 
+    l'estrazione delle feature, mentre i blocchi \textit{Squeeze-and-Excitation} consentono alla rete di ricalibrare 
+    l'importanza dei canali, aiutando il modello a focalizzarsi sulle alterazioni localizzate tipiche degli attacchi 
+    one-step o strutturati.
+
+    \item \textbf{Esperimento B (EfficientNet-B0):} Architettura basata su un \textit{compound scaling} ottimizzato per  
+    catturare omogeneamente le feature a diverse scale spaziali e 
+    risoluzioni. Nel contesto della classificazione binaria avversariale, tale proprietà si rivela particolarmente adatta per 
+    l'identificazione di perturbazioni ad alta frequenza (rumore avversariale). Poiché gli attacchi ottimizzati (come CW o 
+    DeepFool) introducono variazioni quasi impercettibili ma diffuse sulla geometria dei vettori di feature, 
+    il \textit{compound scaling} impedisce che il segnale del rumore venga saturato o perso nei layer più profondi, garantendo 
+    un'elevata sensibilità alle anomalie globali della texture dell'immagine.
+\end{itemize}
+Entrambi i modelli sono stati inizializzati con pesi pre-addestrati (servendosi del meccanismo di Transfer Learning) e 
+dotati di un \textit{classification head} binario.
+
+\vspace{10pt} 
+
+\subsubsection{Configurazione degli Iperparametri e Ottimizzazione}
+L'ottimizzazione dei pesi è stata affidata all'algoritmo \textbf{Adam}. Di seguito sono riportati gli iperparametri 
+fondamentali definiti  per l'addestramento:
+\begin{itemize}
+    \item \textbf{Batch Size:} $256$. Un batch di dimensioni generose aiuta a stabilizzare la stima del gradiente.
+    \item \textbf{Learning Rate:}  $10^{-4}$. Un valore conservativo scelto per evitare alterazioni 
+    distruttive dei pesi pre-addestrati durante le prime fasi del fine-tuning.
+    \item \textbf{Weight Decay:} $10^{-4}$ (Regolarizzazione $L_2$). Questo parametro penalizza pesi 
+    eccessivamente elevati, mitigando l'overfitting e costringendo la rete ad apprendere feature più distribuite e 
+    generali, anziché memorizzare pattern specifici del rumore di training.
+    \item \textbf{Loss Function:} \textit{Cross-Entropy Loss}, la funzione obiettivo standard per i task di 
+    classificazione.
+\end{itemize}
+
+\vspace{10pt} 
+
+\subsubsection{Training \& Validation Results}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/Detector/detector_A_history_from_csv.png}
+        \caption{Andamento di training e validation loss per il rilevatore basato su MobileNetV3-Large.}
+        \label{fig:MobileNetV3_training}
+    \end{subfigure}
+    \hfill 
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/Detector/detector_B_history_from_csv.png}
+        \caption{Andamento di training e validation loss per il rilevatore basato su EfficientNet-B0}
+        \label{fig:EfficientNetB0_training}
+    \end{subfigure}
+    
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{./Defense/Detector/detector_A_per_attack_from_csv.png}
+        \caption{Per-attack detection rate per il rilevatore basato su MobileNetV3-Large.}
+        \label{fig:MobileNetV3_training_det_rate}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}[b]{0.48\textwidth}
+            \centering
+            \includegraphics[width=1.0\textwidth]{./Defense/Detector/detector_B_per_attack_from_csv.png}
+            \caption{Per-attack detection rate per il rilevatore basato su EfficientNet-B0.}
+            \label{fig:EfficientNetB0_training_det_rate}
+    \end{subfigure}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Confronto delle prestazioni di validazione tra i modelli MobileNetV3-Large (Esperimento A) ed EfficientNet-B0 (Esperimento B).}
+    \label{tab:confronto_esperimenti}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{Modello (Esperimento)} & \textbf{Best Val Accuracy} & \textbf{Best Val F1} & \textbf{Best Val AUROC} & \textbf{Best Epoch} & \textbf{Total Epochs} \\
+        \midrule
+        MobileNetV3-Large (A) & 94.45\% & 0.9438 & 0.9884 & 38 & 50 \\
+        \textbf{EfficientNet-B0 (B)*} & \textbf{95.94\%} & \textbf{0.9589} & \textbf{0.9928} & 30 & 50 \\
+        \bottomrule
+    \end{tabular}%
+    }
+    \begin{flushleft}
+        \small $^*$ Indica il miglior modello in base alla metrica AUROC.
+    \end{flushleft}
+\end{table}
+
+In base ai risultati ottenuti sul validation set, riportati in Tabella~\ref{tab:confronto_esperimenti}, 
+il modello \textbf{EfficientNet-B0} (Esperimento B) è stato selezionato come la scelta ottimale per l'architettura 
+del rilevatore. Sebbene entrambi i modelli mostrino ottime capacità di generalizzazione, EfficientNet-B0 supera 
+MobileNetV3-Large in tutte le metriche chiave, registrando un'accuratezza del 95.94\% e un valore di AUROC pari a 0.9928. 
+
+\vspace{10pt} 
+
+
+\paragraph{Threshold Selection}
+
+
+L'output del detector avversariale (EfficientNet-B0) non è una decisione binaria rigida, ma un punteggio di 
+anomalia continuo compreso nell'intervallo $[0, 1]$. Per rendere il sistema operativo, è necessario definire una soglia 
+decisionale (\textit{threshold}) al di sopra della quale un input viene classificato (e conseguentemente bloccato) come
+attacco avversariale. 
+
+Nel nostro caso, la scelta di questo parametro definisce il livello di severità del ``gate'': una soglia più bassa 
+rende il \textit{detector} molto restrittivo (poiché basta un grado minimo di anomalia per innescare il blocco), mentre 
+una soglia più elevata si dimostra più permissiva. In ambito di sicurezza biometrica, questo comportamento impone un 
+inevitabile trade-off operativo misurato attraverso due metriche fondamentali:
+\begin{itemize}
+    \item \textbf{FAR (False Acceptance Rate):} La percentuale di immagini avversariali che riescono a eludere 
+    il \textit{detector} (Falsi Negativi). Rappresenta il rischio di subire l'attacco.
+    \item \textbf{FRR (False Rejection Rate):} La percentuale di immagini genuine che vengono erroneamente etichettate 
+    come manipolate e quindi bloccate dal sistema (Falsi Positivi). Rappresenta il costo in termini di usabilità e 
+    disservizio per l'utente legittimo.
+\end{itemize}
+
+Abbassando la soglia decisionale, si riduce drasticamente il FAR (massima sicurezza) a discapito di un innalzamento 
+vertiginoso del FRR (il sistema blocca quasi tutti, compresi gli utenti legittimi). Per trovare un punto di equilibrio 
+oggettivo che garantisca una robusta barriera difensiva senza paralizzare l'usabilità del sistema di riconoscimento 
+facciale, si ricorre al metodo dell'\textbf{Equal Error Rate (EER)}. L'EER individua esattamente il punto operativo in 
+cui il tasso di false accettazioni eguaglia il tasso di falsi scarti ($FAR = FRR$).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./Defense/Detector/detector_B_eer.png}
+    \caption{Curva di trade-off tra False Acceptance Rate (FAR, in rosso) e False Rejection Rate (FRR, in blu) al variare della soglia decisionale per il modello EfficientNet-B0. L'intersezione indica l'Equal Error Rate (EER).}
+    \label{fig:detector_far_vs_frr}
+\end{figure}
+Come illustrato nella Figura \ref{fig:detector_far_vs_frr}, tracciando l'andamento empirico di FAR e FRR calcolato sulle 
+predizioni del validation set, si osserva che le due curve si incrociano in corrispondenza di una soglia decisionale pari 
+a \textbf{0.11}. In questo esatto punto, l'errore di sistema si stabilizza con un Equal Error Rate stimato di circa 
+il 5.26\%. 
+
+Si è scelto di adottare formalmente questa soglia all'EER ($threshold = 0.11$) in quanto rappresenta il miglior 
+compromesso analitico: permette al \textit{detector} di intercettare e scartare efficacemente quasi il 95\% dei 
+campioni avversari, accettando un ragionevole tasso di interferenza (circa il 5\%) sugli accessi legittimi, un 
+margine del tutto sostenibile per un sistema critico di controllo accessi.
+
+
+
+\vspace{15pt} 
+
+
+\subsubsection{Test Set Results}
+Di seguito vengono riportati i risultati ottenuti sul test set per il rilevatore basato su EfficientNet-B0, utilizzando 
+la soglia decisionale stabilita all'EER (0.11). Come si puo osservare da \ref{fig:efficientnet_test_per_attack} entrambi i
+modelli hanno performance molto simili (come confermato dalle valutazioni sul validation set), ma EfficientNet-B0 mostra 
+una maggiore capacità di rilevare gli attacchi più sofisticati come CW e DeepFool confermandosi come la scelta migliore (già
+fatta in precedenza sulla base dei risultati di validazione) per il modulo di rilevamento da porre a monte del sistema di face recognition.
+tra i due modelli
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/Detector/detector_test_per_attack.png}
+        \caption{Risultati di test per i due detector fine tunati.}
+        \label{fig:efficientnet_test_per_attack}
+    \end{subfigure}
+    \vspace{0.5cm}
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/Detector/detector_test_confusion_matrices.png}
+        \caption{EfficientNet Confusion Matrix.}
+        \label{fig:efficientnet_confusion}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/Detector/detector_test_roc.png}
+        \caption{ROC Curve per il rilevatore EfficientNet.}
+        \label{fig:efficientnet_roc}
+    \end{subfigure}
+
+    \caption{Risultati complessivi del rilevatore EfficientNet.}
+\end{figure}
+
+
+\begin{table}[H]
+    \centering
+    % Table caption containing the global parameters of the test
+    \caption{Test Set Evaluation Summary for EfficientNet-B0 (Test subjects: 10, Test images: 1160, Threshold: 0.11)}
+    \label{tab:evaluation_summary_efficientnet}
+    \begin{tabular}{lc}
+        \toprule
+        \textbf{Metric} & \textbf{EfficientNet-B0} \\
+        \midrule
+        \multicolumn{2}{c}{\textit{Overall Performance}} \\
+        \midrule
+        Accuracy & 95.00\% \\
+        Precision & 0.9373 \\
+        Recall & 0.9607 \\
+        F1 Score & 0.9489 \\
+        AUROC & 0.9906 \\
+        Genuine FPR & 6.00\% \\
+        \midrule
+        \multicolumn{2}{c}{\textit{Per-Attack Detection Rate}} \\
+        \midrule
+        FGSM & 100.0\% \\
+        BIM & 94.5\% \\
+        PGD & 90.8\% \\
+        CW & 97.5\% \\
+        DeepFool & 98.1\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\vspace{10pt}
+
+
+\subsubsection{Multi-Module Defense (Detector + NN1)}
+
+Per proteggere il sistema di riconoscimento facciale, la difesa basata sul rilevatore avversariale è stata 
+ingegnerizzata non come una modifica interna della rete principale (NN1), bensì attraverso un'architettura multi-modulare 
+sequenziale. In questa configurazione, il modello ottimizzato (EfficientNet-B0) viene interposto a monte di NN1, 
+agendo come un modulo di gating attivo a runtime durante la fase di inferenza.
+
+
+\textbf{Pipeline}
+
+
+Il flusso di esecuzione dei dati all'interno del sistema difeso segue una pipeline sequenziale con logica a due stadi, implementata per 
+ogni batch di immagini in ingresso:
+
+% GRAFICO ARCHITETTURALE DELLA PIPELINE DI DIFESA
+\begin{figure}[htbp]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}[
+        % Definition of the block styles
+        node distance = 1.5cm,
+        auto,
+        block/.style={
+            rectangle,
+            draw=black,
+            thick,
+            fill=blue!10,
+            text width=3cm,
+            align=center,
+            rounded corners,
+            minimum height=1.3cm,
+            font=\small
+        },
+        decision/.style={
+            diamond,
+            draw=black,
+            thick,
+            fill=yellow!20,
+            text width=2.2cm,
+            align=center,
+            inner sep=0pt,
+            minimum height=1.3cm,
+            font=\small
+        },
+        inputoutput/.style={
+            rectangle,
+            draw=black,
+            thick,
+            fill=gray!15,
+            text width=2.5cm,
+            align=center,
+            rounded corners,
+            minimum height=1.1cm,
+            font=\small
+        },
+        reject/.style={
+            rectangle,
+            draw=red!70!black,
+            thick,
+            fill=red!15,
+            text width=2.5cm,
+            align=center,
+            rounded corners,
+            minimum height=1.1cm,
+            font=\small\bfseries,
+            text=red!50!black
+        },
+        success/.style={
+            rectangle,
+            draw=green!60!black,
+            thick,
+            fill=green!15,
+            text width=2.5cm,
+            align=center,
+            rounded corners,
+            minimum height=1.1cm,
+            font=\small\bfseries,
+            text=green!40!black
+        },
+        line/.style={
+            draw,
+            -Latex,
+            thick
+        }
+    ]
+    % Positioning of the schema nodes
+    \node (input) [inputoutput] {Sample in Input \\ (Immagine RGB)};
+    \node (detector) [block, right=1.2cm of input] {Adversarial Detector \\ (EfficientNet-B0)};
+    \node (decision) [decision, right=1.2cm of detector] {Punteggio Anomalia \\ $S \ge 0.11$?};
+    \node (reject) [reject, above=1.2cm of decision] {SAMPLE REJECTED \\ (Accesso Negato)};
+    \node (preprocess) [block, right=1.2cm of decision] {Pre-processing NN1 \\ (Normalizzazione $[-1, 1]$)};
+    \node (nn1) [block, fill=blue!20, right=1.2cm of preprocess] {Inferenza NN1 \\ (InceptionResNet)};
+    \node (output) [success, right=1.2cm of nn1] {Predizione Finale \\ (Identità Soggetto)};
+    % Connections and labels
+    \path [line] (input) -- (detector);
+    \path [line] (detector) -- (decision);
+    \path [line] (decision) -- node [near start, left] {Sì} (reject);
+    \path [line] (decision) -- node [near start, above] {No} (preprocess);
+    \path [line] (preprocess) -- (nn1);
+    \path [line] (nn1) -- (output);
+
+    \end{tikzpicture}
+    }
+    \caption{Schema architetturale della pipeline multi-modulare di difesa.}
+    \label{fig:pipeline_architetturale}
+\end{figure}
+
+\begin{enumerate}
+    \item \textbf{Stadio 1 -- Validazione dell'Input (Detector Gate):} L'immagine in ingresso viene inizialmente convertita in un 
+    tensore normalizzato nel range $[0, 1]$. Questo tensore viene analizzato dal detector, il quale calcola il punteggio continuo di 
+    anomalia avversariale tramite la funzione \texttt{detector.predict\_score()}. Qualora questo punteggio sia pari o superiore alla 
+    soglia ($\tau = 0.11$), il campione viene categorizzato come avversariale e poi bloccato così che non raggiunga lo stadio successivo.
+    Solo i campioni che ottengono un punteggio inferiore alla  soglia superano con successo il filtro del detector e vengono 
+    classificati come legittimi.
+    \item \textbf{Stadio 2 -- Classificazione Biometrica (NN1 Inference):} Le immagini che superano il filtro del detector 
+    vengono elaborate dal sistema, che estrae il corrispondente tensore pre-elaborato per la rete di face 
+    recognition, che prevede una normalizzazione specifica nel range $[-1, 1]$ (applicato all'input originale) e poi all'inferenza su NN1. 
+    Il risultato finale è la predizione di identità, che viene confrontata con il label reale per valutare l'accuratezza del sistema 
+    difeso.
+\end{enumerate}
+
+
+\vspace{10pt}
+
+\paragraph{Methodology and Evaluation Criteria}
+
+Per comprendere appieno l'efficacia del sistema difeso, non è sufficiente valutare il modulo di 
+rilevamento in modo isolato; è necessario 
+misurare l'impatto combinato del detector insieme al classificatore biometrico principale (NN1) 
+quando operano in cascata. A questo scopo, la procedura sperimentale è stata strutturata secondo due
+fasi di esecuzione distinte e sequenziali applicate sul test set:
+
+\begin{itemize}
+    \item \textbf{Run 1 -- Baseline (Sistema Indifeso):} In questa prima fase, le immagini del test set 
+    vengono inoltrate direttamente alla rete principale NN1, bypassando il meccanismo di filtraggio. 
+    Questa configurazione consente di registrare le performance grezze della rete 
+    sia sui campioni genuini, sia sotto l'effetto delle diverse famiglie di attacco avversariale grazie 
+    alla duplice nature degli elementi del test set.
+    \item \textbf{Run 2 -- Defended System (Sistema Protetto):} In questa seconda fase viene attivata 
+    l'architettura multi-modulare completa. Ogni immagine attraversa preliminarmente il modulo di 
+    gating del detector seguendo quanto descritto nella sezione precedente della pipeline.
+\end{itemize}
+
+La valutazine della baseline senza difese permette di quantificare l'incremento di sicurezza introdotto 
+dalla difesa, misurando  prima gli effetti dei singoli attacchi del test set su NN1.
+
+
+Per analizzare i flussi generati dalle due fasi, sono stati definiti i seguenti criteri di valutazione:
+
+\begin{itemize}
+    \item \textbf{Accuratezza Nominale e Condizionata su Genuini:} Misura la capacità di NN1 di 
+    riconoscere il corretto soggetto pulito. Nella Run 1 è calcolata su tutto il pool genuino, 
+    mentre nella Run 2 viene valutata in modo condizionato esclusivamente sulle immagini 
+    genuine che hanno superato con successo il gate.
+    \item \textbf{Adversarial Block Rate (True Positive Rate del Detector):} Rappresenta la percentuale 
+    di esempi avversariali correttamente intercettati e neutralizzati dal modulo di protezione.
+    \item \textbf{Genuine False Positive Rate (FPR):} Il tasso di falsi rigetti, ovvero la frazione 
+    di utenti legittimi ingiustamente bloccati a monte dal detector, metrica critica per stimare
+    l'usabilità complessiva della soluzione.
+    \item \textbf{System Accuracy:} La metrica di sintesi definitiva del sistema protetto. 
+    Viene calcolata considerando come predizioni corrette la somma delle immagini genuine 
+    classificate correttamente da NN1 e delle immagini avversariali bloccate con successo 
+    dal detector, rapportata al totale complessivo dei campioni transitati nella pipeline:
+    \begin{equation}
+        \text{System Accuracy} = \frac{\text{Genuine Passed \& NN1 Correct} + \text{Adversarial Blocked}}{\text{Total Genuine} + \text{Total Adversarial}}
+    \end{equation}
+    \item \textbf{Conditional Accuracy (Gate Pass):} L'accuratezza di NN1 calcolata su tutti i campioni 
+    (sia puliti sia residui avversariali sfuggiti al controllo) che riescono a oltrepassare la soglia 
+    decisionale, utile per valutare la qualità dei dati ammessi alla classificazione biometrica finale.
+\end{itemize}
+
+
+\paragraph{Results and Analysis}
+
+L'attivazione della pipeline difensiva multi-modulare ha mostrato risultati soddisfacenti, 
+confermando l'efficacia del rilevatore basato su classificazione binaria nel neutralizzare 
+le minacce avversariali prima che queste possano compromettere l'integrità del sistema 
+biometrico principale (NN1). 
+L'addestramento supervisionato condotto secondo la metodologia identity-disjoint 
+ha fornito al modello una buona capacità di generalizzazione, estrapolando la firma statistica 
+del rumore avversariale anche su identità non viste in fase di training. 
+
+\begin{figure}[htbp]
+    \centering
+    % Prima riga della griglia: l'immagine occupa le prime due posizioni risultando più grande
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{./Defense/Detector/system_eval_accuracy_comparison_nn1.png}
+        \caption{Confronto delle metriche globali di performance: Baseline vs. Sistema Difeso.}
+        \label{fig:accuracy_comparison_nn1}
+    \end{subfigure} \\[3ex]
+    % Seconda riga della griglia: le altre due immagini affiancate
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/Detector/system_eval_breakdown_stacked_nn1.png}
+        \caption{Ripartizione percentuale degli esiti per famiglia di attacco nel sistema protetto.}
+        \label{fig:breakdown_stacked_nn1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/Detector/system_eval_attack_success_rate_nn1.png}
+        \caption{Confronto dell'Attack Success Rate (ASR) tra lo scenario baseline e difeso.}
+        \label{fig:attack_success_rate_nn1}
+    \end{subfigure}
+    \caption{Quadro sinottico della valutazione sperimentale del sistema integrato Detector + NN1.}
+    \label{fig:system_evaluation_grid}
+\end{figure}
+
+Come si puo evincere dai risultati sperimentali il meccanismo di difesa basato su adversarial detector risulta essere ottimale 
+e si conferma essere di gran lunga superiore rispetto alla compressione JPEG.
+
+
+\vspace{15pt}
+\subsection{Defense Transferability: Evaluation on Target Model (NN2)}
+
+L'efficacia di una contromisura di sicurezza non può dirsi completa se valutata unicamente 
+nello scenario \textit{white-box} (in cui l'attaccante ha accesso totale al modello per 
+generare l'attacco). Per garantire una robustezza generale, è essenziale valutare la 
+\textbf{trasferibilità della difesa}. In questo esperimento, abbiamo ipotizzato che 
+l'attaccante abbia utilizzato la rete NN1 come modello surrogato per forgiare i campioni 
+avversariali, tentando poi di trasferirli per colpire il sistema reale. 
+
+Il sistema di difesa scelta è stata quello più efficace, ovvero il detector binario basato su EfficientNet-B0.
+La pipeline adottata è quindi quella Detector + NN2. 
+In questa architettura, l'Adversarial Detector opera invariato come
+gate di pre-filtraggio nello spazio di input, ma i campioni etichettati come genuini 
+vengono inoltrati a NN2 (ResNet-50) per la classificazione 
+finale. Questa struttura permette di rispondere a un quesito fondamentale: se una 
+perturbazione sfugge al detector, possiede ancora le proprietà geometriche 
+necessarie per ingannare un'architettura diversa da quella su cui è stata calcolata?
+
+\subsubsection{Risultati Sperimentali e Analisi Comparativa}
+Le metriche estrapolate dall'esecuzione combinata evidenziano come la pipeline 
+\textit{Detector + NN2} sia ancora efficace contro gli attacchi trasferiti. 
+A parità di soglia, il modulo di gating 
+ha registrato un \textbf{Adversarial Block Rate del 96.07\%}, a fronte di un tasso di falsi 
+positivi (Genuine FPR) mantenuto al 6.00\%.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Confronto delle metriche di valutazione del sistema difeso tra il modello surrogato (NN1) e il modello target (NN2). Soglia Detector: 0.11, Genuine FPR: 6.00\%, Adversarial Block Rate: 96.07\%.}
+    \label{tab:transferability_metrics}
+    \begin{tabular}{@{}lcc@{}}
+        \toprule
+        \textbf{Metrica (Sistema Difeso)} & \textbf{NN1 (VGG)} & \textbf{NN2 (ResNet)} \\
+        \midrule
+        Genuine Accuracy (Passed Gate) & 85.11\% & 91.49\% \\
+        System Accuracy (Blocked = Correct) & 87.76\% & 90.86\% \\
+        Conditional Accuracy (Gate Pass) & 82.94\% & 91.13\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Ripartizione per famiglia di attacco e tasso di fallimento indotto (PassFail) sui campioni in grado di eludere il Detector.}
+    \label{tab:transferability_breakdown}
+    \begin{tabular}{@{}lccccc@{}}
+        \toprule
+        \textbf{Famiglia} & \textbf{Totale} & \textbf{Bloccati} & \textbf{Block \%} & \textbf{NN1 PassFail} & \textbf{NN2 PassFail} \\
+        \midrule
+        FGSM & 97 & 97 & 100.0\% & 0 (0.0\%) & 0 (0.0\%) \\
+        BIM & 128 & 121 & 94.5\% & 7 (5.5\%) & 2 (1.6\%) \\
+        PGD & 109 & 99 & 90.8\% & 9 (8.3\%) & 2 (1.8\%) \\
+        CW & 120 & 117 & 97.5\% & 0 (0.0\%) & 0 (0.0\%) \\
+        DeepFool & 106 & 104 & 98.1\% & 0 (0.0\%) & 0 (0.0\%) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Come si evince dalle Tabelle \ref{tab:transferability_metrics} e \ref{tab:transferability_breakdown}, 
+la System Accuracy subisce un ulteriore incremento su NN2 (90.86\% contro l'87.76\% di NN1). 
+Inolte, come già osservato precedentemente NN2 si rivela essere di base una rete piu robusta dato
+che gli attacchi sono stati generati "ad-hoc" su NN1. 
+Ciò conferma una solida proprietà teorica: le perturbazioni altamente ottimizzate per 
+sfuggire ai filtri spaziali (e quindi al detector) tendono a compiere un 
+forte \textit{overfitting} sulla geometria della rete sorgente, annullando la 
+loro capacità di trasferibilità su reti dotate di distribuzioni di gradienti differenti 
+(come la ResNet di NN2).
+
+\begin{figure}[H]
+    \centering
+    
+    % Prima riga: l'immagine occupa interamente la larghezza del testo
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{./Defense/Detector/system_eval_accuracy_comparison_nn2.png}
+        \caption{Confronto delle metriche globali: Trasferibilità su NN2.}
+        \label{fig:accuracy_comparison_nn2}
+    \end{subfigure}
+    
+    \vspace{1.5em} % Spazio verticale tra le righe
+    
+    % Seconda riga: le due immagini sono affiancate
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/Detector/system_eval_breakdown_stacked_nn2.png}
+        \caption{Ripartizione degli esiti per famiglia di attacco su NN2.}
+        \label{fig:breakdown_stacked_nn2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./Defense/Detector/system_eval_attack_success_rate_nn2.png}
+        \caption{Confronto dell'Attack Success Rate (ASR) su NN2.}
+        \label{fig:attack_success_rate_nn2}
+    \end{subfigure}
+    
+    \caption{Valutazione della trasferibilità della difesa (Detector + NN2).}
+    \label{fig:system_evaluation_grid_nn2}
+\end{figure}
 
 
 
