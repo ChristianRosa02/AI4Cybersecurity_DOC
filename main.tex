@@ -1853,6 +1853,9 @@ Il riscontro visivo primario di questa comparazione è offerto dalla Figura~\ref
 
 
 
+
+
+
 \clearpage
 \section{Transferability Analysis}
 Un aspetto cruciale nella valutazione della robustezza dei sistemi di face recognition è la trasferibilità degli attacchi avversariali. Questa proprietà definisce la capacità di una perturbazione, originariamente calcolata per ingannare uno specifico modello (NN1), di mantenere la propria efficacia malevola anche contro un modello differente (NN2), permettendo all'attaccante di sfruttare vulnerabilità condivise tra architetture simili.
@@ -1863,6 +1866,20 @@ Le immagini avversariali così prodotte vengono successivamente testate su NN2 p
 
 \subsection{Error-Generic Attack}
 
+In questa sezione viene analizzata la transferibilità degli attacchi in modalità 
+\textit{error-generic}. In questo scenario l'attacco ha successo quando il modello assegna 
+all'immagine una qualsiasi etichetta diversa da quella corretta. Coerentemente con questo obiettivo, la metrica utilizzata è l'\textbf{accuracy} 
+del modello sugli esempi avversariali: una sua riduzione indica l'efficacia 
+dell'attacco. Nel contesto della transferibilità, si confronta l'accuracy del 
+modello surrogato NN1 con quella del modello bersaglio NN2, valutato sugli stessi esempi. Un calo marcato 
+dell'accuracy di NN2 indica che l'attacco, pur essendo stato costruito su NN1, 
+riesce a trasferirsi efficacemente anche su un modello diverso. Per quantificare questo fenomeno viene introdotto il \textbf{Transfer Gap}, 
+definito come la differenza tra l'accuracy di NN2 e quella di NN1 
+($\text{Acc}_{NN2} - \text{Acc}_{NN1}$): un valore elevato segnala una bassa 
+transferibilità, poiché NN2 mantiene un'accuratezza nettamente superiore a NN1; 
+un valore prossimo allo zero indica invece che i due modelli sono compromessi in 
+egual misura, e dunque un'elevata transferibilità.
+
 
 
 \subsubsection{Fast Gradient Sign Method (FGSM)}
@@ -1870,7 +1887,7 @@ Le immagini avversariali così prodotte vengono successivamente testate su NN2 p
 In questa sezione viene valutata l'accuratezza del modello NN2 sugli esempi avversariali generati tramite l'attacco FGSM contro NN1, analizzandone il comportamento al variare di $\epsilon$. 
 
 Per visualizzare chiaramente l'impatto dell'attacco, i risultati sono presentati attraverso una Security Evaluation Curve comparativa in Figura \ref{fig:fgsm_transferability_untargeted}. Questo grafico rappresenta l'accuracy di NN1 e di NN2, testati con diversi insiemi di immagini avversariali. Ciasun insieme è riferito a un diverso valore di $\epsilon$. Vengono testate prima le immagini con $\epsilon = 0.01$, poi con $\epsilon = 0.1$, e cosi via, fino a raggiungere il budget massimo di $\epsilon = 0.1$.
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     % Regola il parametro width (es. 0.8\textwidth) per ingrandire o rimpicciolire l'immagine
     \includegraphics[width=0.8\textwidth]{./Transferability/untargeted/FGSM/image.png}
@@ -1885,8 +1902,8 @@ Dall'analisi del grafico è possibile evidenziare i seguenti aspetti chiave:
     \item Per valori di perturbazione contenuti, NN2 mostra una robustezza superiore rispetto a NN1.
     \item In corrispondenza del valore $\epsilon = 0.05$, le due curve tendono a convergere verso gli stessi valori di accuracy. Questo indica che i modelli si comportano in maniera simile con $\epsilon \geq 0.05$.
 \end{itemize}
-I dati numerici completi sono riportati nella Tabella \ref{tab:fgsm_tab_unt_transferability}, che mostra inoltre il \textit{Transfer Gap}, ovvero la differenza di accuracy tra NN2 e NN1 per ogni valore di $\epsilon$.
-\begin{table}[htbp]
+I dati numerici completi sono riportati nella Tabella \ref{tab:fgsm_tab_unt_transferability}, che mostra inoltre il \textit{Transfer Gap} calcolato per ogni valore di $\epsilon$.
+\begin{table}[H]
     \centering
     \vspace{0.2cm}
     \begin{tabular}{cccc}
@@ -1906,7 +1923,6 @@ I dati numerici completi sono riportati nella Tabella \ref{tab:fgsm_tab_unt_tran
     \label{tab:fgsm_tab_unt_transferability}
 \end{table}
 
-Il Transfer Gap, calcolato come $\text{Acc}_{NN2} - \text{Acc}_{NN1}$, quantifica la differenza di accuracy tra i due modelli per ogni valore di $\epsilon$: un valore basso indica una bassa transferibilità.
 Per valori di perturbazione ridotti ($\epsilon \leq 0.010$), il gap raggiunge 
 il suo massimo ($+59.80\%$ per $\epsilon = 0.010$), indicando 
 che l'attacco, pur essendo efficace su NN1, si trasferisce solo parzialmente su NN2.
@@ -1948,12 +1964,12 @@ Dall'analisi in Figura \ref{fig:bim_transferability_untargeted}, emergono le seg
     \setlength{\tabcolsep}{12pt} % <-- AUMENTA QUESTO VALORE (es. 10pt, 12pt, 15pt)
     \vspace{0.2cm}
     \makebox[\textwidth][c]{
-    \begin{tabular}{c | cc | cc | ccc}
+    \begin{tabular}{| c | cc | cc | ccc |}
         \hline
         & \multicolumn{2}{c|}{\textbf{max\_iter = 5}}
         & \multicolumn{2}{c|}{\textbf{max\_iter = 10}}
-        & \multicolumn{3}{c}{\textbf{max\_iter = 20}} \\
-        \hline
+        & \multicolumn{3}{c|}{\textbf{max\_iter = 20}} \\
+        \cline{2-8}
         \textbf{$\epsilon$}
         & \textbf{NN2} & \textbf{NN1}
         & \textbf{NN2} & \textbf{NN1}
@@ -2067,12 +2083,12 @@ seguenti considerazioni.
     \vspace{0.2cm}
     \setlength{\tabcolsep}{12pt}      % aumenta lo spazio orizzontale tra le colonne
     \makebox[\textwidth][c]{
-    \begin{tabular}{c | ccc | ccc | ccc}
+    \begin{tabular}{| c | ccc | ccc | ccc |}
         \hline
         & \multicolumn{3}{c|}{\textbf{max\_iter = 1}}
         & \multicolumn{3}{c|}{\textbf{max\_iter = 10}}
-        & \multicolumn{3}{c}{\textbf{max\_iter = 40}} \\
-        \hline
+        & \multicolumn{3}{c|}{\textbf{max\_iter = 40}} \\
+        \cline{2-10}
         \textbf{$\epsilon$}
         & \textbf{NN1} & \textbf{NN2} & \textbf{Gap}
         & \textbf{NN1} & \textbf{NN2} & \textbf{Gap}
@@ -2145,7 +2161,7 @@ le seguenti considerazioni.
 
 La ridotta transferibilità di DeepFool trova spiegazione nell'entità delle 
 perturbazioni introdotte, riportate nella 
-Tabella~\ref{tab:deepfool_mean_linf}. Il Transfer Gap, calcolato come $\text{Acc}_{NN2} - \text{Acc}_{NN1}$, si mantiene 
+Tabella~\ref{tab:deepfool_mean_linf}. Il Transfer Gap si mantiene 
 elevato e prossimo al $+71\%$ per tutte le configurazioni, a conferma quantitativa 
 della scarsa capacità dell'attacco di trasferirsi sul modello bersaglio. Per sua natura, DeepFool genera 
 perturbazioni di ampiezza minima, appena sufficienti a far attraversare 
@@ -2289,7 +2305,7 @@ poco efficace già su NN1 e sostanzialmente \textbf{non trasferibile} su NN2.
 La Figura~\ref{fig:fgsm_es_ll} riporta la Security Evaluation Curve per la 
 modalità Least-Likely.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{./Transferability/targeted/FGSM/image_leastlikely.png}
     \caption{SEC comparativa per l'attacco FGSM error-specific in modalità 
@@ -2304,21 +2320,316 @@ $\epsilon$. Questo risultato è atteso: forzare la classificazione verso la clas
 FGSM non dispone della capacità di ottimizzazione necessaria a raggiungerlo, né su 
 NN1 né, tantomeno, su NN2.
 
+I dati numerici delle due modalità sono riassunti nella Tabella~\ref{tab:fgsm_es_transferability}, che riporta l'ASR di NN1 e NN2.
+
+\begin{table}[htbp]
+    \centering
+    \vspace{0.2cm}
+    \small
+    \setlength{\tabcolsep}{8pt}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{| c | cc | cc |}
+        \hline
+        & \multicolumn{2}{c|}{\textbf{Fixed}}
+        & \multicolumn{2}{c|}{\textbf{Least-Likely}} \\
+        \cline{2-5}
+        \textbf{$\epsilon$}
+        & \textbf{ASR NN1} & \textbf{ASR NN2}
+        & \textbf{ASR NN1} & \textbf{ASR NN2} \\
+        \hline
+        0.001 & 0.0\% & 0.0\% & 0.0\% & 0.0\% \\
+        0.003 & 0.0\% & 0.0\% & 0.0\% & 0.0\% \\
+        0.005 & 0.3\% & 0.0\% & 0.0\% & 0.0\% \\
+        0.010 & 1.7\% & 0.0\% & 0.0\% & 0.0\% \\
+        0.030 & 8.0\% & 0.5\% & 0.0\% & 0.0\% \\
+        0.050 & 8.0\% & 0.5\% & 0.1\% & 0.0\% \\
+        0.100 & 4.9\% & 1.9\% & 0.1\% & 0.0\% \\
+        \hline
+    \end{tabular}
+    \caption{ASR per FGSM error-specific nelle modalità Fixed e Least-Likely}
+    \label{tab:fgsm_es_transferability}
+\end{table}
+
 
 
 \subsubsection{Basic Iterative Method (BIM)}
+In questa sezione viene valutata la transferibilità dell'attacco BIM 
+\textit{error-specific}, analizzando l'Attack Success Rate (ASR) del modello 
+surrogato NN1 e del modello bersaglio NN2 al variare di $\epsilon$ e del numero 
+di iterazioni \texttt{max\_iter}, nelle due modalità Fixed e Least-Likely.
+
+\paragraph*{Modalità Fixed}\mbox{}\\
+La Figura~\ref{fig:bim_es_fixed} riporta la Security Evaluation Curve comparativa 
+per la modalità Fixed, confrontando l'ASR di NN1 e NN2 al variare di $\epsilon$ 
+per i diversi valori di \texttt{max\_iter}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{./Transferability/targeted/BIM/image_fixed.png}
+    \caption{SEC comparativa per l'attacco BIM error-specific in modalità Fixed.}
+    \label{fig:bim_es_fixed}
+\end{figure}
+
+Dall'analisi della Figura~\ref{fig:bim_es_fixed} emergono le seguenti considerazioni.
+\begin{itemize}
+    \item A differenza di FGSM, la natura iterativa di BIM gli consente di 
+    raggiungere ASR molto elevati su NN1: per \texttt{max\_iter} $\geq 5$ e 
+    $\epsilon \geq 0.03$, l'attacco forza la classe bersaglio su quasi tutte le 
+    immagini, arrivando al $100\%$ di ASR. L'efficacia su NN1 cresce inoltre con 
+    il numero di iterazioni.
+
+    \item Nonostante l'elevata efficacia su NN1, l'ASR di NN2 rimane molto 
+    contenuto, non superando l'$8\%$ in nessuna configurazione. L'attacco 
+    error-specific, pur riuscendo a imporre la classe bersaglio al modello NN1, \textbf{non si trasferisce efficacemente} su NN2.
+
+    \item Il massimo trasferimento su NN2 ($7.8\%$ di ASR) si osserva con 
+    \texttt{max\_iter=5} e $\epsilon = 0.1$, e tende a ridursi per valori di 
+    \texttt{max\_iter} superiori. Un numero più elevato di iterazioni rende 
+    infatti la perturbazione più specifica per NN1, diminuendone la capacità di 
+    trasferimento.
+\end{itemize}
+
+\paragraph*{Modalità Least-Likely}\mbox{}\\
+La Figura~\ref{fig:bim_es_ll} riporta la SEC comparativa per la modalità 
+Least-Likely.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{./Transferability/targeted/BIM/image_leastlikely.png}
+    \caption{SEC comparativa per l'attacco BIM error-specific in modalità 
+    Least-Likely.}
+    \label{fig:bim_es_ll}
+\end{figure}
+
+In modalità Least-Likely si osserva un comportamento analogo su NN1, ma con un 
+trasferimento ancora più limitato su NN2.
+\begin{itemize}
+    \item Anche in questo caso l'ASR di NN1 raggiunge valori elevati 
+    (fino al $100\%$ per \texttt{max\_iter} $\geq 10$ e $\epsilon = 0.1$), 
+    sebbene siano necessarie perturbazioni leggermente maggiori rispetto alla 
+    modalità Fixed per ottenere gli stessi risultati. Questo riflette la maggiore 
+    difficoltà del compito: forzare la classe \textit{meno probabile} richiede uno 
+    sforzo di ottimizzazione superiore.
+
+    \item L'ASR di NN2 rimane quasi sempre nullo, raggiungendo al più il $2.7\%$ 
+    (con \texttt{max\_iter=5}, $\epsilon = 0.1$). La transferibilità è quindi 
+    \textbf{ancora più bassa} rispetto alla modalità Fixed, coerentemente con la 
+    maggiore specificità dell'obiettivo.
+\end{itemize}
+
+I dati numerici delle due modalità sono riassunti nella 
+Tabella~\ref{tab:bim_es_transferability}, che riporta l'ASR di NN1 e NN2 per la 
+configurazione più aggressiva (\texttt{max\_iter=20}).
+
+\begin{table}[H]
+    \centering
+    \vspace{0.2cm}
+    \small
+    \setlength{\tabcolsep}{8pt}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{| c | cc | cc |}
+        \hline
+        & \multicolumn{2}{c|}{\textbf{Fixed}}
+        & \multicolumn{2}{c|}{\textbf{Least-Likely}} \\
+        \cline{2-5} 
+        \textbf{$\epsilon$}
+        & \textbf{ASR NN1} & \textbf{ASR NN2}
+        & \textbf{ASR NN1} & \textbf{ASR NN2} \\
+        \hline
+        0.001 &   0.0\% & 0.0\% &   0.0\% & 0.0\% \\
+        0.003 &   0.1\% & 0.0\% &   0.0\% & 0.0\% \\
+        0.005 &   1.0\% & 0.0\% &   0.0\% & 0.0\% \\
+        0.010 &  20.6\% & 0.0\% &   0.3\% & 0.0\% \\
+        0.030 &  98.5\% & 0.5\% &  75.1\% & 0.0\% \\
+        0.050 & 100.0\% & 1.3\% &  99.2\% & 0.2\% \\
+        0.100 & 100.0\% & 3.0\% & 100.0\% & 0.9\% \\
+        \hline
+    \end{tabular}
+    \caption{ASR per BIM error-specific nelle modalità Fixed e Least-Likely con \texttt{max\_iter=20}.}
+    \label{tab:bim_es_transferability}
+\end{table}
+
+
+
+
+
+
 
 \subsubsection{Projected Gradient Descent (PGD)}
+In questa sezione viene valutata la transferibilità dell'attacco PGD 
+\textit{error-specific}, analizzando l'Attack Success Rate (ASR) del modello 
+surrogato NN1 e del modello bersaglio NN2 al variare di $\epsilon$ e del numero 
+di iterazioni \texttt{max\_iter}, nelle due modalità Fixed e Least-Likely. 
+Il numero di inizializzazioni casuali è fissato a \texttt{nri=1}: come già 
+riscontrato nel caso error-generic, anche in questo contesto valori superiori non 
+producono variazioni significative, mentre \texttt{nri=0} corrisponderebbe di 
+fatto all'attacco BIM.
+
+\paragraph*{Modalità Fixed}\mbox{}\\
+La Figura~\ref{fig:pgd_es_fixed} riporta la SEC comparativa per la modalità Fixed, 
+confrontando l'ASR di NN1 e NN2 al variare di $\epsilon$ per i diversi valori di 
+\texttt{max\_iter}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{./Transferability/targeted/PGD/image_fixed.png}
+    \caption{SEC comparativa per l'attacco PGD error-specific in modalità Fixed.}
+    \label{fig:pgd_es_fixed}
+\end{figure}
+
+Dall'analisi della Figura~\ref{fig:pgd_es_fixed} emergono le seguenti considerazioni.
+\begin{itemize}
+    \item Grazie alla sua natura iterativa, PGD raggiunge ASR molto elevati su 
+    NN1: per \texttt{max\_iter} $\geq 5$ e $\epsilon \geq 0.05$, l'attacco forza 
+    la classe bersaglio sulla quasi totalità delle immagini, arrivando al $100\%$. 
+    Con \texttt{max\_iter=1} l'attacco resta invece poco efficace anche su NN1, 
+    non superando il $9\%$ di ASR.
+
+    \item Nonostante l'efficacia quasi totale su NN1, l'ASR di NN2 rimane molto 
+    contenuto, non superando il $4.2\%$ in nessuna configurazione. L'attacco 
+    error-specific, pur riuscendo a imporre la classe bersaglio al modello NN1, 
+    \textbf{non si trasferisce efficacemente} su NN2.
+
+    \item Il massimo trasferimento su NN2 si osserva con \texttt{max\_iter=5} 
+    ($4.2\%$ a $\epsilon = 0.1$) e tende a ridursi per valori di \texttt{max\_iter} 
+    superiori. Un numero più elevato di iterazioni rende la perturbazione più 
+    specifica per NN1, diminuendone la capacità di trasferimento.
+\end{itemize}
+
+\paragraph*{Modalità Least-Likely}\mbox{}\\
+La Figura~\ref{fig:pgd_es_ll} riporta la SEC comparativa per la modalità 
+Least-Likely.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{./Transferability/targeted/PGD/image_leastlikely.png}
+    \caption{SEC comparativa per l'attacco PGD error-specific in modalità 
+    Least-Likely.}
+    \label{fig:pgd_es_ll}
+\end{figure}
+
+In modalità Least-Likely il comportamento su NN1 è analogo, ma la transferibilità 
+su NN2 risulta ancora più ridotta.
+\begin{itemize}
+    \item L'ASR di NN1 raggiunge nuovamente valori prossimi al $100\%$ per 
+    \texttt{max\_iter} $\geq 10$ e $\epsilon = 0.1$, sebbene la salita verso questi 
+    valori sia più lenta rispetto alla modalità Fixed: forzare la classe 
+    \textit{meno probabile} è un obiettivo intrinsecamente più difficile e 
+    richiede perturbazioni maggiori.
+
+    \item L'ASR di NN2 rimane quasi costantemente nullo, raggiungendo al più lo 
+    $0.6\%$ (con \texttt{max\_iter=5}, $\epsilon = 0.1$). La transferibilità è 
+    quindi \textbf{ancora più bassa} rispetto alla modalità Fixed, coerentemente 
+    con la maggiore specificità dell'obiettivo.
+\end{itemize}
+
+I dati numerici delle due modalità sono riassunti nella 
+Tabella~\ref{tab:pgd_es_transferability}, che riporta l'ASR di NN1 e NN2 per la 
+configurazione più aggressiva (\texttt{max\_iter=40}, \texttt{nri}=1).
 
 
-\subsubsection{DeepFool}
+\begin{table}[H]
+    \centering
+    \vspace{0.2cm}
+    \small
+    \setlength{\tabcolsep}{8pt}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{| c | cc | cc |}
+        \hline
+        & \multicolumn{2}{c|}{\textbf{Fixed}}
+        & \multicolumn{2}{c|}{\textbf{Least-Likely}} \\
+        \cline{2-5}
+        \textbf{$\epsilon$}
+        & \textbf{ASR NN1} & \textbf{ASR NN2}
+        & \textbf{ASR NN1} & \textbf{ASR NN2} \\
+        \hline
+        0.001 &   0.0\% & 0.0\% &   0.0\% & 0.0\% \\
+        0.003 &   0.0\% & 0.0\% &   0.0\% & 0.0\% \\
+        0.005 &   0.4\% & 0.0\% &   0.0\% & 0.0\% \\
+        0.010 &   8.4\% & 0.0\% &   0.1\% & 0.0\% \\
+        0.030 &  94.7\% & 0.2\% &  59.3\% & 0.0\% \\
+        0.050 & 100.0\% & 0.9\% &  98.1\% & 0.0\% \\
+        0.100 & 100.0\% & 1.2\% & 100.0\% & 0.1\% \\
+        \hline
+    \end{tabular}
+    \caption{Attack Success Rate (ASR) per l'attacco PGD error-specific nelle 
+    modalità Fixed e Least-Likely, con \texttt{max\_iter=40} e \texttt{nri}=1. }
+    \label{tab:pgd_es_transferability}
+\end{table}
+
+La Tabella~\ref{tab:pgd_es_transferability} evidenzia con chiarezza il contrasto 
+tra l'efficacia dell'attacco su NN1 e la scarsa transferibilità su NN2:
+in entrambe le modalità l'ASR di NN1 raggiunge il $100\%$ per 
+$\epsilon = 0.1$, mentre quello di NN2 resta sotto il $2\%$. Si conferma quindi 
+che gli attacchi error-specific, faticano a trasferirsi su un modello diverso, 
+poiché imporre una classe bersaglio specifica richiede perturbazioni strettamente legate alla geometria decisionale 
+di NN1. Il comportamento è del tutto coerente con quanto osservato per l'attacco 
+BIM, di cui PGD costituisce una generalizzazione.
 
 
-\subsubsection{Carlini \& Wagner}
 
 
 
 
+\subsubsection{Carlini \& Wagner (C\&W)}
+In questa sezione viene valutata la transferibilità dell'attacco Carlini \& Wagner 
+\textit{error-specific}, nelle modalità Fixed e Least-Likely, analizzando l'Attack 
+Success Rate (ASR) di NN1 e NN2 al variare di \texttt{max\_iter} e del 
+\texttt{learning\_rate}.
+
+A differenza degli attacchi precedenti, nella variante \textit{error-specific} 
+l'attacco C\&W non riesce a raggiungere il proprio obiettivo nemmeno sul modello 
+surrogato: l'ASR di NN1 risulta nullo in tutte le configurazioni testate. Come 
+mostrato nella Tabella~\ref{tab:cw_es_transferability}, né variando il numero di 
+iterazioni né il \texttt{learning\_rate} l'attacco riesce a forzare la 
+classificazione verso la classe bersaglio, neppure aumentando l'ampiezza della 
+perturbazione (Mean $L_\infty$ fino a $0.0485$). Inoltre, la modalità Least-Likely 
+produce risultati analoghi, con ASR nullo in ogni configurazione.
+
+\begin{table}[ht]
+    \centering
+    \vspace{0.2cm}
+    \small
+    \setlength{\tabcolsep}{8pt}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{ccccc}
+        \toprule
+        \textbf{max\_iter} & \textbf{learning\_rate}
+        & \textbf{ASR NN1} & \textbf{ASR NN2} & \textbf{Mean $L_\infty$} \\
+        \midrule
+        1   & 0.01 & 0.0\% & 0.0\% & 0.0050 \\
+        1   & 0.10 & 0.0\% & 0.0\% & 0.0485 \\
+        20  & 0.01 & 0.0\% & 0.0\% & 0.0050 \\
+        20  & 0.10 & 0.0\% & 0.0\% & 0.0485 \\
+        50  & 0.01 & 0.0\% & 0.0\% & 0.0050 \\
+        50  & 0.10 & 0.0\% & 0.0\% & 0.0485 \\
+        \bottomrule
+    \end{tabular}
+    \caption{ASR per C\&W error-specific in 
+    modalità Fixed, al variare di \texttt{max\_iter} e \texttt{learning\_rate}.}
+    \label{tab:cw_es_transferability}
+\end{table}
+
+Poiché l'attacco fallisce già nello scenario \textit{white-box} su NN1, la 
+questione della transferibilità su NN2 non si pone: non esistendo esempi 
+avversariali in grado di forzare la classe bersaglio sul modello NN1, quindi non 
+vi è alcun attacco efficace da trasferire. La modalità Least-Likely conferma 
+questo comportamento, con ASR costantemente nullo sia su NN1 che su NN2.
+
+Questo risultato è coerente con la natura dell'attacco C\&W in versione 
+\textit{targeted}. Forzare la classificazione verso una specifica classe 
+bersaglio è un obiettivo particolarmente arduo. Il numero di iterazioni 
+adottato non è sufficiente a far convergere il processo di ottimizzazione verso 
+una soluzione efficace: per ottenere ASR significativi su NN1, e poter quindi 
+valutare un'eventuale transferibilità su NN2, sarebbe necessario 
+un numero di iterazioni sensibilmente più elevato, con valori di confidence piu' alti.
+
+
+
+
+
+
+\clearpage
 \section{Defenses}
 Difendersi dagli esempi avversari è, in generale, un problema complesso e difficile da gestire. Allo stato attuale, 
 non esiste una soluzione definitiva e ogni difesa tende a essere aggirata da attacchi sempre più sofisticati. 
@@ -2330,10 +2641,10 @@ nei capitoli precedenti, sono stati implementati e confrontati due distinti appr
     \item \textbf{Image Pre-Processing Before Classification (JPEG Compression):} 
     Con questo approccio, 
     l'input viene ripulito prima di essere passato al modello così da rimuovere il rumore avversario. Tecniche come la 
-    compressione JPEG si sono dimostrate effettive nel ridurre l'effetto avversario degli adversarial samples, ma comportano 
-    un compromesso tra robustezza e accuratezza, poiché spesso degradano anche le prestazioni su dati puliti. 
+    compressione JPEG si sono dimostrate efficaci nel ridurre l'effetto avversario degli adversarial samples, ma comportano 
+    un compromesso tra robustezza e accuratezza, poiché spesso degradano anche le prestazioni sui dati puliti. 
     \item \textbf{Detection of Adversarial Samples (Adversarial Detector):} L'obiettivo di questa difesa è rilevare durante 
-    l'inferenza la presenza di perturbazioni avversarie in modo da identificare quando un input è stato manipolato. Invece 
+    l'inferenza la presenza di perturbazioni avversarie in modo da identificare se un input è stato manipolato. Invece 
     di creare proattivamente un modello durante la fase di addestramento, questo approccio fornisce un modulo aggiuntivo
     per i modelli pre-addestrati, al fine di difenderli dagli attacchi avversari. Nel contesto di questo progetto, 
     la difesa è stata implementata addestrando un classificatore binario ausiliario incaricato di agire come gate
@@ -2368,13 +2679,13 @@ Il dataset è composto da due macro-categorie di immagini:
 
     Le immagini avversariali scelte appartengono sia alla classe degli attacchi 
     error-generic che alla classe degli attacchi error specific. In particolare per gli attacchi error specific si è scelto
-    di includere unicamente i campioni proveniente dagli attacchi targeted fixed dato che gli attacchi in modalità least likely
+    di includere unicamente i campioni provenienti dagli attacchi targeted fixed, dato che gli attacchi in modalità least likely
     hanno mostrato una scarsa efficacia e quindi le perturbazioni generate possono non essere considerate rappresentative 
     di un attacco reale. 
 
     Si consideri che per l'attacco DeepFool, essendo un attacco non-targeted, sono stati inclusi unicamente sample appartenenti
     a questa categoria. Anche per l'attacco Carlini \& Wagner sono stati scelti solo samples error generic, ma in questo caso 
-    perchè i sample error specific generati durante la fase di attacco hanno avuto dei risultati molto scarsi e quindi non sono
+    perchè i samples error specific generati durante la fase di attacco hanno avuto dei risultati molto scarsi (0\% di ASR) e quindi non sono
     stati considerati rappresentativi di un attacco reale.
     \item \textbf{Immagini Genuine (Genuine):} Per bilanciare il dataset in un rapporto 1:1 con la controparte avversariale, 
     alle 1000 immagini originali (appartenenti alle 100 identità bersaglio) sono state aggiunte ulteriori 
@@ -2395,11 +2706,10 @@ modo:
     \item \textbf{Test Set:} 10 soggetti (10\% del totale dei campioni).
 \end{itemize}
 Questa tecnica, nota come split \textit{identity-disjoint}, 
-garantisce che nessun soggetto presente nel training set appaia nei set di validazione o di test. In un task 
-biometrico come la face recognition, ciò è cruciale: assicura che il classificatore ausiliario impari a 
-riconoscere il rumore avversariale, eliminando a priori il rischio che questo apprenda i tratti 
-somatici, lo sfondo o l'illuminazione specifici delle identità usate in addestramento.
-
+garantisce che nessun soggetto presente nel training set appaia nei set di validazione o di test. In un task biometrico come la face recognition, 
+ciò è cruciale per prevenire il fenomeno del \textit{data leakage} (o contaminazione dei dati): assicura infatti che il classificatore ausiliario 
+impari a riconoscere esclusivamente il rumore avversariale, eliminando a priori il rischio che questo apprenda i tratti somatici, lo sfondo o l'illuminazione 
+specifici delle identità usate in fase di addestramento.
 \vspace{10pt}  
 
 \subsubsection{DataLoader e Weighted Sampling}Nella fase di costruzione dei DataLoader in PyTorch, è emersa la 
@@ -2445,8 +2755,7 @@ delicata e precisa struttura dei gradienti avversariali, neutralizzando o mitiga
 minaccia prima della classificazione. Tecniche come la compressione JPEG si sono dimostrate 
 effettive nel ridurre l'effetto avversario degli \textit{adversarial samples}. 
 
-Tuttavia, queste tecniche introducono un inevitabile compromesso tra robustezza e accuratezza
-[cite: 45]. La rimozione delle alte frequenze altera l'immagine e degrada spesso anche le 
+Tuttavia, queste tecniche introducono un inevitabile compromesso tra robustezza e accuratezza. La rimozione delle alte frequenze altera l'immagine e degrada spesso anche le 
 prestazioni nominali del modello sui dati puliti, poiché elimina dettagli che potrebbero 
 risultare discriminanti per il sistema di riconoscimento biometrico.
 
@@ -2481,7 +2790,7 @@ sistema testando tre differenti livelli di qualità di compressione ($q$):
 \subsubsection{Metodologia di Valutazione della Compressione JPEG}
 Per quantificare in modo rigoroso l'efficacia della compressione JPEG come strumento di 
 pre-processing avversariale, la procedura è stata strutturata secondo una duplice strategia di testing,
-(le medesime condizioni vengono poi utilizzate per valutare il rilevatore binario). 
+(le medesime condizioni vengono poi utilizzate per valutare il detector di adversarial samples). 
 La metodologia si articola in due fasi distinte e sequenziali:
 
 \vspace{5pt}
@@ -2489,7 +2798,7 @@ La metodologia si articola in due fasi distinte e sequenziali:
 \textbf{1. Valutazione Estesa sull'Intero Dataset:}
 La prima fase prevede l'esecuzione del test sull'intero dataset di difesa indipendentemente dallo split 
 (training, validation e test), 
-al fine di valutare la resilienza del modello rispetto a quante piu configurazioni di attacchi possibili.
+al fine di valutare la resilienza del modello rispetto a quante più configurazioni di attacchi possibili.
 
 Al fine di valutare correttamente  l'impatto della contromisura, il codice traccia metriche diversificate 
 in base all'obiettivo dell'attacco:
@@ -2503,7 +2812,7 @@ in base all'obiettivo dell'attacco:
     predeterminata dall'attaccante (classe 2026).
     \end{itemize}
 
-\textbf{2. Delta Quantification}
+\textbf{2. Delta Quantification:}
 Prima di procedere con la valutazione dei classificatori 
 difesi (jpeg_classifiers), il sistema esegue una sessione di controllo sul modello privo di 
 protezioni. Questo passaggio stabilisce lo zero per il calcolo dei \textit{delta} 
@@ -2512,7 +2821,7 @@ incremento dell'accuratezza avversariale) sia il rispettivo costo computazionale
 (\textit{genuine accuracy degradation}).
 
 
-\textbf{Evaluation Strategy}
+\textbf{Evaluation Strategy:}
 A differenza dell'Adversarial Detector 
 la compressione JPEG è un algoritmo matematico deterministico di elaborazione del segnale e non costituisce 
 un modello di Machine Learning e non richiede alcuna suddivisione strutturale dei dati in set di 
@@ -2567,16 +2876,16 @@ mettono in luce il complesso \textit{trade-off} operativo intrinseco alle difese
 \end{figure}
 
 
-\textbf{Il Trade-off tra Usabilità e Robustezza}
+\textbf{Il Trade-off tra Usabilità e Robustezza:}
 L'analisi del comportamento sui campioni \textbf{genuini} illustra chiaramente il costo operativo della difesa. 
 Utilizzando un fattore di qualità lieve ($q=80$), l'impatto sull'accuratezza nominale del sistema è statisticamente 
-nullo (+0.03\%), indicando che le feature biometriche fondamentali vengono preservate. Tuttavia, inasprendo il filtro 
+nullo (+0.03\%), indicando che le feature biometriche fondamentali vengono preservate. Tuttavia, rendendo il filtro più restrittivo
 ($q=10$), si assiste a un crollo drammatico dell'accuratezza legittima (-13.30\%). A questo livello, 
 i pesanti artefatti introdotti dalla quantizzazione DCT alterano la topologia del volto in modo irreparabile, 
 rendendo il sistema inusabile per scopi di identificazione.
 
 
-\textbf{Mitigazione degli Attacchi Mirati (Targeted Fixed)} 
+\textbf{Mitigazione degli Attacchi Mirati (Targeted Fixed):} 
 Nello scenario \textit{baseline}, gli attacchi iterativi strutturati manifestano un ASR estremamente elevato 
 (70.83\% per BIM e 62.17\% per PGD). 
 Applicando compressioni conservative ($q=80$ e $q=50$), si ottiene una mitigazione solo marginale: l'ASR di PGD, 
@@ -2585,7 +2894,7 @@ segnale ($q=10$) la direzionalità dell'attacco viene infranta in modo significa
 (l'ASR di PGD collassa allo 0.83\% e quello di BIM al 10.17\%).
 
 
-\textbf{Recupero dell'Accuratezza (Untargeted)}
+\textbf{Recupero dell'Accuratezza (Untargeted):}
 Parallelamente, le metriche relative agli attacchi a errore generico rivelano un'inefficacia intrinseca nel 
 ripristinare il corretto ground truth. Contro minacce subdole e ottimizzate in norma $L_2$ come Carlini 
 \& Wagner e DeepFool, il filtro $q=80$ riesce a recuperare appena un 1.42\% e un 2.75\% di accuratezza. 
@@ -2623,7 +2932,7 @@ graficamente nella Figura \ref{fig:jpeg_testset_trends}.
 
 \begin{table}[htbp]
     \centering
-    \caption{Metriche complessive di accuratezza sul Test Set Condiviso per i diversi livelli di qualità JPEG e relativi delta rispetto alla configurazione indifesa.}
+    \caption{Metriche complessive di accuratezza sul Test Set Condiviso per i diversi livelli di qualità JPEG e relativi delta rispetto alla configurazione non difesa.}
     \label{tab:jpeg_testset_summary}
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{@{}lcccc@{}}
@@ -2698,7 +3007,7 @@ meccanismo di difesa non è adatto a garantire un meccanssmo di protezione suffi
 \subsection{Adversarial Detector}
 \vspace{5pt}
 
-\textbf{Training}
+\textbf{Training:}
 La fase di addestramento dell'Adversarial Detector è stata concepita per massimizzare la capacità del modello di 
 generalizzare su perturbazioni non viste, mantenendo al contempo un'elevata efficienza computazionale. A tal fine, 
 sono stati condotti due esperimenti paralleli per confrontare architetture di rete e strategie di ottimizzazione 
@@ -2718,7 +3027,7 @@ classificatore principale, questa non è la strada metodologica corretta.
 
 Si è scelto pertanto di modellare il rilevamento come un problema nativo di classificazione binaria supervisionata, 
 (campione genuino vs. campione avversariale). Per risolvere questo task si è optato per architetture convoluzionali
-note per ottenere un necessario compromesso tra accuratezza e leggerezza computazionale, un requisito essenziale affinché 
+note per ottenere un necessario compromesso tra accuratezza ed efficienza computazionale, un requisito essenziale affinché 
 il modulo di  difesa non introduca latenze operative inaccettabili in un sistema di face recognition reale e possa essere
 allo stesso tempo addestrato in tempi ragionavoli e con le limitate risorse a disposizione. Le architetture selezionate 
 per i due esperimenti sono le seguenti:
@@ -2871,11 +3180,11 @@ margine del tutto sostenibile per un sistema critico di controllo accessi.
 
 \subsubsection{Test Set Results}
 Di seguito vengono riportati i risultati ottenuti sul test set per il rilevatore basato su EfficientNet-B0, utilizzando 
-la soglia decisionale stabilita all'EER (0.11). Come si puo osservare da \ref{fig:efficientnet_test_per_attack} entrambi i
+la soglia decisionale stabilita all'EER (0.11). Come si può osservare dalla figura \ref{fig:efficientnet_test_per_attack} entrambi i
 modelli hanno performance molto simili (come confermato dalle valutazioni sul validation set), ma EfficientNet-B0 mostra 
 una maggiore capacità di rilevare gli attacchi più sofisticati come CW e DeepFool confermandosi come la scelta migliore (già
 fatta in precedenza sulla base dei risultati di validazione) per il modulo di rilevamento da porre a monte del sistema di face recognition.
-tra i due modelli
+
 \begin{figure}[H]
     \centering
     \begin{subfigure}{\textwidth}
@@ -2944,9 +3253,7 @@ sequenziale. In questa configurazione, il modello ottimizzato (EfficientNet-B0) 
 agendo come un modulo di gating attivo a runtime durante la fase di inferenza.
 
 
-\textbf{Pipeline}
-
-
+\textbf{Pipeline:}
 Il flusso di esecuzione dei dati all'interno del sistema difeso segue una pipeline sequenziale con logica a due stadi, implementata per 
 ogni batch di immagini in ingresso:
 
@@ -3248,9 +3555,6 @@ loro capacità di trasferibilità su reti dotate di distribuzioni di gradienti d
     \caption{Valutazione della trasferibilità della difesa (Detector + NN2).}
     \label{fig:system_evaluation_grid_nn2}
 \end{figure}
-
-
-
 
 \clearpage
 \bibliographystyle{plain} 
