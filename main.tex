@@ -1860,9 +1860,12 @@ Il riscontro visivo primario di questa comparazione è offerto dalla Figura~\ref
 \section{Transferability Analysis}
 Un aspetto cruciale nella valutazione della robustezza dei sistemi di face recognition è la trasferibilità degli attacchi avversariali. Questa proprietà definisce la capacità di una perturbazione, originariamente calcolata per ingannare uno specifico modello (NN1), di mantenere la propria efficacia malevola anche contro un modello differente (NN2), permettendo all'attaccante di sfruttare vulnerabilità condivise tra architetture simili.
 
-In questo capitolo viene simulato uno scenario di attacco di tipo black-box. In tale contesto, si assume che l'attaccante non abbia alcun accesso all'architettura interna, ai parametri o ai gradienti del modello NN2, conoscendone esclusivamente il dominio applicativo.
-Per aggirare questa limitazione, l'attaccante impiega il modello fornito NN1 come modello surrogato, generando quindi le immagini avversariali basandosi su questo modello.
-Le immagini avversariali così prodotte vengono successivamente testate su NN2 per verificare se le perturbazioni applicate mantengono la propria efficacia, riuscendo a ingannare un modello differente da quello per cui sono state originariamente progettate.
+
+In questo capitolo viene simulato uno scenario di attacco di tipo grey-box, più precisamente un attacco \textit{Limited Knowledge with Surrogate Learners} (LK-SL). In tale contesto, l'attaccante non conosce i parametri appresi né i gradienti del modello NN2, ma dispone di conoscenza parziale del sistema: conosce il dominio applicativo (face recognition), lo spazio delle feature (immagini RGB di volti) e ha accesso agli stessi dati di addestramento (VGGFace2).
+Per aggirare la mancanza di accesso diretto a NN2, l'attaccante impiega NN1 come modello surrogato, ovvero un modello alternativo addestrato sullo stesso task, rispetto al quale è disponibile accesso completo all'architettura e ai gradienti. Le immagini avversariali vengono quindi generate in modalità white-box su NN1.
+Le immagini avversariali così prodotte vengono successivamente testate su NN2 per verificare se le perturbazioni applicate mantengono la propria efficacia, sfruttando il fenomeno della \textit{transferability}: la proprietà per cui esempi avversariali generati su un modello sorgente risultano efficaci anche su modelli differenti da quello per cui sono stati originariamente progettati.
+
+\vspace{15pt}
 
 \subsection{Error-Generic Attack}
 
@@ -1880,13 +1883,22 @@ transferibilità, poiché NN2 mantiene un'accuratezza nettamente superiore a NN1
 un valore prossimo allo zero indica invece che i due modelli sono compromessi in 
 egual misura, e dunque un'elevata transferibilità.
 
+Prima di effettuare i test di transferibilità sono state verificate le performance base della rete NN2 (come discusso nel Capitolo 4: NN1 and NN2 Baseline Evaluation). 
+È importante sottolineare che NN2 richiede delle immagini in input con dimensioni di 224x224 pixel, mentre NN1 è stata addestrata con immagini di dimensioni 160x160 pixel. 
+Per garantire la coerenza dei test, tutte le immagini avversariali generate su NN1 sono state ridimensionate a 288x288 pixel prima di essere testate su NN2. 
+Dato che gli attacchi avversariali si basano sulla generazione di rumore, il ridimensionamento delle immagini potrebbe potenzialmente alterare le perturbazioni applicate. 
+Per ridurre al minimo questo effetto Il ridimensionamento iniziale a 288 pixel sfrutta un'interpolazione di tipo \textit{Nearest Neighbor}, 
+seguita da un ritaglio centrale (\textit{Center Crop}) a 224x224 pixel. L'uso del \textit{Nearest Neighbor} non calcola la media tra pixel adiacenti e preserva i valori esatti dell'immagine originale. 
+Questo approccio è il più adeguato per mantenere inalterata, per quanto possibile, la perturbazione avversaria (in particolare in norma $L_\infty$), permettendo di misurare la trasferibilità dell'attacco 
+senza introdurre attenuazioni artificiali
 
+\vspace{10pt}
 
 \subsubsection{Fast Gradient Sign Method (FGSM)}
 
-In questa sezione viene valutata l'accuratezza del modello NN2 sugli esempi avversariali generati tramite l'attacco FGSM contro NN1, analizzandone il comportamento al variare di $\epsilon$. 
+In questa sezione viene valutata l'accuratezza del modello NN2 sugli esempi avversariali generati tramite l'attacco FGSM appositamente per NN1, analizzandone il comportamento al variare di $\epsilon$. 
 
-Per visualizzare chiaramente l'impatto dell'attacco, i risultati sono presentati attraverso una Security Evaluation Curve comparativa in Figura \ref{fig:fgsm_transferability_untargeted}. Questo grafico rappresenta l'accuracy di NN1 e di NN2, testati con diversi insiemi di immagini avversariali. Ciasun insieme è riferito a un diverso valore di $\epsilon$. Vengono testate prima le immagini con $\epsilon = 0.01$, poi con $\epsilon = 0.1$, e cosi via, fino a raggiungere il budget massimo di $\epsilon = 0.1$.
+Per visualizzare chiaramente l'impatto dell'attacco, i risultati sono presentati attraverso una Security Evaluation Curve comparativa in Figura \ref{fig:fgsm_transferability_untargeted}. Questo grafico rappresenta l'accuracy di NN1 e di NN2, testati con diversi insiemi di immagini avversariali. Ciasun insieme è riferito a un diverso valore di $\epsilon$. Vengono testate prima le immagini con $\epsilon = 0.01$, poi con $\epsilon = 0.03$, e cosi via, fino a raggiungere il budget massimo di $\epsilon = 0.1$.
 \begin{figure}[H]
     \centering
     % Regola il parametro width (es. 0.8\textwidth) per ingrandire o rimpicciolire l'immagine
@@ -1898,11 +1910,11 @@ Per visualizzare chiaramente l'impatto dell'attacco, i risultati sono presentati
 Dal grafico emerge innanzitutto una differenza nelle prestazioni di base dei due modelli su immagini non perturbate ($\epsilon$=0.00). Il modello bersaglio NN2 dimostra una capacità di generalizzazione superiore, registrando un'accuratezza del 95.50\%, rispetto all'85.00\% del modello surrogato NN1.
 Dall'analisi del grafico è possibile evidenziare i seguenti aspetti chiave:
 \begin{itemize}
-    \item L'accuratezza del secondo modello decresce progressivamente all'aumentare di $\epsilon$, confermando che anche l'architettura \textit{black-box} (NN2) subisce l'effetto dell'attacco originato sul modello surrogato.
+    \item L'accuratezza del secondo modello decresce progressivamente all'aumentare di $\epsilon$, confermando che anche NN2 subisce l'effetto dell'attacco originato sul modello surrogato.
     \item Per valori di perturbazione contenuti, NN2 mostra una robustezza superiore rispetto a NN1.
     \item In corrispondenza del valore $\epsilon = 0.05$, le due curve tendono a convergere verso gli stessi valori di accuracy. Questo indica che i modelli si comportano in maniera simile con $\epsilon \geq 0.05$.
 \end{itemize}
-I dati numerici completi sono riportati nella Tabella \ref{tab:fgsm_tab_unt_transferability}, che mostra inoltre il \textit{Transfer Gap} calcolato per ogni valore di $\epsilon$.
+I dati numerici completi sono riportati nella Tabella \ref{tab:fgsm_tab_unt_transferability}, che mostra inoltre il \textit{Transferability Gap} calcolato per ogni valore di $\epsilon$.
 \begin{table}[H]
     \centering
     \vspace{0.2cm}
@@ -1929,6 +1941,7 @@ che l'attacco, pur essendo efficace su NN1, si trasferisce solo parzialmente su 
 Al crescere di $\epsilon$, il gap si riduce progressivamente fino a quasi annullarsi 
 ($+0.60\%$ per $\epsilon = 0.100$). Questo indica che NN2 è robusta fino a circa $\epsilon = 0.01$. Tuttavia, aumentando le perturbazioni, aumenta anche la trasferibilità, riuscendo a compromettere con successo NN2.
 
+\vspace{10pt}
 
 \subsubsection{Basic Iterative Method (BIM)}
 
@@ -2003,7 +2016,7 @@ raggiungendo il $+64.20\%$ per $\epsilon = 0.010$. Al crescere di $\epsilon$,
 il Gap si riduce progressivamente fino al $+3.40\%$ per $\epsilon = 0.100$, indicando una \textbf{crescente transferibilità} 
 dell'attacco: perturbazioni piu' marcate riescono a compromettere NN2 favorendo la trasferibilità dei rispettivi campioni avversariali.
 
-
+\vspace{10pt}
 
 \subsubsection{Projected Gradient Descent (PGD)}
 In questa sezione viene valutata l'accuracy del modello NN2 sugli esempi 
@@ -2119,7 +2132,7 @@ corrispondenza di $\epsilon = 0.100$ (ad esempio $+5.7\%$ per \texttt{max\_iter=
 Questo comportamento indica una \textbf{crescente transferibilità} dell'attacco: 
 perturbazioni più ampie riescono a compromettere NN2 favorendo la transferibilità dell'attacco.
 
-
+\vspace{10pt}
 
 \subsubsection{DeepFool}
 In questa sezione viene valutata l'accuracy del modello NN2 sugli esempi 
@@ -2193,6 +2206,7 @@ diverso come NN2.
     \label{tab:deepfool_mean_linf}
 \end{table}
 
+\vspace{10pt}
 
 \subsubsection{Carlini \& Wagner}
 In questa sezione viene valutata l'accuracy del modello NN2 sugli esempi 
@@ -2258,10 +2272,7 @@ L'unica variazione apprezzabile si registra con \texttt{learning\_rate=0.01} nel
 passaggio da \texttt{max\_iter=1} a \texttt{max\_iter=5}, oltre il quale l'attacco 
 raggiunge la sua configurazione stabile.
 
-
-
-
-
+\vspace{15pt}
 
 
 \subsection{Error-Specific Attack}
@@ -2277,6 +2288,8 @@ della transferibilità, un ASR elevato su NN2 indica che l'attacco, generato
 contro NN1, riesce a forzare la classe bersaglio anche sul modello bersaglio.
 
 In accordo agli attacchi trattati nei capitoli iniziali, vengono considerate due modalità di selezione della classe bersaglio: \textbf{Least-Likely} e \textbf{Fixed}.
+
+\vspace{10pt}
 
 \subsubsection{Fast Gradient Sign Method (FGSM)}
 In questa sezione viene valutata la transferibilità dell'attacco FGSM 
@@ -2401,8 +2414,7 @@ Least-Likely.
     \label{fig:bim_es_ll}
 \end{figure}
 
-In modalità Least-Likely si osserva un comportamento analogo su NN1, ma con un 
-trasferimento ancora più limitato su NN2.
+In modalità Least-Likely si osserva un comportamento analogo su NN1, ma con una trasferibilità ancora più limitato su NN2.
 \begin{itemize}
     \item Anche in questo caso l'ASR di NN1 raggiunge valori elevati 
     (fino al $100\%$ per \texttt{max\_iter} $\geq 10$ e $\epsilon = 0.1$), 
@@ -2451,8 +2463,7 @@ configurazione più aggressiva (\texttt{max\_iter=20}).
 
 
 
-
-
+\vspace{10pt}
 
 
 \subsubsection{Projected Gradient Descent (PGD)}
@@ -2569,7 +2580,7 @@ BIM, di cui PGD costituisce una generalizzazione.
 
 
 
-
+\vspace{10pt}
 
 \subsubsection{Carlini \& Wagner (C\&W)}
 In questa sezione viene valutata la transferibilità dell'attacco Carlini \& Wagner 
@@ -2624,6 +2635,33 @@ una soluzione efficace: per ottenere ASR significativi su NN1, e poter quindi
 valutare un'eventuale transferibilità su NN2, sarebbe necessario 
 un numero di iterazioni sensibilmente più elevato, con valori di confidence piu' alti.
 
+\vspace{15pt}
+
+% Conclusion section summarizing the transferability of the analyzed adversarial attacks
+\subsection{Transferability Summary}
+
+% Summary of highly transferable attacks
+\subsection*{Attacchi ad Elevata Trasferibilità}
+\begin{itemize}
+    \item \textbf{FGSM, BIM e PGD (Error-Generic):} Questi attacchi riescono a compromettere con successo il modello bersaglio (NN2) e mostrano un'alta trasferibilità quando si utilizzano perturbazioni ampie (es. $\epsilon \geq 0.05$ o $\epsilon = 0.100$).
+    \item \textit{Carlini \& Wagner (Error-Generic con elevato \texttt{learning\_rate}):} Configurando l'attacco untargeted con un \texttt{learning\_rate} elevato ($0.1$), l'ampiezza della perturbazione cresce in modo significativo, traducendosi in una trasferibilità nettamente superiore.
+\end{itemize}
+
+% Summary of moderately transferable attacks
+\subsection*{Attacchi a Trasferibilità Media o Condizionata}
+\begin{itemize}
+    \item \textit{FGSM, BIM e PGD (Error-Generic con basse perturbazioni):} Per valori di perturbazione ridotti (es. $\epsilon \leq 0.010$), il trasferimento dell'efficacia malevola avviene solo parzialmente.
+    \item \textit{BIM e PGD (Error-Generic con alto numero di iterazioni):} Un numero elevato di iterazioni rende questi attacchi meno trasferibili, poiché la perturbazione viene ottimizzata in modo troppo specifico per il modello surrogato, perdendo efficacia sul modello bersaglio.
+\end{itemize}
+
+% Summary of low or non-transferable attacks
+\subsection*{Attacchi a Trasferibilità Bassa o Nulla}
+\begin{itemize}
+    \item \textit{Attacchi Error-Specific (FGSM, BIM, PGD):} Sia nelle modalità Fixed che Least-Likely, questi attacchi risultano sostanzialmente non trasferibili, poiché imporre una specifica classe bersaglio richiede alterazioni strettamente legate alla geometria decisionale del modello di origine.
+    \item \textit{DeepFool (Error-Generic):} Presenta una trasferibilità molto bassa a causa della sua stessa natura: genera perturbazioni di ampiezza minima che sono appena sufficienti a ingannare il modello surrogato, risultando inefficaci su architetture differenti.
+    \item \textit{Carlini \& Wagner (Error-Generic con basso \texttt{learning\_rate}):} Utilizzando un \texttt{learning\_rate} ridotto ($0.01$), le perturbazioni generate sono troppo contenute e specifiche per il modello sorgente, non riuscendo quindi a trasferirsi.
+    \item \textit{Carlini \& Wagner (Error-Specific):} Nelle configurazioni analizzate, questo attacco non riesce a forzare la classe bersaglio nemmeno sul modello surrogato (NN1), rendendo di fatto inesistente qualsiasi potenziale di trasferibilità.
+\end{itemize}
 
 
 
