@@ -81,9 +81,8 @@ sistema di face recognition}}} \\
                 \midrule
                 Rosa Christian & 0622702616 & c.rosa10@studenti.unisa.it \\ 
                 Savino Candido Simone & 0622702650 & c.savino8@studenti.unisa.it \\
-                Tartaglione Salvatore Francesco&
-                0622702655 &
-                s.tartaglione@studenti.unisa.it \\ Rosanova Raffaele & 062270xxxx & r.rosanovaXX@studenti.unisa.it \\
+                Tartaglione Salvatore Francesco & 0622702655 & s.tartaglione@studenti.unisa.it \\ 
+                Rosanova Raffaele & 0622702455 & r.rosanova5@studenti.unisa.it \\
                 \bottomrule
             \end{tabular}
             \label{tab:group_table}
@@ -97,7 +96,7 @@ sistema di face recognition}}} \\
 \tableofcontents
 \newpage
 
-\section{Introduzione}
+\section{Introduction}
 La seguente documentazione mira ad approfondire e spiegare nel dettaglio le scelte implementative fatte dal team nel contesto di valutazione di un sistema di face recognition. La sturttura dell'elaborato è così composta, per arrivare in modo coerente all'implementazione difensiva:
 
 \begin{enumerate}
@@ -113,14 +112,12 @@ La seguente documentazione mira ad approfondire e spiegare nel dettaglio le scel
     \end{enumerate}
     \item Valutazione della rete NN1 con le immagini avversariali generate al punto 3
     \item Valutazione della trasferibilità alla rete NN2 con le immagini avversariali generate al punto 3
-    \item Implementazione e valutazione del meccanismo di difesa \textit{\textbf{SCEGLIERE IL MECCANISMO DI DIFESA}}
+    \item Implementazione e valutazione di due meccanismi di difesa: \textbf{compressione JPEG} e \textbf{Detector di Adversarial Samples}.
 \end{enumerate}
 
 \clearpage
 \section{Dataset Preparation}
-Questa fase preliminare ha lo scopo di configurare i test set partendo dal dataset VGGFace2. Per garantire la completa e indipendente riproducibilità del notebook, l'intero processo è regolato da una logica di controllo preventivo: se i file estratti e i relativi metadati sono già presenti localmente, lo script salta le procedure di elaborazione per ottimizzare i tempi di esecuzione. 
-
-In caso contrario, viene avviata la pipeline di generazione che prevede tre passaggi sequenziali:
+Questa fase preliminare ha lo scopo di configurare i test set partendo dal dataset VGGFace2. La pipeline di preparazione dati prevede la selezione e l'estrazione controllata delle immagini, strutturata nei seguenti passaggi:
 \begin{enumerate}
     \item \textbf{Selezione dei soggetti:} Dal file dei metadati (\texttt{vggface2\_meta.csv}) vengono filtrati i soggetti appartenenti al set di addestramento ufficiale (\texttt{Flag == 1}) che dispongono di almeno 10 immagini. Tra questi, ne vengono selezionati casualmente 100 tramite un seed fisso (\texttt{random\_state=42}).
     \item \textbf{Estrazione delle immagini:} Dall'archivio compresso \texttt{vggface2.tar.gz} vengono estratte in modo selettivo esattamente 10 immagini per ciascuno dei 100 soggetti scelti, popolando il primo dataset.
@@ -135,14 +132,14 @@ I due dataset d'estrazione risultanti sono così strutturati:
 
 \clearpage
 \section{NN1 \& NN2 Baseline Evaluation}
-Una volta completata la generazione dei dataset, si procede con la valutazione delle reti neurali target, NN1 e NN2, su dati originali e privi di perturbazioni. Questa fase, definita \textit{baseline evaluation}, è di fondamentale importanza metodologica: l'accuratezza ottenuta sulle immagini pulite fungerà da punto di riferimento assoluto per quantificare il successivo degrado prestazionale causato dai vari algoritmi di attacco. 
+Una volta completata la generazione dei dataset, si procede con la valutazione delle reti neurali target, NN1 e NN2, su dati originali e privi di perturbazioni. Questa fase è definita \textit{baseline evaluation}: l'accuratezza ottenuta sulle immagini pulite fungerà da punto di riferimento assoluto per quantificare il successivo degrado prestazionale causato dai vari algoritmi di attacco. 
 
-Prima di analizzare i risultati dell'inferenza, è necessario definire le architetture dei due modelli impiegati e le relative pipeline di pre-elaborazione delle immagini, elementi cruciali per comprendere a pieno le scelte implementative e il dominio applicativo:
+Prima di analizzare i risultati dell'inferenza, è necessario definire le architetture dei due modelli impiegati e le relative pipeline di pre-elaborazione delle immagini:
 
 \begin{itemize}
     \item \textbf{NN1 (\textit{InceptionResnetV1}):} Rete pre-addestrata sul dataset VGGFace2. Le immagini in ingresso subiscono un ridimensionamento standard a 160x160 pixel, seguito da una conversione in tensori e da una normalizzazione canonica dei canali RGB (con media e deviazione standard pari a 0.5).
     
-    \item \textbf{NN2 (\textit{ResNet50}):} Questa architettura richiede una pre-elaborazione più articolata. Il ridimensionamento iniziale a 288 pixel sfrutta un'interpolazione di tipo \textit{Nearest Neighbor}, seguita da un ritaglio centrale (\textit{Center Crop}) a 224x224 pixel. L'uso del \textit{Nearest Neighbor} è una scelta tecnica mirata: non calcolando la media tra pixel adiacenti, preserva i valori esatti dell'immagine originale. Questo approccio risulta il più corretto per mantenere inalterata la perturbazione avversaria (in particolare in norma $L_\infty$), permettendo di misurare la pura trasferibilità dell'attacco senza introdurre attenuazioni artificiali. I tensori subiscono infine un ri-scalamento nel range [0, 255], una conversione nello spazio colore BGR e una sottrazione delle medie dei canali derivate dai dati di addestramento (senza alterazione della deviazione standard).
+    \item \textbf{NN2 (\textit{ResNet50}):} Questa architettura richiede una pre-elaborazione più articolata. Il ridimensionamento iniziale a 288 pixel sfrutta un'interpolazione di tipo \textit{Nearest Neighbor}, seguita da un ritaglio centrale (\textit{Center Crop}) a 224x224 pixel. I tensori subiscono infine un ri-scalamento nel range [0, 255], una conversione nello spazio colore BGR e una sottrazione delle medie dei canali derivate dai dati di addestramento (senza alterazione della deviazione standard).
 \end{itemize}
 
 Lo script implementato per questa fase esegue l'inferenza in modo sequenziale su entrambi i dataset generati in precedenza (\texttt{dataset\_1000} a struttura annidata e \texttt{dataset\_100} a struttura piatta). Sfruttando la mappatura dei metadati caricata dal file CSV, l'algoritmo confronta la classe predetta con la \textit{ground truth} per ciascun campione, generando un report globale che fissa le accuratezze di partenza (baseline accuracy) per NN1 e NN2, contro le quali verranno misurati tutti i futuri attacchi avversari. I risulatati sono riportati in tabella~\ref{tab:NN1_NN2_baseline}. 
@@ -164,7 +161,7 @@ Lo script implementato per questa fase esegue l'inferenza in modo sequenziale su
 
 \clearpage
 \section{Generating Adversarial Examples}
-Stabilite le \textit{baseline accuracy} per i due modelli sui rispettivi dataset, la pipeline procedurale avanza verso la generazione degli esempi avversari (\textit{Adversarial Examples}). Per saggiare la robustezza delle reti, sono stati implementati i seguenti cinque algoritmi di attacco:
+Stabilite le \textit{baseline accuracy} per i due modelli sui rispettivi dataset, la pipeline procedurale avanza verso la generazione degli esempi avversari (\textit{Adversarial Examples}). Per valutare la robustezza delle reti, sono stati implementati i seguenti cinque algoritmi di attacco:
 \begin{enumerate}
     \item \textbf{\textit{Fast Gradient Sign Method} (FGSM)}
     \item \textbf{\textit{Basic Iterative Method} (BIM)}
@@ -173,19 +170,25 @@ Stabilite le \textit{baseline accuracy} per i due modelli sui rispettivi dataset
     \item \textbf{\textit{DeepFool} (DF)}
 \end{enumerate}
 
-La campagna di test è strutturata valutando due paradigmi di attacco fondamentali: \textit{\textbf{Error-Generic}} ed \textit{\textbf{Error-Specific}}. Fa eccezione l'algoritmo \textit{DeepFool}, la cui formulazione matematica nativa è concepita esclusivamente per ingannare il classificatore verso la classe errata più vicina, rientrando quindi unicamente nella prima categoria.
+La campagna di test è strutturata valutando due paradigmi di attacco: \textit{\textbf{Error-Generic}} ed \textit{\textbf{Error-Specific}}. Fa eccezione l'algoritmo \textit{DeepFool}, la cui formulazione matematica nativa è concepita esclusivamente per ingannare il classificatore verso la classe errata più vicina, rientrando quindi unicamente nella prima categoria.
 
 Al fine di garantire un'analisi rigorosa, l'esecuzione degli algoritmi non si è limitata all'uso di un singolo parametro di intensità fisso. Al contrario, è stata implementata una logica di iterazione su uno spettro di valori (ad esempio, variando la magnitudo della perturbazione $\epsilon$ o il numero di step computazionali). Questo approccio metodologico permette di valutare dinamicamente la sensibilità dei modelli al variare della forza dell'attacco. I risultati ottenuti vengono successivamente sintetizzati tramite appositi grafici, i quali incrociano il decadimento dell'accuratezza con l'incremento del parametro sotto esame, mantenendo la \textit{baseline} precedentemente calcolata come limite superiore di riferimento.
+
+\textbf{Rispetto del vincolo $L_\infty$:} Le immagini vengono consegnate ad ART nel range $[0, 1]$ (ottenuto tramite una pipeline di preprocessing composta da \texttt{Resize} e \texttt{ToTensor}) con \texttt{clip\_values=(0.0, 1.0)}. La normalizzazione verso il range $[-1, 1]$, richiesta dal modello, è delegata al wrapper \texttt{PyTorchClassifier} tramite il parametro \texttt{preprocessing}, configurato con media $\mu = [0.5, 0.5, 0.5]$ e deviazione standard $\sigma = [0.5, 0.5, 0.5]$. In questo modo, il vincolo $\epsilon$ è misurato direttamente nello spazio $[0, 1]$: un valore $\epsilon = 0.1$ corrisponde a una perturbazione massima del $10\%$ dell'intervallo di intensità valido per ciascun pixel.
+
+Per gli attacchi che non consentono di imporre esplicitamente un budget massimo di perturbazione (quali \textit{Carlini \& Wagner} e \textit{DeepFool}) la norma $L_\infty$ di ciascun esempio avversario generato è stata calcolata a posteriori. I campioni per i quali tale norma superava la soglia $\epsilon = 0.1$ sono stati esclusi dalla valutazione e non considerati nel computo delle metriche.
+
+\vspace{15pt}
 
 \subsection{Error-Generic Attacks}
 Come anticipato, la valutazione empirica si divide in due macro-sezioni. La presente sottosezione esplora la generazione e gli effetti degli attacchi \textit{Error-Generic}. 
 
 Un attacco \textit{\textbf{error-generic}} ha come unico scopo quello di indurre il modello a commettere una classificazione errata, indipendentemente dalla classe finale predetta. In termini analitici, l'algoritmo mira a perturbare i pixel dell'immagine originaria per \textbf{allontanare la predizione dalla \textit{ground truth}}, massimizzando l'errore del classificatore senza curarsi verso quale altra etichetta l'immagine venga spinta.
 
-Un'ulteriore specificazione per aiutare la lettura del seguente documento è che nella presente sezione valuteranno le performance esclusivamente della rete NN1. Le performance della rete NN2 verranno valutate successivamente per esplicitare il concetto di \textbf{\textit{trasferibilità}} richiesto dalla traccia progettuale.  
+Nella presente sezione si valuteranno le performance esclusivamente della rete NN1. Le performance della rete NN2 verranno valutate successivamente nell'\textbf{\textit{Analisi della trasferibilità}}.  
 
 \subsubsection{Fast Gradient Sign Method (FGSM)}
-Il \textit{\textbf{Fast Gradient Sign Method}} (FGSM), è uno degli algoritmi di generazione di esempi avversari più noti e computazionalmente efficienti. Si tratta di un attacco \textit{single-step} basato sul gradiente: l'algoritmo sfrutta il calcolo della funzione di costo del modello neurale per determinare la direzione in cui alterare i pixel, al fine di massimizzare l'errore di classificazione.
+Il \textit{\textbf{Fast Gradient Sign Method}} (FGSM), è l'algoritmo di generazione di esempi avversari computazionalmente più efficiente. Si tratta di un attacco \textit{single-step} basato sul gradiente: l'algoritmo sfrutta il calcolo della funzione di costo del modello neurale per determinare la direzione in cui alterare i pixel, al fine di massimizzare l'errore di classificazione.
 
 La \textbf{perturbazione }da applicare viene calcolata analiticamente aggiungendo ai pixel originari un rumore proporzionale al segno del gradiente della loss, secondo la seguente equazione:
 $$x_{adv} = x + \epsilon \cdot \text{sign}(\nabla_x J(\theta, x, y))$$
@@ -202,7 +205,7 @@ Per condurre un'indagine approfondita, è stato testato il seguente vettore di v
 epsilons = [0.001, 0.003, 0.005, 0.01, 0.03, 0.05, 0.1]
 \end{verbatim}
 
-Questo spazzolamento dei parametri ha consentito di tracciare una \textit{\textbf{Security Evaluation Curve}} (SEC) (Figura~\ref{fig:FGSM_SEC_NN1}), che correla l'entità del rumore iniettato con il progressivo degrado prestazionale del modello. In tabella~\ref{tab:NN1_robustness} è possibile analizzare nel dettaglio i valori specifici per il suddetto attacco.
+Questa variazione dei parametri ha consentito di tracciare una \textit{\textbf{Security Evaluation Curve}} (SEC) (Figura~\ref{fig:FGSM_SEC_NN1}), che correla l'entità del rumore iniettato con il progressivo degrado prestazionale del modello. In tabella~\ref{tab:NN1_robustness} è possibile analizzare nel dettaglio i valori specifici per il suddetto attacco.
 
 \begin{figure}[h]
     \centering
@@ -235,11 +238,12 @@ Come si evince dall'andamento della curva, il modello NN1 mostra una severa vuln
 
 Tuttavia, il collasso predittivo più critico si osserva nel range compreso tra $\epsilon = 0.001$ e $\epsilon = 0.01$. Raggiunta la soglia di $\epsilon = 0.01$, il modello registra il 6.7\% di predizioni corrette. Questo dato indica che un rumore pari ad appena l'1\% della scala dei pixel è sufficiente per ingannare la rete InceptionResnetV1 in oltre il 93\% dei casi.
 
-Per valori di $\epsilon \ge 0.03$, la curva assume un comportamento asintotico tendente allo zero. Al raggiungimento del limite massimo consentito per i test ($\epsilon = 0.1$), l'efficacia del classificatore è di fatto annullata (0.1\%), dimostrando il totale \textbf{successo dell'attacco \textit{error-generic}}.
+Per valori di $\epsilon \ge 0.03$, la curva assume un comportamento asintotico tendente allo zero. Al raggiungimento del limite massimo consentito per i test ($\epsilon = 0.1$), l'efficacia del classificatore è di fatto annullata (0.1\%), dimostrando il totale \textbf{successo dell'attacco \textit{error-generic}}. La rete NN1, risulta quindi essere vulnerabile contro questo tipo di attacco.
 
 Infine, l'analisi dei tempi di computazione riportati in Tabella \ref{tab:NN1_robustness} conferma empiricamente la natura dell'algoritmo. Essendo FGSM un metodo \textit{single-step}, il calcolo del gradiente non richiede iterazioni multiple: la generazione di 1000 esempi avversari avviene in un tempo medio compreso tra i 15 e i 22 secondi. Tale efficienza computazionale si mantiene pressoché costante e indipendente dalla magnitudo della perturbazione calcolata.
 
-\clearpage
+\vspace{10pt}
+
 \subsubsection{Basic Iterative Method (BIM)}
 Il \textit{\textbf{Basic Iterative Method}} (BIM), rappresenta un'estensione diretta e più sofisticata del \textit{Fast Gradient Sign Method}. Sviluppato per superare i limiti di precisione degli attacchi \textit{single-step}, BIM applica la perturbazione avversaria attraverso iterazioni multiple e sequenziali, ricalcolando il gradiente ad ogni singolo passaggio per ottimizzare la direzione dell'errore.
 
@@ -263,72 +267,67 @@ EPSILON = [0.001, 0.003, 0.005, 0.01, 0.03, 0.05, 0.1]
 
 \end{verbatim}
 
-Questo spazzolamento bidimensionale ha consentito la generazione di un set di \textit{Security Evaluation Curve} (SEC) individuali per ogni limite iterativo, nonché di una curva SEC comparativa che sovrappone le diverse configurazioni. Inoltre, al fine di isolare l'efficacia del parametro iterativo, è stato tracciato un grafico dedicato all'effetto degli iperparametri, che osserva la caduta di accuratezza in funzione esclusiva del numero di step (\texttt{max\_iter}) a fronte di tre soglie fisse di $\epsilon$ (0.01, 0.05 e 0.1). 
+Questa variazione bidimensionale ha consentito la generazione di un set di \textit{Security Evaluation Curve} (SEC) individuali per ogni limite iterativo, nonché di una curva SEC comparativa che sovrappone le diverse configurazioni. Inoltre, al fine di isolare l'efficacia del parametro iterativo, è stato tracciato un grafico dedicato all'effetto degli iperparametri, che osserva la caduta di accuratezza in funzione esclusiva del numero di step (\texttt{max\_iter}) a fronte di tre soglie fisse di $\epsilon$ (0.01, 0.05 e 0.1). 
 
 Nelle sezioni seguenti vengono analizzati nel dettaglio i risultati quantitativi e i grafici prodotti da questa matrice di valutazione.
 
+Al fine di garantire la leggibilità del documento, i grafici relativi alle singole iterazioni isolate sono stati omessi dalla presente trattazione. L'intero materiale integrativo è comunque consultabile all'interno della repository del progetto ai seguenti collegamenti:
+
+\begin{itemize}
+    \item \href{https://github.com/ChristianRosa02/AI4Cybersecurity/tree/master/results/BIM}{Grafici singoli al variare dei parametri (BIM)}
+    \item \href{https://github.com/ChristianRosa02/AI4Cybersecurity/blob/master/results/BIM/BIM_results.csv}{Dati grezzi completi (File CSV)}
+\end{itemize}
+
+I risultati quantitativi di questa fase di testing sono riassunti nella Tabella \ref{tab:bim_results_acc_timerange}. L'analisi congiunta di tali dati e della curva comparativa (Figura~\ref{fig:BIM_SEC_NN1}) rivela dinamiche tipiche dell'attacco BIM, evidenziando in modo chiaro i vantaggi e i limiti dell'approccio iterativo rispetto alla variante \textit{single-step} (FGSM).
+
+\begin{table}[H]
+    \centering
+    \caption{Accuratezza del modello e tempo di esecuzione esatto sotto attacco BIM al variare del budget di perturbazione ($\epsilon$) e del numero massimo di iterazioni.}
+    \label{tab:bim_results_detailed}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{c cc cc cc cc}
+        \toprule
+        \multirow{2}{*}{\textbf{Budget ($\epsilon$)}} & \multicolumn{2}{c}{\textbf{Max Iter = 1}} & \multicolumn{2}{c}{\textbf{Max Iter = 5}} & \multicolumn{2}{c}{\textbf{Max Iter = 10}} & \multicolumn{2}{c}{\textbf{Max Iter = 20}} \\
+        \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(lr){8-9}
+         & \textbf{Acc (\%)} & \textbf{Tempo (s)} & \textbf{Acc (\%)} & \textbf{Tempo (s)} & \textbf{Acc (\%)} & \textbf{Tempo (s)} & \textbf{Acc (\%)} & \textbf{Tempo (s)} \\
+        \midrule
+        \textbf{0.001} & 77.1 & 20.7 & 76.6 & 31.8 & 76.7 & 46.8 & 76.7 & 76.6 \\
+        \textbf{0.003} & 45.9 & 20.2 & 41.2 & 32.1 & 40.4 & 46.5 & 40.2 & 77.1 \\
+        \textbf{0.005} & 22.8 & 19.9 & 15.8 & 32.5 & 14.9 & 46.7 & 14.8 & 77.6 \\
+        \textbf{0.01}  &  6.7 & 18.4 &  2.6 & 31.7 &  2.0 & 46.7 &  1.8 & 76.5 \\
+        \textbf{0.03}  &  1.6 & 17.9 &  0.1 & 29.1 &  0.1 & 43.9 &  0.1 & 74.6 \\
+        \textbf{0.05}  &  0.7 & 17.0 &  0.1 & 28.2 &  0.1 & 42.7 &  0.1 & 107.1 \\
+        \textbf{0.1}   &  0.1 & 17.7 &  0.0 & 27.7 &  0.0 & 42.0 &  0.1 & 75.4 \\
+        \bottomrule
+    \end{tabular}
+    }
+\end{table}
+
+
 \begin{figure}[H]
     \centering
-    % Sotto-figura 1
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{BIM_Error_generic/BIM_iter1_SEC.png}
-        \caption{\texttt{max_iter} = 1}
-        \label{fig:iter1}
-    \end{subfigure}
-    \hfill
-    % Sotto-figura 2
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{BIM_Error_generic/BIM_iter5_SEC.png}
-        \caption{\texttt{max_iter} = 5}
-        \label{fig:iter5}
-    \end{subfigure}
-
-    \vspace{1em} % Spazio verticale tra le righe di immagini
-
-    % Sotto-figura 3
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{BIM_Error_generic/BIM_iter10_SEC.png}
-        \caption{\texttt{max_iter} = 10}
-        \label{fig:iter10}
-    \end{subfigure}
-    \hfill
-    % Sotto-figura 4
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{BIM_Error_generic/BIM_iter20_SEC.png}
-        \caption{\texttt{max_iter} = 20}
-        \label{fig:iter20}
-    \end{subfigure}
-
-    \caption{Visualizzazione delle immagini avversarie al variare del numero di iterazioni.}
-    \label{fig:BIM_iterations}
-\end{figure}
-
-Per una migliore analisi comparativa, in figura~\ref{fig:BIM_SEC_NN1} è possibile visualizzare la SEC prodotta da BIM sul modello NN1. 
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.75\linewidth]{BIM_Error_generic/BIM_comparative_SEC.png}
+    \includegraphics[width=0.9\linewidth]{BIM_Error_generic/BIM_comparative_SEC.png}
     \caption{BIM SEC su NN1}
     \label{fig:BIM_SEC_NN1}
 \end{figure}
 
-L'analisi congiunta della curva comparativa (Figura~\ref{fig:BIM_SEC_NN1}) e dei dati quantitativi raccolti durante i test (vedere la cartella al percorso \texttt{results/BIM/BIM_results.csv}) rivela dinamiche tipiche dell'attacco BIM, evidenziando in modo chiaro il vantaggio e i limiti dell'approccio iterativo rispetto alla variante \textit{single-step} (FGSM).
-\\
-Il primo dato significativo emerge confrontando le curve a parità di budget di perturbazione ($\epsilon$). L'esecuzione con \texttt{max\_iter} = 1 equivale concettualmente a un attacco FGSM tradizionale: tutto il rumore viene calcolato e applicato in un singolo passaggio. In questa configurazione, con $\epsilon$ pari a 0.01, il modello NN1 conserva un'accuratezza del 6.7\%. 
-Tuttavia, suddividendo il medesimo budget in 5 step iterativi (\texttt{max\_iter} = 5), l'algoritmo riesce a ricalcolare il gradiente man mano che l'immagine si sposta nello spazio delle feature, ottimizzando la direzione del rumore. Questa maggiore precisione fa diminuire l'accuratezza al 2.6\%, dimostrando che l'approccio multi-step è più distruttivo, pur non alterando il budget.
-\\
-Osservando la Figura~\ref{fig:BIM_SEC_NN1}, è visibile come lo scarto prestazionale tra le diverse configurazioni non sia lineare. Si nota un netto distacco tra la curva blu (1 iterazione) e la curva gialla (5 iterazioni), ma all'aumentare ulteriore degli step (10 e 20 iterazioni) le curve tendono a sovrapporsi, indicando un fenomeno di saturazione.
-I dati confermano visivamente questa tendenza: sempre prendendo come riferimento $\epsilon$ = 0.01, il passaggio da 10 a 20 iterazioni non produce alcun degrado aggiuntivo apprezzabile. L'algoritmo raggiunge quindi il suo massimo potenziale offensivo già intorno al budget $\epsilon$ = 0.05 ; frammentare ulteriormente il parametro apporta benefici marginali.  
 
-\clearpage
+Il primo dato significativo emerge confrontando le prestazioni a parità di budget di perturbazione ($\epsilon$). L'esecuzione con \texttt{max\_iter} = 1 equivale concettualmente a un attacco FGSM tradizionale: tutto il rumore viene calcolato e applicato in un singolo passaggio. In questa configurazione, con un limite di $\epsilon = 0.01$, il modello NN1 conserva un'accuratezza del 6.7\%. 
+Tuttavia, suddividendo il medesimo budget in 5 step iterativi (\texttt{max\_iter} = 5), l'algoritmo riesce a ricalcolare il gradiente man mano che l'immagine si sposta nello spazio delle \textit{feature}, ottimizzando la direzione del rumore a ogni passo. Questa maggiore precisione topologica fa crollare l'accuratezza al 2.6\%, dimostrando che l'approccio \textit{multi-step} risulta sensibilmente più distruttivo pur non alterando il budget totale.
+
+Osservando i dati tabellari e la Figura~\ref{fig:BIM_SEC_NN1}, è inoltre palese come lo scarto prestazionale tra le diverse configurazioni non sia lineare. Si nota un netto distacco tra le performance a 1 iterazione e quelle a 5 iterazioni, ma all'aumentare ulteriore degli step (10 e 20) le curve tendono a sovrapporsi, indicando un marcato fenomeno di saturazione. I dati confermano analiticamente questa tendenza: prendendo sempre in esame $\epsilon = 0.01$, il passaggio da 10 a 20 iterazioni abbassa l'accuratezza solo dal 2.0\% all'1.8\%, un degrado marginale. 
+
+Si evince quindi che l'algoritmo raggiunge il suo massimo potenziale offensivo in pochi step; frammentare ulteriormente l'attacco apporta benefici trascurabili a fronte di un costo computazionale quasi raddoppiato (passando da circa 46 a oltre 76 secondi). Si può concludere, in linea generale, che la rete NN1 si dimostra gravemente vulnerabile anche contro questa specifica tipologia di attacco.
+
+
+
+
+\vspace{10pt}
+
 \subsubsection{Projected Gradient Descent (PGD)}
-Il \textit{\textbf{Projected Gradient Descent}} (PGD) rappresenta una naturale evoluzione del \textit{Basic Iterative Method} (BIM), dal quale eredita la struttura computazionale multi-step, introducendo tuttavia un elemento stocastico cruciale: l'inizializzazione casuale (\textit{random restart}).
+Il \textit{\textbf{Projected Gradient Descent}} (PGD) rappresenta una naturale evoluzione del \textit{Basic Iterative Method} (BIM), dal quale eredita la struttura computazionale multi-step, introducendo anche l'inizializzazione casuale (\textit{random restart}).
 
-Mentre BIM inizia l'ottimizzazione del gradiente partendo sempre dall'immagine originale pulita, PGD perturba il punto di partenza aggiungendo un rumore casuale campionato uniformemente all'interno della sfera $L_\infty$ di raggio $\epsilon$. Questa perturbazione iniziale permette all'algoritmo di esplorare porzioni diverse del paesaggio della funzione di costo (\textit{loss landscape}), riducendo drasticamente il rischio di convergere in un massimo locale sub-ottimale. 
+Mentre BIM inizia l'ottimizzazione del gradiente partendo sempre dall'immagine originale pulita, PGD perturba il punto di partenza aggiungendo un rumore casuale campionato uniformemente all'interno della sfera $L_\infty$ di raggio $\epsilon$. Questa perturbazione iniziale permette all'algoritmo di esplorare porzioni diverse della superficie della funzione di costo (\textit{loss landscape}), riducendo il rischio di convergere in un massimo locale sub-ottimale. 
 
 Formalmente, l'algoritmo si articola in due fasi. La prima prevede l'inizializzazione stocastica, ovvero la primissima fase in cui viene applicata una perturbazione casuale campionata da una distribuzione uniforme con valori nel range $(-\epsilon,\epsilon)$:
 $$ x'_0 = x + \eta \quad \text{con} \quad \eta \sim \mathcal{U}(-\epsilon, \epsilon) $$
@@ -338,14 +337,14 @@ $$ x'_t = \Pi_\epsilon \left( x_{t-1} + \alpha \cdot \text{sign}(\nabla_x \mathc
 
 dove:
 \begin{itemize}
-    \item $\Pi_\epsilon$ rappresenta l'operatore di proiezione, il quale garantisce che ad ogni step l'immagine alterata rimanga rigorosamente confinata all'interno dell'intorno $L_\infty$ di raggio $\epsilon$ centrato sull'input originale $x$;
+    \item $\Pi_\epsilon$ rappresenta l'operatore di proiezione, il quale garantisce che ad ogni step l'immagine alterata rimanga confinata all'interno dell'intorno $L_\infty$ di raggio $\epsilon$ centrato sull'input originale $x$;
     \item $\mathcal{L}$ è la funzione di costo valutata sulla rete neurale target $h$ (parametrizzata dai pesi $w$) rispetto all'etichetta reale $y$;
     \item $\alpha = \epsilon / \text{max\_iter}$ definisce l'ampiezza del passo per la singola iterazione.
 \end{itemize}
 
-\textbf{Se la rete neurale viene ingannata con successo durante uno qualsiasi dei riavvii casuali, l'attacco viene considerato riuscito. ????????}
+Se la rete neurale viene ingannata con successo durante uno qualsiasi dei riavvii casuali, l'attacco viene considerato riuscito.
 
-Per valutare in modo esaustivo la robustezza della rete NN1 contro questo attacco \textit{error-generic}, l'architettura di test implementata è stata strutturata su una complessa matrice tridimensionale. Oltre a spaziare sul budget di perturbazione $\epsilon$ (da 0.001 a 0.1) e sulla profondità computazionale \texttt{max\_iter} (1, 5, 10, 20 e 40 step), è stata introdotta la variabile \texttt{num\_random\_init}, valutata per i valori 0, 1, 3 e 5:
+Per valutare la robustezza della rete NN1 contro questo attacco \textit{error-generic}, l'architettura di test implementata è stata strutturata su una matrice tridimensionale. Oltre a spaziare sul budget di perturbazione $\epsilon$ (da 0.001 a 0.1) e sulla profondità computazionale \texttt{max\_iter} (1, 5, 10, 20 e 40 step), è stata introdotta la variabile \texttt{num\_random\_init}, valutata per i valori 0, 1, 3 e 5:
 
 \begin{verbatim}
 EPSILONS           = [0.001, 0.003, 0.005, 0.01, 0.03, 0.05, 0.1]
@@ -354,256 +353,108 @@ NUM_RANDOM_INITS   = [0, 1, 3, 5]
 
 \end{verbatim}
 
-È fondamentale sottolineare che la configurazione con \texttt{num\_random\_init} = 0 disabilita la componente stocastica, riducendo di fatto PGD a un attacco BIM standard. Questo espediente metodologico fornisce una \textit{baseline} algoritmica perfetta per isolare e quantificare il reale valore aggiunto dei \textit{random restart}.
+La configurazione con \texttt{num\_random\_init} = 0 disabilita la componente stocastica, riducendo di fatto PGD a un attacco BIM standard. Questo espediente metodologico fornisce una \textit{baseline} algoritmica perfetta per isolare e quantificare il reale valore aggiunto dei \textit{random restart}.
 
-L'esecuzione di questa vasta mole di permutazioni ha generato un set stratificato di \textit{Security Evaluation Curve} (SEC). Nelle sezioni successive verranno analizzati i risultati quantitativi. Nello specifico il testo è stato organizzato in modo tale da esporre il primo grafico comparativo e subito di seguito una matrice di grafici per aiutare una migliore visualizzazione delle curve di interesse.   
+L'esecuzione di questa griglia di permutazioni ha generato un set stratificato di \textit{Security Evaluation Curve} (SEC). Nelle sezioni successive verranno analizzati i risultati quantitativi.   
 
-\clearpage
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\linewidth]{PGD_Error_Generic/PGD_nri0_comparative_maxiter_SEC.png}
-    \caption{PGD SEC su NN1 con \texttt{num\_random\_init} = 0}
-    \label{fig:PGD_SEC_nri0}
-\end{figure}
+Nella Figura \ref{fig:PGD_SEC_All_NRI} sono riportati esclusivamente i grafici riassuntivi per ciascun valore di \texttt{num\_random\_init}, i quali permettono di osservare direttamente il degrado dell'accuratezza all'aumentare della profondità computazionale (\texttt{max\_iter}).
 
-% -- SOTTO GRAFICI PER NRI = 0
 \begin{figure}[H]
     \centering
-    % Sotto-figura 1
-    \begin{subfigure}[b]{0.45\textwidth}
+    
+    % --- RIGA 1: nri=0 e nri=1 ---
+    \begin{subfigure}{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri0_iter1_SEC.png}
-        \caption{\texttt{max_iter} = 1}
-        \label{fig:PGD_nri0_generic_iter1}
-    \end{subfigure}
-    \hfill
-    % Sotto-figura 2
-    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\linewidth, keepaspectratio]{PGD_Error_Generic/PGD_nri0_comparative_maxiter_SEC.png}
+        \caption{\texttt{nri} = 0}
+        \label{fig:PGD_SEC_nri0}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri0_iter5_SEC.png}
-        \caption{\texttt{max_iter} = 5}
-        \label{fig:PGD_nri0_generic_iter5}
-    \end{subfigure}
-
-    \vspace{1em} % Spazio verticale tra le righe di immagini
-
-    % Sotto-figura 3
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri0_iter10_SEC.png}
-        \caption{\texttt{max_iter} = 10}
-        \label{fig:PGD_nri0_generic_iter10}
-    \end{subfigure}
-    \hfill
-    % Sotto-figura 4
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri0_iter20_SEC.png}
-        \caption{\texttt{max_iter} = 20}
-        \label{fig:PGD_nri0_generic_iter2'}
-    \end{subfigure}
-    \vspace{1em} % Spazio verticale tra le righe di immagini
-
-    % Sotto-figura 5
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri0_iter40_SEC.png}
-        \caption{\texttt{max_iter} = 40}
-        \label{fig:PGD_nri0_generic_iter40}
+        \includegraphics[width=\linewidth, keepaspectratio]{PGD_Error_Generic/PGD_nri1_comparative_maxiter_SEC.png}
+        \caption{\texttt{nri} = 1}
+        \label{fig:PGD_SEC_nri1}
     \end{subfigure}
 
-    \caption{PGD Generic - Iterazioni a confronto per \texttt{nri} = 0}
-    \label{fig:PGD_nri0_iterations}
+    \vspace{0.6cm} % Spazio verticale tra le due righe
+
+    % --- RIGA 2: nri=3 e nri=5 ---
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth, keepaspectratio]{PGD_Error_Generic/PGD_nri3_comparative_maxiter_SEC.png}
+        \caption{\texttt{nri} = 3}
+        \label{fig:PGD_SEC_nri3}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth, keepaspectratio]{PGD_Error_Generic/PGD_nri5_comparative_maxiter_SEC.png}
+        \caption{\texttt{nri} = 5}
+        \label{fig:PGD_SEC_nri5}
+    \end{subfigure}
+
+    \caption{Confronto delle Security Evaluation Curve PGD al variare di \texttt{num\_random\_init} (curve sovrapposte per tutte le iterazioni).}
+    \label{fig:PGD_SEC_All_NRI}
 \end{figure}
 
-\clearpage
-% -- GRAFICO PER nri = 1
-\begin{figure}[h]
+Al fine di non appesantire la trattazione, i grafici relativi alle singole iterazioni isolate sono stati omessi dalla presente sezione, ma restano a completa disposizione per eventuali approfondimenti. È possibile visionare il materiale integrativo direttamente all'interno della repository del progetto cliccando sui seguenti collegamenti:
+\begin{itemize}
+    \item \href{https://github.com/ChristianRosa02/AI4Cybersecurity/tree/master/results/PGD}{Grafici singoli al variare dei parametri}
+    \item \href{https://github.com/ChristianRosa02/AI4Cybersecurity/blob/master/results/PGD/PGD_results.csv}{Dati grezzi completi (File CSV)}
+\end{itemize}
+
+I risultati completi di questa fase di testing sono riassunti nella Tabella \ref{tab:pgd_results_acc_timerange}. L'analisi quantitativa evidenzia in primo luogo l'estrema vulnerabilità della rete agli attacchi iterativi non mirati: già con \texttt{max\_iter} = 5 e un budget minimo di $\epsilon = 0.03$, l'accuratezza del modello crolla allo 0.2\%. 
+
+Il dato scientificamente più interessante emerge tuttavia dall'analisi incrociata del parametro \texttt{num\_random\_init}. A livello teorico era lecito attendersi un miglioramento dell'\textit{Attack Success Rate} (ASR) rispetto alla variante deterministica BIM; tuttavia, i test su questo specifico dominio smentiscono tale assunzione, portando a risultati lievemente peggiori.
+
+Focalizzando l'attenzione sui valori di \textit{budget} inferiori, si osserva infatti un degrado delle performance offensive all'aumentare dei riavvii casuali. Ad esempio, eseguendo 10 iterazioni con $\epsilon = 0.01$, l'approccio BIM (\texttt{nri} = 0) fa calare le prestazioni della rete NN1 al 2.0\%. Al contrario, utilizzando il PGD con 5 \textit{random restart} a parità di iterazioni, l'accuratezza residua del modello sale al 4.1\%. 
+
+Questa dinamica di lieve decremento dell'efficacia dell'attacco si conferma per tutte le configurazioni iterative (con \texttt{max\_iter} da 1 a 40). Nonostante questa lieve flessione, la rete InceptionResnetV1 si conferma comunque criticamente vulnerabile anche alle perturbazioni generate tramite PGD.
+
+\begin{table}[H]
     \centering
-    \includegraphics[width=0.6\linewidth]{PGD_Error_Generic/PGD_nri1_comparative_maxiter_SEC.png}
-    \caption{PGD SEC su NN1 con \texttt{num\_random\_init} = 1}
-    \label{fig:PGD_SEC_nri1}
-\end{figure}
+    \caption{Accuratezza del modello e range temporale di esecuzione sotto attacco PGD al variare del budget di perturbazione ($\epsilon$), delle iterazioni e dei riavvii casuali (NRI).}
+    \label{tab:pgd_results_acc_timerange}
+    \resizebox{\textwidth}{!}{ % Consigliato tenerlo attivo viste le 10 colonne
+    \begin{tabular}{cc ccccccc c}
+        \toprule
+        \multirow{2}{*}{\textbf{NRI}} & \multirow{2}{*}{\textbf{Max Iter}} & \multicolumn{7}{c}{\textbf{Accuracy (\%) per Perturbation Budget ($\epsilon$)}} & \multirow{2}{*}{\textbf{Range Tempo (s)}} \\
+        \cmidrule(lr){3-9}
+         & & \textbf{0.001} & \textbf{0.003} & \textbf{0.005} & \textbf{0.01} & \textbf{0.03} & \textbf{0.05} & \textbf{0.1} & \\
+        \midrule
+        \multirow{5}{*}{\textbf{0}} 
+         & \textbf{1}  & 77.1 & 45.7 & 22.7 & 6.8 & 1.7 & 0.7 & 0.1 & 15.7 -- 19.2 \\
+         & \textbf{5}  & 76.6 & 41.1 & 15.5 & 2.6 & 0.1 & 0.1 & 0.0 & 26.9 -- 31.5 \\
+         & \textbf{10} & 76.7 & 40.3 & 15.0 & 2.0 & 0.1 & 0.1 & 0.0 & 42.6 -- 47.9 \\
+         & \textbf{20} & 76.7 & 40.1 & 14.9 & 1.8 & 0.1 & 0.1 & 0.0 & 64.1 -- 70.0 \\
+         & \textbf{40} & 76.7 & 40.0 & 14.7 & 1.7 & 0.1 & 0.1 & 0.1 & 117.1 -- 122.0 \\
+        \midrule
+        \multirow{5}{*}{\textbf{1}} 
+         & \textbf{1}  & 79.4 & 57.2 & 36.8 & 12.2 & 1.9 & 1.1 & 0.3 & 14.6 -- 20.9 \\
+         & \textbf{5}  & 79.1 & 54.0 & 27.2 & 5.2  & 0.1 & 0.1 & 0.0 & 24.6 -- 31.4 \\
+         & \textbf{10} & 78.9 & 53.2 & 26.0 & 4.4  & 0.2 & 0.1 & 0.0 & 37.7 -- 44.2 \\
+         & \textbf{20} & 79.0 & 53.2 & 25.1 & 4.3  & 0.4 & 0.1 & 0.1 & 63.8 -- 71.4 \\
+         & \textbf{40} & 78.8 & 53.2 & 25.3 & 4.1  & 0.3 & 0.2 & 0.2 & 116.1 -- 123.0 \\
+        \midrule
+        \multirow{5}{*}{\textbf{3}} 
+         & \textbf{1}  & 79.3 & 56.9 & 35.7 & 11.1 & 1.6 & 1.2 & 0.2 & 25.9 -- 32.2 \\
+         & \textbf{5}  & 79.0 & 53.6 & 26.6 & 4.8  & 0.2 & 0.0 & 0.0 & 56.9 -- 63.6 \\
+         & \textbf{10} & 78.8 & 53.0 & 25.4 & 4.5  & 0.2 & 0.1 & 0.0 & 95.8 -- 102.5 \\
+         & \textbf{20} & 78.7 & 52.8 & 24.8 & 4.1  & 0.3 & 0.1 & 0.1 & 174.2 -- 181.3 \\
+         & \textbf{40} & 78.8 & 52.9 & 24.6 & 3.9  & 0.3 & 0.1 & 0.0 & 331.4 -- 337.5 \\
+        \midrule
+        \multirow{5}{*}{\textbf{5}} 
+         & \textbf{1}  & 79.2 & 56.9 & 35.3 & 11.0 & 1.6 & 1.2 & 0.2 & 37.5 -- 43.0 \\
+         & \textbf{5}  & 79.1 & 53.3 & 26.0 & 4.9  & 0.2 & 0.1 & 0.0 & 89.9 -- 95.9 \\
+         & \textbf{10} & 78.8 & 53.2 & 24.9 & 4.1  & 0.1 & 0.1 & 0.1 & 155.1 -- 161.5 \\
+         & \textbf{20} & 78.8 & 52.8 & 24.7 & 3.9  & 0.2 & 0.1 & 0.1 & 287.2 -- 293.1 \\
+         & \textbf{40} & 78.8 & 52.8 & 24.6 & 3.7  & 0.2 & 0.1 & 0.1 & 551.8 -- 557.2 \\
+        \bottomrule
+    \end{tabular}
+    } % Chiusura del resizebox
+\end{table}
 
-% -- SOTTO GRAFICI PER NRI = 1
-\begin{figure}[H]
-    \centering
-    % Sotto-figura 1
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri1_iter1_SEC.png}
-        \caption{\texttt{max_iter} = 1}
-        \label{fig:PGD_nri1_generic_iter1}
-    \end{subfigure}
-    \hfill
-    % Sotto-figura 2
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri1_iter5_SEC.png}
-        \caption{\texttt{max_iter} = 5}
-        \label{fig:PGD_nri1_generic_iter5}
-    \end{subfigure}
+\vspace{10pt}
 
-    \vspace{1em} % Spazio verticale tra le righe di immagini
-
-    % Sotto-figura 3
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri1_iter10_SEC.png}
-        \caption{\texttt{max_iter} = 10}
-        \label{fig:PGD_nri1_generic_iter10}
-    \end{subfigure}
-    \hfill
-    % Sotto-figura 4
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri1_iter20_SEC.png}
-        \caption{\texttt{max_iter} = 20}
-        \label{fig:PGD_nri1_generic_iter2'}
-    \end{subfigure}
-    \vspace{1em} % Spazio verticale tra le righe di immagini
-
-    % Sotto-figura 5
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri1_iter40_SEC.png}
-        \caption{\texttt{max_iter} = 40}
-        \label{fig:PGD_nri1_generic_iter40}
-    \end{subfigure}
-
-    \caption{PGD Generic - Iterazioni a confronto per \texttt{nri} = 1}
-    \label{fig:PGD_iterations_nri1}
-\end{figure}
-
-
-\clearpage
-% -- GRAFICO PER nri = 3
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.55\linewidth]{PGD_Error_Generic/PGD_nri3_comparative_maxiter_SEC.png}
-    \caption{PGD SEC su NN1 con \texttt{num\_random\_init} = 3}
-    \label{fig:PGD_generic_SEC_nri3}
-\end{figure}
-
-% -- SOTTO GRAFICI PER NRI = 3
-\begin{figure}[h]
-    \centering
-    % Sotto-figura 1
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter1_SEC.png}
-        \caption{\texttt{max_iter} = 1}
-        \label{fig:PGD_nri3_generic_iter1}
-    \end{subfigure}
-    \hfill
-    % Sotto-figura 2
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter5_SEC.png}
-        \caption{\texttt{max_iter} = 5}
-        \label{fig:PGD_nri3_generic_iter5}
-    \end{subfigure}
-
-    \vspace{1em} % Spazio verticale tra le righe di immagini
-
-    % Sotto-figura 3
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter10_SEC.png}
-        \caption{\texttt{max_iter} = 10}
-        \label{fig:PGD_nri3_generic_iter10}
-    \end{subfigure}
-    \hfill
-    % Sotto-figura 4
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter20_SEC.png}
-        \caption{\texttt{max_iter} = 20}
-        \label{fig:PGD_nri3_generic_iter20'}
-    \end{subfigure}
-    \vspace{1em} % Spazio verticale tra le righe di immagini
-
-    % Sotto-figura 5
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter40_SEC.png}
-        \caption{\texttt{max_iter} = 40}
-        \label{fig:PGD_nri3_generic_iter40}
-    \end{subfigure}
-
-    \caption{PGD Generic - Iterazioni a confronto per \texttt{nri} = 3}
-    \label{fig:PGD_nri3_iterations}
-\end{figure}
-
-
-% -- GRAFICO PER nri = 5
-\clearpage
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{PGD_Error_Generic/PGD_nri5_comparative_maxiter_SEC.png}
-    \caption{PGD SEC su NN1 con \texttt{num\_random\_init} = 5}
-    \label{fig:PGD_Generic_SEC_nri5}
-\end{figure}
-
-% -- SOTTO GRAFICI PER NRI = 5
-\begin{figure}[h]
-    \centering
-    % Sotto-figura 1
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri3_iter1_SEC.png}
-        \caption{\texttt{max_iter} = 1}
-        \label{fig:PGD_nri5_generic_iter1}
-    \end{subfigure}
-    \hfill
-    % Sotto-figura 2
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri5_iter5_SEC.png}
-        \caption{\texttt{max_iter} = 5}
-        \label{fig:PGD_nri5_generic_iter5}
-    \end{subfigure}
-
-    \vspace{1em} % Spazio verticale tra le righe di immagini
-
-    % Sotto-figura 3
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri5_iter10_SEC.png}
-        \caption{\texttt{max_iter} = 10}
-        \label{fig:PGD_nri5_generic_iter10}
-    \end{subfigure}
-    \hfill
-    % Sotto-figura 4
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri5_iter20_SEC.png}
-        \caption{\texttt{max_iter} = 20}
-        \label{fig:PGD_nri5_generic_iter20'}
-    \end{subfigure}
-    \vspace{1em} % Spazio verticale tra le righe di immagini
-
-    % Sotto-figura 5
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{PGD_Error_Generic/PGD_nri5_iter40_SEC.png}
-        \caption{\texttt{max_iter} = 40}
-        \label{fig:PGD_nri5_generic_iter40}
-    \end{subfigure}
-
-    \caption{PGD Generic - Iterazioni a confronto per \texttt{nri} = 5}
-    \label{fig:PGD_nri5_iterations}
-\end{figure}
-
-
-
-L'analisi quantitativa, i cui risultati compatti sono visibili nelle \textit{Security Evaluation Curve} (SEC) prodotte e nei dati estratti dal file CSV, evidenzia in primo luogo l'estrema vulnerabilità della rete agli attacchi iterativi non mirati. Già con \texttt{max\_iter} = 5 e un budget minimo di $\epsilon = 0.03$, il modello raggiunge un'accuracy dello 0.2\%. 
-
-Il dato scientificamente più interessante emerge tuttavia dall'analisi incrociata del parametro \texttt{num\_random\_init}. A livello teorico il team si aspettava un miglioramento dell'ASR rispetto alla variante deterministica BIM, invece il test su questo dominio smentisce tale assunzione portando a dei risultati lievemente peggiori.
-
-Focalizzando l'attenzione sui valori di \textit{budget} inferiori, si osserva un degrado delle performance all'aumentare dei riavvii casuali. Ad esempio, eseguendo 10 iterazioni con $\epsilon = 0.01$, l'approccio BIM (\texttt{nri} = 0) fa calare le prestazioni della rete NN1 al 2\%. Al contrario, PGD con 5 \textit{random restart} a parità di iterazioni, il modello sale al 4.1\%. Questa dinamica di lieve decremento offensivo si conferma per tutte le configurazioni iterative (\texttt{max\_iter} da 1 a 40).
-
-\clearpage
 \subsubsection{Carlini \& Wagner (CW)}
 L'algoritmo di Carlini \& Wagner (CW) rappresenta uno degli attacchi avversari più sofisticati e potenti presenti in letteratura. A differenza dei metodi analizzati in precedenza (basati sul segno del gradiente computato in uno o più step temporali), CW riformula la generazione dell'esempio avversario come un vero e proprio problema di ottimizzazione continua. L'algoritmo non cerca di massimizzare l'errore dato un budget, ma al contrario cerca di minimizzare la perturbazione garantendo l'inganno del classificatore.
 
@@ -712,7 +563,8 @@ In conclusione, l'analisi empirica conferma che CW domina nella capacità di elu
     \label{tab:CW_Untargeted_robustness}
 \end{table}
 
-\clearpage
+\vspace{10pt}
+
 \subsubsection{DeepFool (DF)}
 L'algoritmo DeepFool (DF), è un metodo iterativo di generazione avversaria non mirato (\textit{error-generic}) progettato per trovare la perturbazione minima necessaria a indurre un classificatore all'errore. A differenza degli attacchi geometrici basati sulla massimizzazione della perdita entro un raggio fisso, DeepFool assume un punto di vista differente: assume che le classi del modello siano separate da confini decisionali e mira a proiettare l'immagine oltre il confine corretto più vicino, stimando la geometria locale della rete tramite una linearizzazione iterativa.
 
@@ -765,7 +617,8 @@ Dal punto di vista dell'economia elaborativa, i tempi di esecuzione riportati of
 
 In conclusione, l'analisi empirica dimostra come DeepFool sia un algoritmo molto interessante per gli attacchi non mirati. Il suo duplice vantaggio risiede nel trovare una perturbazione minima efficace in un tempo relativamente basso. 
 
-\clearpage
+\vspace{10pt}
+
 \subsubsection{All Algorithms Recap}
 
 A conclusione della disamina individuale degli algoritmi per la generazione di esempi avversari non mirati (\textit{error-generic}), è fondamentale tracciare un bilancio comparativo per delineare l'effettivo panorama della vulnerabilità della rete InceptionResnetV1 (NN1). L'obiettivo di questa sezione è confrontare il \textit{trade-off} operativo offerto da ciascun metodo, bilanciando la letalità dell'attacco, la magnitudo della perturbazione (invisibilità) e il costo computazionale.
@@ -793,8 +646,8 @@ L'osservazione della Figura~\ref{fig:SEC_Untargeted_All} e l'analisi incrociata 
     \end{itemize}
 \end{enumerate}
 
+\vspace{15pt}
 
-\clearpage
 \subsection{Error-Specific Attacks}
 A differenza degli attacchi \textit{error-generic} analizzati nella sezione precedente, gli attacchi \textit{error-specific} non si limitano a indurre un errore di classificazione arbitrario. Il loro scopo è nettamente più complesso e pericoloso: forzare la rete neurale a classificare l'immagine d'ingresso in una specifica classe predeterminata, scelta a priori dall'attaccante.
 
@@ -819,8 +672,9 @@ Per condurre un'analisi empirica approfondita, il test sulla rete NN1 è stato s
 
 Di seguito verranno ripercorsi i test condotti per ciascun algoritmo, analizzando le percentuali di successo dell'attacco (\textit{Attack Success Rate}) al variare degli iperparametri e del budget di perturbazione.
 
-\clearpage
-\subsubsection{Targeted Fast Gradient Sign Method (FGSM)}
+\vspace{10pt}
+
+\subsubsection{Fast Gradient Sign Method (FGSM)}
 Il \textit{Fast Gradient Sign Method} (FGSM), analizzato in precedenza nella sua variante non mirata, può essere adattato matematicamente per operare in regime \textit{error-specific}. L'obiettivo dell'attaccante passa dalla semplice massimizzazione dell'errore (allontanamento dalla \textit{ground truth}) alla minimizzazione dell'errore rispetto a un'etichetta bersaglio predefinita ($y_{target}$).
 
 In questa configurazione, l'aggiornamento avversario a singolo step sfrutta sempre l'informazione fornita dal segno del gradiente, ma ne inverte la direzione operativa:
@@ -903,7 +757,8 @@ Questi risultati empirici dimostrano in modo inconfutabile che gli approcci \tex
     \label{tab:FGSM_targeted_least_likely}
 \end{table}
 
-\clearpage
+\vspace{10pt}
+
 \subsubsection{Basic Iterative Method (BIM)}
 Come dimostrato dall'analisi della variante \textit{single-step} (FGSM), gli attacchi mirati in spazi decisionali complessi richiedono una precisione che un singolo sbalzo perturbativo non può garantire. Il \textit{Basic Iterative Method} (BIM) interviene esattamente per sanare questa criticità.
 
@@ -926,7 +781,7 @@ Le sezioni seguenti presentano l'analisi quantitativa dei risultati, esplorando 
     \item \href{https://github.com/ChristianRosa02/AI4Cybersecurity/blob/master/results/BIM_Targeted_LeastLikely/BIM_Targeted_LeastLikely_results.csv}{risultati Least Likely}
 \end{itemize}
 
-\clearpage
+
 \subsubsection*{Fixed Attack}
 L'analisi della modalità \textit{Fixed} per l'attacco BIM rivela in modo lampante la superiorità geometrica dell'approccio iterativo nel risolvere il complesso problema dell'inganno mirato. Confrontando i risultati con quelli ottenuti nella medesima configurazione tramite FGSM, emerge un divario prestazionale sostanziale, interamente imputabile al partizionamento del \textit{budget} di perturbazione.
 
@@ -992,7 +847,7 @@ In figura~\ref{fig:BIM_Targeted_Fixed_comparative_SEC} è possibile vedere l'eff
     \label{fig:matrice_iterazioni_fixed_BIM}
 \end{figure}
 
-\clearpage
+
 \subsubsection*{Least Likely Attack}
 Coerentemente con i limiti teorici noti, la variante \textit{single-step} (\texttt{max\_iter} = 1) fallisce sistematicamente, confermando che un singolo vettore di perturbazione non può colmare distanze così ampie.
 
@@ -1056,8 +911,9 @@ Il grafico relativo all'effetto del parametro iterativo (figura~\ref{fig:BIM_Tar
     \label{fig:matrice_iterazioni_LL_BIM}
 \end{figure}
 
-\clearpage
-\subsubsection{Targeted Projected Gradient Descent (PGD)}
+\vspace{10pt}
+
+\subsubsection{Projected Gradient Descent (PGD)}
 L'algoritmo \textit{Projected Gradient Descent} (PGD), integra una componente stocastica fondamentale: l'inizializzazione casuale (\textit{random restart}).
 L'algoritmo prima di iniziare la discesa del gradiente, perturba casualmente il punto di partenza all'interno del \textit{budget} $L_\infty$ consentito.
 
@@ -1090,7 +946,7 @@ Le sezioni a seguire conterranno un'analisi quantitativa granulare basata sulle 
     \item \href{https://github.com/ChristianRosa02/AI4Cybersecurity/blob/master/results/PGD_Targeted_LeastLikely/PGD_Targeted_LeastLikely_results.csv}{risultati Least Likely}
 \end{itemize}
 
-\clearpage
+
 \subsubsection*{Fixed Attack}
 Per valutare l'effettivo apporto del PGD, è necessario confrontare le prestazioni ottenute abilitando l'inizializzazione stocastica (\texttt{num\_random\_init} $> 0$) con la \textit{baseline} algoritmica priva di rumore iniziale (\texttt{num\_random\_init} $= 0$, equivalente al BIM).
 
@@ -1135,7 +991,7 @@ Poiché la formulazione teorica di PGD suggeriva un potenziale vantaggio offensi
 
 
 
-\clearpage
+
 % -- SEC NRI = 0 -- 
 \begin{figure}[H]
     \centering
@@ -1408,7 +1264,7 @@ Poiché la formulazione teorica di PGD suggeriva un potenziale vantaggio offensi
 
 Quest ultimo set di grafici evidenzia in modo chiaro anche la poca influenza del paramentro \texttt{num\_random\_init} sull'efficacia complessiva dell'attacco. A parità di iterazioni e \textit{budget}, l'ASR rimane sostanzialmente invariato al variare del numero di riavvii casuali, confermando che, per un attacco a bersaglio fisso, la componente stocastica non apporta alcun beneficio in termini di successo offensivo.
 
-\clearpage
+
 \subsubsection*{Least Likely Attack}
 In questo scenario estremo, l'intuizione matematica suggerirebbe che i \textit{random restart} forniscano un vantaggio cruciale, permettendo all'ottimizzatore di esplorare traiettorie di attacco alternative.
 
@@ -1451,7 +1307,7 @@ Inoltre, per agevolare una valutazione visiva immediata dell'efficacia algoritmi
     \label{tab:PGD_least_likely}
 \end{table}
 
-\clearpage
+
 % -- SEC NRI = 0 --
 \begin{figure}[H]
     \centering
@@ -1724,7 +1580,7 @@ Anche in questo caso, la matrice di curve SEC evidenzia in modo inequivocabile l
 Un ulteriore elemento di rilevanza che emerge dai dati, visibile nella matrice in Figura~\ref{fig:PGD_LL_iterations_vari_nri}, è il totale e sistematico fallimento dell'attacco quando configurato con \texttt{max\_iter} = 1, indipendentemente dal numero di inizializzazioni casuali (\texttt{num\_random\_init}) applicate. In tutti gli scenari testati, l'\textit{Attack Success Rate} per il target \textit{Least Likely} con una singola iterazione rimane rigorosamente ancorato allo~0\%.
 Il dato scientificamente più interessante è che l'introduzione della stocasticità (\texttt{num\_random\_init} > 0) non mitiga in alcun modo questo risultato. Se l'algoritmo applica un salto casuale iniziale, ma dispone poi di un unico passo di calcolo del gradiente (\texttt{max\_iter} = 1) per rimettersi in rotta, la dinamica offensiva non cambia. Partire da un punto leggermente sfalsato all'interno del minuscolo \textit{budget} $\epsilon$ e tracciare una singola retta di massima pendenza produce inevitabilmente un risultato che non è in grado di raggiungere il target. L'immagine alterata finisce per cadere all'interno della regione di pertinenza di una delle innumerevoli classi limitrofe (causando un attacco di tipo \textit{error-generic} riuscito), ma manca totalmente la minuscola e lontana area di accettazione della classe \textit{Least Likely}.
 
-\subsubsection{Carlini \& Wagner Attack}
+\subsubsection{Carlini \& Wagner (CW)}
 L'algoritmo \textit{Carlini \& Wagner} (CW) chiude la disamina degli attacchi mirati proponendo un approccio diverso rispetto ai metodi basati sul gradiente proiettato. Come ampiamente discusso nelle sezioni relative a BIM e PGD, il limite strutturale degli attacchi \textit{budget-constrained} emerge quando la distanza semantica tra l'immagine originale e la classe bersaglio è estrema.
 
 Essendo un CW un attacco ottimizzante, la sua formulazione matematica non prevede un vincolo esplicito sulla magnitudo della perturbazione.
@@ -1827,7 +1683,8 @@ Questo limite teorico si scontra drammaticamente con il vincolo applicativo del 
     \label{fig:matrice_cw_targeted_fixed}
 \end{figure}
 
-\clearpage
+\vspace{10pt}
+
 \subsubsection{All Algorithms Recap}
 
 Conclusa l'analisi dettagliata delle singole varianti algoritmiche, la presente sezione si prefigge di tracciare un bilancio comparativo definitivo sull'efficacia degli attacchi avversari mirati (\textit{error-specific}) contro l'architettura InceptionResnetV1 (NN1). 
@@ -1850,7 +1707,6 @@ Il riscontro visivo primario di questa comparazione è offerto dalla Figura~\ref
     
     \item \textbf{L'impossibilità computazionale di Carlini \& Wagner (CW):} Infine, l'attacco Carlini \& Wagner, seppur teoricamente capace di garantire il 100\% di ASR con il minimo rumore possibile, si è scontrato con i limiti computazionali. Formulando l'attacco come un problema di minimizzazione continua gestito dall'ottimizzatore \textit{Adam}, l'algoritmo richiede tempi di convergenza enormi (fino a 10.000 step secondo gli autori originali). Interrompendo l'ottimizzazione a un massimo di 50 iterazioni (che hanno comunque richiesto oltre 5 ore per sole 100 immagini), l'ASR registrato è stato dello 0.0\%.
 \end{enumerate}
-
 
 
 
@@ -1887,7 +1743,7 @@ Prima di effettuare i test di transferibilità sono state verificate le performa
 È importante sottolineare che NN2 richiede delle immagini in input con dimensioni di 224x224 pixel, mentre NN1 è stata addestrata con immagini di dimensioni 160x160 pixel. 
 Per garantire la coerenza dei test, tutte le immagini avversariali generate su NN1 sono state ridimensionate a 288x288 pixel prima di essere testate su NN2. 
 Dato che gli attacchi avversariali si basano sulla generazione di rumore, il ridimensionamento delle immagini potrebbe potenzialmente alterare le perturbazioni applicate. 
-Per ridurre al minimo questo effetto Il ridimensionamento iniziale a 288 pixel sfrutta un'interpolazione di tipo \textit{Nearest Neighbor}, 
+Per ridurre al minimo questo effetto, il ridimensionamento iniziale a 288 pixel sfrutta un'interpolazione di tipo \textit{Nearest Neighbor}, 
 seguita da un ritaglio centrale (\textit{Center Crop}) a 224x224 pixel. L'uso del \textit{Nearest Neighbor} non calcola la media tra pixel adiacenti e preserva i valori esatti dell'immagine originale. 
 Questo approccio è il più adeguato per mantenere inalterata, per quanto possibile, la perturbazione avversaria (in particolare in norma $L_\infty$), permettendo di misurare la trasferibilità dell'attacco 
 senza introdurre attenuazioni artificiali
