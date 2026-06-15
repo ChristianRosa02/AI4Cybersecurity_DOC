@@ -678,6 +678,7 @@ L'osservazione della Figura~\ref{fig:SEC_Untargeted_All} e l'analisi incrociata 
 \subsection{Error-Specific Attacks}
 A differenza degli attacchi \textit{error-generic} analizzati nella sezione precedente, gli attacchi \textit{error-specific} non si limitano a indurre un errore di classificazione arbitrario. Il loro scopo è forzare la rete neurale a classificare l'immagine d'ingresso in una specifica classe predeterminata, scelta a priori dall'attaccante.
 In questo caso l'algoritmo avversario non cerca più di massimizzare la funzione di costo rispetto all'etichetta reale (\textit{ground truth}) per allontanarsi, bensì mira a minimizzare la funzione di costo rispetto alla classe bersaglio ($y_{target}$), guidando la perturbazione affinché l'immagine superi lo specifico confine decisionale di quell'etichetta. 
+Formalmente, per gli attacchi basati sul gradiente, il segno della perturbazione viene invertito, sottraendo rumore nella direzione del gradiente della loss calcolata sulla classe target
 
 Verrà valutata l'efficacia e l'efficienza computazionale delle varianti mirate dei seguenti algoritmi:
 \begin{itemize}
@@ -2850,7 +2851,7 @@ finale. Questa struttura permette di rispondere a un quesito fondamentale: se un
 perturbazione sfugge al detector, possiede ancora le proprietà
 necessarie per ingannare un'architettura diversa da quella su cui è stata calcolata?
 
-\subsubsection{Risultati Sperimentali e Analisi Comparativa}
+\subsubsection{Results and Comparative Analysis}
 Le metriche estrapolate dall'esecuzione combinata evidenziano come la pipeline 
 \textit{Detector + NN2} sia ancora efficace contro gli attacchi trasferiti. 
 A parità di soglia, il modulo di gating 
